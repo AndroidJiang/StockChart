@@ -1,0 +1,8 @@
+/app/src/main/java/com/example/yanjiang/stockchart/api/Constant.java
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+/captures
