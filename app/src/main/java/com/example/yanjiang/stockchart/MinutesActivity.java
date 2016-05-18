@@ -2,9 +2,11 @@ package com.example.yanjiang.stockchart;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseArray;
 
 import com.example.yanjiang.stockchart.bean.MData;
+import com.example.yanjiang.stockchart.bean.MinutesSH;
 import com.example.yanjiang.stockchart.rxutils.SchedulersCompat;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
@@ -84,6 +86,8 @@ public class MinutesActivity extends BaseActivity {
 
 
 
+
+
         //左边y
         axisLeft = lineChart.getAxisLeft();
         axisLeft.setLabelCount(5, true);
@@ -130,6 +134,9 @@ public class MinutesActivity extends BaseActivity {
         this.xAxis.setAxisLineColor(getResources().getColor(R.color.grayLine));
         this.axisLeft.setGridColor(getResources().getColor(R.color.grayLine));
         this.axisRight.setAxisLineColor(getResources().getColor(R.color.grayLine));
+
+        MinutesSH minutesSH=new MinutesSH();
+        Log.e("***", minutesSH.getShowTimeLabels() + "");
 
     }
 
