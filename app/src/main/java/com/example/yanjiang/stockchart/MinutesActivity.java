@@ -86,8 +86,6 @@ public class MinutesActivity extends BaseActivity {
 
 
 
-
-
         //左边y
         axisLeft = lineChart.getAxisLeft();
         axisLeft.setLabelCount(5, true);
@@ -198,10 +196,12 @@ public class MinutesActivity extends BaseActivity {
         d2.setHighlightEnabled(false);
         d1.setDrawFilled(true);
 
+
         barDataSet.setBarSpacePercent(0); //bar空隙
         barDataSet.setHighLightColor(Color.BLACK);
         barDataSet.setHighLightAlpha(255);
         barDataSet.setDrawValues(false);
+        barDataSet.setHighlightEnabled(true);
         //谁为基准
         d1.setAxisDependency(YAxis.AxisDependency.LEFT);
        // d2.setAxisDependency(YAxis.AxisDependency.RIGHT);
