@@ -49,7 +49,7 @@ public abstract class AxisRenderer extends Renderer {
         mAxisLinePaint.setStyle(Style.STROKE);
 
 		mLimitLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		mLimitLinePaint.setStyle(Paint.Style.STROKE);
+		mLimitLinePaint.setStyle(Style.STROKE);
 	}
 
     /**

@@ -176,7 +176,7 @@ public class Entry implements Parcelable {
         }
     }
 
-    public static final Parcelable.Creator<Entry> CREATOR = new Parcelable.Creator<Entry>() {
+    public static final Creator<Entry> CREATOR = new Creator<Entry>() {
         public Entry createFromParcel(Parcel source) {
             return new Entry(source);
         }

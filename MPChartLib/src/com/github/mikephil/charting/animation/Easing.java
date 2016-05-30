@@ -47,61 +47,61 @@ public class Easing {
         switch (easing) {
             default:
             case Linear:
-                return Easing.EasingFunctions.Linear;
+                return EasingFunctions.Linear;
             case EaseInQuad:
-                return Easing.EasingFunctions.EaseInQuad;
+                return EasingFunctions.EaseInQuad;
             case EaseOutQuad:
-                return Easing.EasingFunctions.EaseOutQuad;
+                return EasingFunctions.EaseOutQuad;
             case EaseInOutQuad:
-                return Easing.EasingFunctions.EaseInOutQuad;
+                return EasingFunctions.EaseInOutQuad;
             case EaseInCubic:
-                return Easing.EasingFunctions.EaseInCubic;
+                return EasingFunctions.EaseInCubic;
             case EaseOutCubic:
-                return Easing.EasingFunctions.EaseOutCubic;
+                return EasingFunctions.EaseOutCubic;
             case EaseInOutCubic:
-                return Easing.EasingFunctions.EaseInOutCubic;
+                return EasingFunctions.EaseInOutCubic;
             case EaseInQuart:
-                return Easing.EasingFunctions.EaseInQuart;
+                return EasingFunctions.EaseInQuart;
             case EaseOutQuart:
-                return Easing.EasingFunctions.EaseOutQuart;
+                return EasingFunctions.EaseOutQuart;
             case EaseInOutQuart:
-                return Easing.EasingFunctions.EaseInOutQuart;
+                return EasingFunctions.EaseInOutQuart;
             case EaseInSine:
-                return Easing.EasingFunctions.EaseInSine;
+                return EasingFunctions.EaseInSine;
             case EaseOutSine:
-                return Easing.EasingFunctions.EaseOutSine;
+                return EasingFunctions.EaseOutSine;
             case EaseInOutSine:
-                return Easing.EasingFunctions.EaseInOutSine;
+                return EasingFunctions.EaseInOutSine;
             case EaseInExpo:
-                return Easing.EasingFunctions.EaseInExpo;
+                return EasingFunctions.EaseInExpo;
             case EaseOutExpo:
-                return Easing.EasingFunctions.EaseOutExpo;
+                return EasingFunctions.EaseOutExpo;
             case EaseInOutExpo:
-                return Easing.EasingFunctions.EaseInOutExpo;
+                return EasingFunctions.EaseInOutExpo;
             case EaseInCirc:
-                return Easing.EasingFunctions.EaseInCirc;
+                return EasingFunctions.EaseInCirc;
             case EaseOutCirc:
-                return Easing.EasingFunctions.EaseOutCirc;
+                return EasingFunctions.EaseOutCirc;
             case EaseInOutCirc:
-                return Easing.EasingFunctions.EaseInOutCirc;
+                return EasingFunctions.EaseInOutCirc;
             case EaseInElastic:
-                return Easing.EasingFunctions.EaseInElastic;
+                return EasingFunctions.EaseInElastic;
             case EaseOutElastic:
-                return Easing.EasingFunctions.EaseOutElastic;
+                return EasingFunctions.EaseOutElastic;
             case EaseInOutElastic:
-                return Easing.EasingFunctions.EaseInOutElastic;
+                return EasingFunctions.EaseInOutElastic;
             case EaseInBack:
-                return Easing.EasingFunctions.EaseInBack;
+                return EasingFunctions.EaseInBack;
             case EaseOutBack:
-                return Easing.EasingFunctions.EaseOutBack;
+                return EasingFunctions.EaseOutBack;
             case EaseInOutBack:
-                return Easing.EasingFunctions.EaseInOutBack;
+                return EasingFunctions.EaseInOutBack;
             case EaseInBounce:
-                return Easing.EasingFunctions.EaseInBounce;
+                return EasingFunctions.EaseInBounce;
             case EaseOutBounce:
-                return Easing.EasingFunctions.EaseOutBounce;
+                return EasingFunctions.EaseOutBounce;
             case EaseInOutBounce:
-                return Easing.EasingFunctions.EaseInOutBounce;
+                return EasingFunctions.EaseInOutBounce;
         }
     }
     

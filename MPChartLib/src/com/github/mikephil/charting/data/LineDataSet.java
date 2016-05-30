@@ -18,7 +18,7 @@ import java.util.List;
 public class LineDataSet extends LineRadarDataSet<Entry> implements ILineDataSet {
 
     /** Drawing mode for this line dataset **/
-    private LineDataSet.Mode mMode = Mode.LINEAR;
+    private Mode mMode = Mode.LINEAR;
 
     /** List representing all colors that are used for the circles */
     private List<Integer> mCircleColors = null;
@@ -28,6 +28,9 @@ public class LineDataSet extends LineRadarDataSet<Entry> implements ILineDataSet
 
     /** the radius of the circle-shaped value indicators */
     private float mCircleRadius = 8f;
+
+    /** the hole radius of the circle-shaped value indicators */
+    private float mCircleHoleRadius = 4f;
 
     /** sets the intensity of the cubic lines */
     private float mCubicIntensity = 0.2f;
@@ -71,6 +74,7 @@ public class LineDataSet extends LineRadarDataSet<Entry> implements ILineDataSet
         copied.mMode = mMode;
         copied.mColors = mColors;
         copied.mCircleRadius = mCircleRadius;
+        copied.mCircleHoleRadius = mCircleHoleRadius;
         copied.mCircleColors = mCircleColors;
         copied.mDashPathEffect = mDashPathEffect;
         copied.mDrawCircles = mDrawCircles;
@@ -86,7 +90,7 @@ public class LineDataSet extends LineRadarDataSet<Entry> implements ILineDataSet
      * @return
      */
     @Override
-    public LineDataSet.Mode getMode() {
+    public Mode getMode() {
         return mMode;
     }
 
@@ -95,7 +99,7 @@ public class LineDataSet extends LineRadarDataSet<Entry> implements ILineDataSet
      *
      * @return
      */
-    public void setMode(LineDataSet.Mode mode) {
+    public void setMode(Mode mode) {
         mMode = mode;
     }
 
@@ -134,6 +138,21 @@ public class LineDataSet extends LineRadarDataSet<Entry> implements ILineDataSet
     @Override
     public float getCircleRadius() {
         return mCircleRadius;
+    }
+
+    /**
+     * sets the hole radius of the drawn circles.
+     * Default radius = 2f
+     *
+     * @param holeRadius
+     */
+    public void setCircleHoleRadius(float holeRadius) {
+        mCircleHoleRadius = Utils.convertDpToPixel(holeRadius);
+    }
+
+    @Override
+    public float getCircleHoleRadius() {
+        return mCircleHoleRadius;
     }
 
     /**
