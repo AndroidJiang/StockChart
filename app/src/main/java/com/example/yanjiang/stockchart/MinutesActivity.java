@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseArray;
 
+import com.example.yanjiang.stockchart.api.ConstantTest;
 import com.example.yanjiang.stockchart.bean.MData;
 import com.example.yanjiang.stockchart.bean.MinutesSH;
-import com.example.yanjiang.stockchart.rxutils.SchedulersCompat;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
@@ -21,19 +21,18 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.YAxisValueFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import okhttp3.ResponseBody;
-import rx.Subscriber;
 import rx.Subscription;
 
 public class MinutesActivity extends BaseActivity {
@@ -60,6 +59,28 @@ public class MinutesActivity extends BaseActivity {
         setTimeLabels();
         getMinutesData();
 
+        lineChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
+                barChart.highlightValues(new Highlight[]{h});
+            }
+
+            @Override
+            public void onNothingSelected() {
+
+            }
+        });
+        barChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
+                lineChart.highlightValues(new Highlight[]{h});
+            }
+
+            @Override
+            public void onNothingSelected() {
+
+            }
+        });
 
     }
 
@@ -217,7 +238,7 @@ public class MinutesActivity extends BaseActivity {
         barChart.invalidate();
     }
     private void getMinutesData() {
-        String code = "sz002081";
+      /*  String code = "sz002081";
         subscriptionMinute = clientApi.getMinutes(code)
                 .compose(SchedulersCompat.<ResponseBody>applyIoSchedulers())
                 .subscribe(new Subscriber<ResponseBody>() {
@@ -245,8 +266,18 @@ public class MinutesActivity extends BaseActivity {
                         setData(mData);
 
                     }
-                });
-        mCompositeSubscription.add(subscriptionMinute);
+                });*/
+        /*方便测试，加入假数据*/
+        MData mData = new MData();
+        JSONObject object = null;
+        try {
+            object = new JSONObject(ConstantTest.JSON_TEST);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        mData.parseData(object);
+        setData(mData);
+       // mCompositeSubscription.add(subscriptionMinute);
     }
     private SparseArray<String> setTimeLabels(){
         SparseArray<String> times = new SparseArray<>();

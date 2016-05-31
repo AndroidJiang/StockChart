@@ -17,6 +17,7 @@ import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.util.List;
 
+/*画蜡烛图、值、高亮*/
 public class CandleStickChartRenderer extends LineScatterCandleRadarRenderer {
 
     protected CandleDataProvider mChart;
