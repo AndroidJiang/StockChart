@@ -5,12 +5,15 @@ import android.text.TextUtils;
 
 import com.github.mikephil.charting.renderer.YAxisRenderer;
 import com.github.mikephil.charting.utils.Transformer;
+import com.github.mikephil.charting.utils.Utils;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 
 /**
  * author：ajiang
  * mail：1025065158@qq.com
  * blog：http://blog.csdn.net/qqyanjiang
+ *
+ * 重写y轴labels
  */
 public class MyYAxisRenderer extends YAxisRenderer {
     protected MyYAxis mYAxis;
@@ -29,6 +32,28 @@ public class MyYAxisRenderer extends YAxisRenderer {
             mYAxis.mEntries[1] = max;
             return;
         }
+        /*折线图左边没有basevalue，则调用系统*/
+        if (Float.isNaN(mYAxis.getBaseValue())) {
+            super.computeAxisValues(min, max);
+
+            return;
+        }
+        float base = mYAxis.getBaseValue();
+        float yMin = min;
+
+        int labelCount = mYAxis.getLabelCount();
+
+        float interval = (base - yMin) / labelCount;
+        int n = labelCount * 2 + 1;
+        mYAxis.mEntryCount = n;
+        // Ensure stops contains at least numStops elements.
+        mYAxis.mEntries = new float[n];
+        int i;
+        float f;
+        for (f = min, i = 0; i < n; f += interval, i++) {
+            mYAxis.mEntries[i] = f;
+        }
+
     }
 
     @Override
@@ -48,6 +73,31 @@ public class MyYAxisRenderer extends YAxisRenderer {
                     //c.drawText(text, mViewPortHandler.contentRight(), mViewPortHandler.contentBottom() - 3, mAxisLabelPaint);
                 }
             }
+        }
+        else {
+            for (int i = 0; i < mYAxis.mEntryCount; i++) {
+
+                String text = mYAxis.getFormattedLabel(i);
+                if (!mYAxis.isDrawTopYLabelEntryEnabled() && i >= mYAxis.mEntryCount - 1)
+                    return;
+
+                int labelHeight = Utils.calcTextHeight(mAxisLabelPaint, text);
+                float pos = positions[i * 2 + 1] + offset;
+
+                if ((pos - labelHeight) < mViewPortHandler.contentTop()) {
+
+                    pos = mViewPortHandler.contentTop() + offset * 2.5f + 3;
+                } else if ((pos + labelHeight / 2) > mViewPortHandler.contentBottom()) {
+                    pos = mViewPortHandler.contentBottom() - 3;
+                }
+              /*  if (mYAxis.getTextColors() != null) {
+                    mAxisLabelPaint.setColor(mYAxis.getTextColors()[i % mYAxis.getTextColors().length]);
+                }*/
+
+                c.drawText(text, fixedPosition, pos, mAxisLabelPaint);
+            }
+
+
         }
     }
 

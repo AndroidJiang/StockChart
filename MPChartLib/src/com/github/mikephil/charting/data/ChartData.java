@@ -144,9 +144,9 @@ public abstract class ChartData<T extends IDataSet<? extends Entry>> {
 
     /**
      * calculates the average length (in characters) across all x-value strings
+     * 修改源码，加入判断
      */
     private void calcXValMaximumLength() {
-
         if (mXVals.size() <= 0) {
             mXValMaximumLength = 1;
             return;
@@ -155,11 +155,12 @@ public abstract class ChartData<T extends IDataSet<? extends Entry>> {
         int max = 1;
 
         for (int i = 0; i < mXVals.size(); i++) {
+            if (mXVals.get(i) != null) {
+                int length = mXVals.get(i).length();
 
-            int length = mXVals.get(i).length();
-
-            if (length > max)
-                max = length;
+                if (length > max)
+                    max = length;
+            }
         }
 
         mXValMaximumLength = max;

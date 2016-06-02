@@ -2,17 +2,20 @@ package com.example.yanjiang.stockchart;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
 
 import com.example.yanjiang.stockchart.api.ConstantTest;
 import com.example.yanjiang.stockchart.bean.MData;
+import com.example.yanjiang.stockchart.bean.MinutesData;
 import com.example.yanjiang.stockchart.bean.MinutesSH;
 import com.example.yanjiang.stockchart.mychart.MyBarChart;
+import com.example.yanjiang.stockchart.mychart.MyLineChart;
+import com.example.yanjiang.stockchart.mychart.MyXAxis;
 import com.example.yanjiang.stockchart.mychart.MyYAxis;
 import com.example.yanjiang.stockchart.rxutils.ChengJiaoLiangFormatter;
 import com.example.yanjiang.stockchart.rxutils.MyUtils;
-import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
@@ -27,6 +30,7 @@ import com.github.mikephil.charting.formatter.YAxisValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.github.mikephil.charting.utils.Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,17 +44,17 @@ import rx.Subscription;
 
 public class MinutesActivity extends BaseActivity {
     @Bind(R.id.line_chart)
-    LineChart lineChart;
+    MyLineChart lineChart;
     @Bind(R.id.bar_chart)
     MyBarChart barChart;
     private Subscription subscriptionMinute;
     private LineDataSet d1, d2;
-    XAxis xAxis;
-    YAxis axisRight;
-    YAxis axisLeft;
+    MyXAxis xAxisLine;
+    MyYAxis axisRightLine;
+    MyYAxis axisLeftLine;
     BarDataSet barDataSet;
 
-    XAxis xAxisBar;
+    MyXAxis xAxisBar;
     MyYAxis axisLeftBar;
     MyYAxis axisRightBar;
     SparseArray<String> stringSparseArray;
@@ -63,6 +67,7 @@ public class MinutesActivity extends BaseActivity {
         initChart();
 
         stringSparseArray = setTimeLabels();
+
         getMinutesData();
 
         lineChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
@@ -107,21 +112,47 @@ public class MinutesActivity extends BaseActivity {
         Legend barChartLegend = barChart.getLegend();
         barChartLegend.setEnabled(false);
         //x轴
-        xAxis = lineChart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setLabelsToSkip(59);
+        xAxisLine = lineChart.getXAxis();
+xAxisLine.setDrawLabels(true);
+        xAxisLine.setPosition(XAxis.XAxisPosition.BOTTOM);
+        // xAxisLine.setLabelsToSkip(59);
 
 
         //左边y
-        axisLeft = lineChart.getAxisLeft();
-        axisLeft.setLabelCount(5, true);
-        axisLeft.setDrawLabels(true);
+        axisLeftLine = lineChart.getAxisLeft();
+        /*折线图y轴左没有basevalue，调用系统的*/
+        axisLeftLine.setLabelCount(5, true);
+        axisLeftLine.setDrawLabels(true);
+
+
+        //右边y
+        axisRightLine = lineChart.getAxisRight();
+        axisRightLine.setLabelCount(2, true);
+        axisRightLine.setDrawLabels(true);
+        axisRightLine.setValueFormatter(new YAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, YAxis yAxis) {
+                DecimalFormat mFormat = new DecimalFormat("#0.00%");
+                return mFormat.format(value);
+            }
+        });
+
+        axisRightLine.setStartAtZero(false);
+        axisRightLine.setDrawGridLines(false);
+        axisRightLine.setDrawAxisLine(false);
+        //背景线
+        xAxisLine.setGridColor(getResources().getColor(R.color.grayLine));
+        xAxisLine.setAxisLineColor(getResources().getColor(R.color.grayLine));
+        axisLeftLine.setGridColor(getResources().getColor(R.color.grayLine));
+        axisRightLine.setAxisLineColor(getResources().getColor(R.color.grayLine));
+
 
         //bar x y轴
         xAxisBar = barChart.getXAxis();
         xAxisBar.setDrawLabels(false);
         xAxisBar.setDrawGridLines(false);
-
+       // xAxisBar.setPosition(XAxis.XAxisPosition.BOTTOM);
+        setOff();
         axisLeftBar = barChart.getAxisLeft();
         axisLeftBar.setDrawGridLines(false);
 
@@ -131,34 +162,13 @@ public class MinutesActivity extends BaseActivity {
         axisRightBar.setDrawGridLines(false);
 
         //y轴样式
-        this.axisLeft.setValueFormatter(new YAxisValueFormatter() {
+        this.axisLeftLine.setValueFormatter(new YAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, YAxis yAxis) {
                 DecimalFormat mFormat = new DecimalFormat("#0.00");
                 return mFormat.format(value);
             }
         });
-        //右边y
-        this.axisRight = lineChart.getAxisRight();
-        this.axisRight.setLabelCount(5, true);
-        this.axisRight.setDrawLabels(true);
-        this.axisRight.setValueFormatter(new YAxisValueFormatter() {
-            @Override
-            public String getFormattedValue(float value, YAxis yAxis) {
-                DecimalFormat mFormat = new DecimalFormat("#0.00%");
-                return mFormat.format(value);
-            }
-        });
-
-        this.axisRight.setStartAtZero(false);
-        this.axisRight.setDrawGridLines(false);
-        this.axisRight.setDrawAxisLine(false);
-        //背景线
-        this.xAxis.setGridColor(getResources().getColor(R.color.grayLine));
-        this.xAxis.setAxisLineColor(getResources().getColor(R.color.grayLine));
-        this.axisLeft.setGridColor(getResources().getColor(R.color.grayLine));
-        this.axisRight.setAxisLineColor(getResources().getColor(R.color.grayLine));
-
         MinutesSH minutesSH = new MinutesSH();
         Log.e("***", minutesSH.getShowTimeLabels() + "");
 
@@ -166,15 +176,17 @@ public class MinutesActivity extends BaseActivity {
 
 
     private void setData(MData mData) {
+        setShowLabels(stringSparseArray);
+        Log.e("###", mData.getDatas().size() + "ee");
         if (mData.getDatas().size() == 0) {
             lineChart.setNoDataText("暂无数据");
             return;
         }
         //设置y左右两轴最大最小值
-        axisLeft.setAxisMinValue(mData.getMin());
-        axisLeft.setAxisMaxValue(mData.getMax());
-        axisRight.setAxisMinValue(mData.getPercentMin());
-        axisRight.setAxisMaxValue(mData.getPercentMax());
+        axisLeftLine.setAxisMinValue(mData.getMin());
+        axisLeftLine.setAxisMaxValue(mData.getMax());
+        axisRightLine.setAxisMinValue(mData.getPercentMin());
+        axisRightLine.setAxisMaxValue(mData.getPercentMax());
 
 
         axisLeftBar.setAxisMaxValue(mData.getVolmax());
@@ -191,7 +203,6 @@ public class MinutesActivity extends BaseActivity {
         axisLeftBar.setShowOnlyMax(unit);
         //axisLeftBar.setAxisMinValue(0);//即使最小是不是0，也无碍
         //axisLeftBar.setShowOnlyMinMax(true);
-        axisRightBar.setShowOnlyMax("ee");
         axisRightBar.setAxisMaxValue(mData.getVolmax());
         //   axisRightBar.setAxisMinValue(mData.getVolmin);//即使最小是不是0，也无碍
         //axisRightBar.setShowOnlyMinMax(true);
@@ -202,22 +213,33 @@ public class MinutesActivity extends BaseActivity {
         ll.setLineColor(Color.RED);
         ll.enableDashedLine(10f, 10f, 0f);
         ll.setLineWidth(1);
-        axisRight.addLimitLine(ll);
-
+        axisRightLine.addLimitLine(ll);
+        axisRightLine.setBaseValue(0);
 
         ArrayList<Entry> lineCJEntries = new ArrayList<Entry>();
         ArrayList<Entry> lineJJEntries = new ArrayList<Entry>();
         ArrayList<String> dateList = new ArrayList<String>();
         ArrayList<BarEntry> barEntries = new ArrayList<BarEntry>();
         ArrayList<String> xVals = new ArrayList<String>();
-
-        for (int i = 0; i < mData.getDatas().size(); i++) {
-            //避免数据重复，skip也能正常显示
+Log.e("##",xVals.size()+"");
+        for (int i = 0, j=0; i < mData.getDatas().size(); i++,j++) {
+           /* //避免数据重复，skip也能正常显示
             if (mData.getDatas().get(i).time.equals("13:30")) {
                 continue;
+            }*/
+            MinutesData t = mData.getDatas().get(j);
+
+            if (t == null) {
+                lineCJEntries.add(new Entry(Float.NaN, i, t));
+                lineJJEntries.add(new Entry(Float.NaN, i));
+                barEntries.add(new BarEntry(Float.NaN, i, t));
+                continue;
+            }
+            if (!TextUtils.isEmpty(stringSparseArray.get(i)) &&
+                    stringSparseArray.get(i).contains("/")) {
+                i++;
             }
             lineCJEntries.add(new Entry(mData.getDatas().get(i).chengjiaojia, i));
-
             lineJJEntries.add(new Entry(mData.getDatas().get(i).junjia, i));
             barEntries.add(new BarEntry(mData.getDatas().get(i).chengjiaoliang, i));
             dateList.add(mData.getDatas().get(i).time);
@@ -246,17 +268,25 @@ public class MinutesActivity extends BaseActivity {
         ArrayList<ILineDataSet> sets = new ArrayList<ILineDataSet>();
         sets.add(d1);
         sets.add(d2);
-        LineData cd = new LineData(dateList, sets);
+        /*注老版本LineData参数可以为空，最新版本会报错，修改进入ChartData加入if判断*/
+        LineData cd = new LineData(getMinutesCount(), sets);
         lineChart.setData(cd);
 
-        BarData barData = new BarData(dateList, barDataSet);
+        BarData barData = new BarData(getMinutesCount(), barDataSet);
         barChart.setData(barData);
+
+
+        setOffset();
+        setYAxisOffset(2);
         lineChart.invalidate();//刷新图
         barChart.invalidate();
+
+
+
     }
 
     private void getMinutesData() {
-      /*  String code = "sz002081";
+     /*   String code = "sz002081";
         subscriptionMinute = clientApi.getMinutes(code)
                 .compose(SchedulersCompat.<ResponseBody>applyIoSchedulers())
                 .subscribe(new Subscriber<ResponseBody>() {
@@ -308,4 +338,62 @@ public class MinutesActivity extends BaseActivity {
         return times;
     }
 
+    public void setOff() {
+        float offset = Utils.convertDpToPixel(5);
+
+        lineChart.setExtraOffsets(offset, offset, offset, offset);
+        barChart.setExtraOffsets(offset, 0, offset, offset);
+    }
+
+    public void setYAxisOffset(float offset) {
+        axisLeftLine.setXOffset(offset);
+        axisRightLine.setXOffset(offset);
+        axisLeftBar.setXOffset(offset);
+    }
+
+    private void setOffset() {
+
+        float offsetLeft = 0;
+        float offsetRight = 0;
+        float offset = Utils.convertDpToPixel(10);
+
+        float lMax1 = offset;
+        if (axisLeftLine.needsOffset()) {
+            lMax1 = axisLeftLine.getRequiredWidthSpace(lineChart.getRendererLeftYAxis().getPaintAxisLabels());   Log.e("!!!","1"+lMax1);
+        }
+
+        float lMax2 = 0;
+        if (axisLeftBar.needsOffset()) {
+            lMax2 = axisLeftBar.getRequiredWidthSpace(barChart.getRendererLeftYAxis().getPaintAxisLabels());   Log.e("!!!","2"+lMax2);
+        }
+
+        float rMax = offset;
+        if (axisRightLine.needsOffset()) {
+            rMax = axisRightLine.getRequiredWidthSpace(lineChart.getRendererRightYAxis().getPaintAxisLabels());  Log.e("!!!","3"+rMax);
+        }
+
+        if (lMax1 < lMax2) {
+            lMax1 = lMax2;   Log.e("!!!","4");
+        }
+
+
+        offsetLeft = Utils.convertPixelsToDp(lMax1);
+        offsetRight = Utils.convertPixelsToDp(rMax);
+
+
+        barChart.setExtraLeftOffset(offsetLeft);
+        barChart.setExtraRightOffset(offsetRight);
+        lineChart.setExtraLeftOffset(offsetLeft);
+        lineChart.setExtraRightOffset(offsetRight);
+
+
+    }
+
+    public void setShowLabels(SparseArray<String> labels) {
+        xAxisLine.setShowLabels(labels);
+        xAxisBar.setShowLabels(labels);
+    }
+    public String[] getMinutesCount() {
+        return new String[243];
+    }
 }
