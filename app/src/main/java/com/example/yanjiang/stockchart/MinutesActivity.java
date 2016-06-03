@@ -207,7 +207,7 @@ public class MinutesActivity extends BaseActivity {
         }
         /*次方*/
         axisLeftBar.setValueFormatter(new ChengJiaoLiangFormatter((int) Math.pow(10, u)));
-        axisLeftBar.setShowOnlyMax(unit);
+        axisLeftBar.setShowMaxAndUnit(unit);
         //axisLeftBar.setAxisMinValue(0);//即使最小是不是0，也无碍
         //axisLeftBar.setShowOnlyMinMax(true);
         axisRightBar.setAxisMaxValue(mData.getVolmax());

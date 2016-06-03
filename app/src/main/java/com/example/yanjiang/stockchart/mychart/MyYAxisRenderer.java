@@ -35,25 +35,20 @@ public class MyYAxisRenderer extends YAxisRenderer {
         /*折线图左边没有basevalue，则调用系统*/
         if (Float.isNaN(mYAxis.getBaseValue())) {
             super.computeAxisValues(min, max);
-
             return;
         }
         float base = mYAxis.getBaseValue();
         float yMin = min;
-
         int labelCount = mYAxis.getLabelCount();
-
         float interval = (base - yMin) / labelCount;
         int n = labelCount * 2 + 1;
         mYAxis.mEntryCount = n;
-        // Ensure stops contains at least numStops elements.
         mYAxis.mEntries = new float[n];
         int i;
         float f;
         for (f = min, i = 0; i < n; f += interval, i++) {
             mYAxis.mEntries[i] = f;
         }
-
     }
 
     @Override
@@ -61,16 +56,15 @@ public class MyYAxisRenderer extends YAxisRenderer {
         /*当有最小text的时候*/
         if (!TextUtils.isEmpty(mYAxis.getMinValue()) && mYAxis.isShowOnlyMinMaxEnabled()) {
             for (int i = 0; i < mYAxis.mEntryCount; i++) {
+                /*获取对应位置的值*/
                 String text = mYAxis.getFormattedLabel(i);
                 if (i == 0) {
                     text = mYAxis.getMinValue();
                 }
                 if (i == 1) {
                     c.drawText(text, fixedPosition, mViewPortHandler.contentTop() + offset * 2.5f + 3, mAxisLabelPaint);
-                    //c.drawText(text, mViewPortHandler.contentRight(), mViewPortHandler.contentTop() + offset * 2.5f + 3, mAxisLabelPaint);
                 } else if (i == 0) {
                     c.drawText(text, fixedPosition, mViewPortHandler.contentBottom() - 3, mAxisLabelPaint);
-                    //c.drawText(text, mViewPortHandler.contentRight(), mViewPortHandler.contentBottom() - 3, mAxisLabelPaint);
                 }
             }
         }

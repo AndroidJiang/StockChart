@@ -16,7 +16,7 @@ public class MyYAxis extends YAxis {
     public MyYAxis(AxisDependency axis) {
         super(axis);
     }
-    public void setShowOnlyMax(String minValue) {
+    public void setShowMaxAndUnit(String minValue) {
         setShowOnlyMinMax(true);
         this.minValue = minValue;
     }
