@@ -11,10 +11,10 @@ import com.github.mikephil.charting.components.XAxis;
  */
 public class MyXAxis extends XAxis {
     private SparseArray<String> labels;
-    public SparseArray<String> getShowLabels() {
+    public SparseArray<String> getXLabels() {
         return labels;
     }
-    public void setShowLabels(SparseArray<String> labels) {
+    public void setXLabels(SparseArray<String> labels) {
         this.labels = labels;
     }
 }

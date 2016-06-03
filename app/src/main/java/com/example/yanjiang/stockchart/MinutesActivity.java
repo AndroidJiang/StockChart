@@ -16,6 +16,7 @@ import com.example.yanjiang.stockchart.mychart.MyXAxis;
 import com.example.yanjiang.stockchart.mychart.MyYAxis;
 import com.example.yanjiang.stockchart.rxutils.ChengJiaoLiangFormatter;
 import com.example.yanjiang.stockchart.rxutils.MyUtils;
+import com.example.yanjiang.stockchart.rxutils.SchedulersCompat;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
@@ -35,11 +36,14 @@ import com.github.mikephil.charting.utils.Utils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import okhttp3.ResponseBody;
+import rx.Subscriber;
 import rx.Subscription;
 
 public class MinutesActivity extends BaseActivity {
@@ -68,8 +72,10 @@ public class MinutesActivity extends BaseActivity {
 
         stringSparseArray = setTimeLabels();
 
-        getMinutesData();
-
+        /*网络数据*/
+        //getMinutesData();
+        /*离线测试数据*/
+        getOffLineData();
         lineChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
@@ -106,14 +112,15 @@ public class MinutesActivity extends BaseActivity {
 
         barChart.setScaleEnabled(false);
         barChart.setDrawBorders(false);
-      /*  barChart.setBorderWidth(1);
-        barChart.setBorderColor(getResources().getColor(R.color.grayLine));*/
+        barChart.setDrawBorders(true);
+        barChart.setBorderWidth(1);
+        barChart.setBorderColor(getResources().getColor(R.color.grayLine));
         barChart.setDescription("");
         Legend barChartLegend = barChart.getLegend();
         barChartLegend.setEnabled(false);
         //x轴
         xAxisLine = lineChart.getXAxis();
-xAxisLine.setDrawLabels(true);
+        xAxisLine.setDrawLabels(true);
         xAxisLine.setPosition(XAxis.XAxisPosition.BOTTOM);
         // xAxisLine.setLabelsToSkip(59);
 
@@ -151,8 +158,8 @@ xAxisLine.setDrawLabels(true);
         xAxisBar = barChart.getXAxis();
         xAxisBar.setDrawLabels(false);
         xAxisBar.setDrawGridLines(false);
-       // xAxisBar.setPosition(XAxis.XAxisPosition.BOTTOM);
-        setOff();
+        // xAxisBar.setPosition(XAxis.XAxisPosition.BOTTOM);
+
         axisLeftBar = barChart.getAxisLeft();
         axisLeftBar.setDrawGridLines(false);
 
@@ -221,8 +228,8 @@ xAxisLine.setDrawLabels(true);
         ArrayList<String> dateList = new ArrayList<String>();
         ArrayList<BarEntry> barEntries = new ArrayList<BarEntry>();
         ArrayList<String> xVals = new ArrayList<String>();
-Log.e("##",xVals.size()+"");
-        for (int i = 0, j=0; i < mData.getDatas().size(); i++,j++) {
+        Log.e("##", xVals.size() + "");
+        for (int i = 0, j = 0; i < mData.getDatas().size(); i++, j++) {
            /* //避免数据重复，skip也能正常显示
             if (mData.getDatas().get(i).time.equals("13:30")) {
                 continue;
@@ -277,16 +284,16 @@ Log.e("##",xVals.size()+"");
 
 
         setOffset();
-        setYAxisOffset(2);
+        //setOff();
+        // setYAxisOffset(2);
         lineChart.invalidate();//刷新图
         barChart.invalidate();
-
 
 
     }
 
     private void getMinutesData() {
-     /*   String code = "sz002081";
+        String code = "sz002081";
         subscriptionMinute = clientApi.getMinutes(code)
                 .compose(SchedulersCompat.<ResponseBody>applyIoSchedulers())
                 .subscribe(new Subscriber<ResponseBody>() {
@@ -314,8 +321,13 @@ Log.e("##",xVals.size()+"");
                         setData(mData);
 
                     }
-                });*/
-        /*方便测试，加入假数据*/
+                });
+
+        mCompositeSubscription.add(subscriptionMinute);
+    }
+
+    private void getOffLineData() {
+           /*方便测试，加入假数据*/
         MData mData = new MData();
         JSONObject object = null;
         try {
@@ -325,7 +337,6 @@ Log.e("##",xVals.size()+"");
         }
         mData.parseData(object);
         setData(mData);
-        // mCompositeSubscription.add(subscriptionMinute);
     }
 
     private SparseArray<String> setTimeLabels() {
@@ -341,8 +352,8 @@ Log.e("##",xVals.size()+"");
     public void setOff() {
         float offset = Utils.convertDpToPixel(5);
 
-        lineChart.setExtraOffsets(offset, offset, offset, offset);
-        barChart.setExtraOffsets(offset, 0, offset, offset);
+        lineChart.setExtraOffsets(0, 0, 0, 0);
+       // barChart.setExtraOffsets(offset, 0, offset, offset);
     }
 
     public void setYAxisOffset(float offset) {
@@ -351,48 +362,36 @@ Log.e("##",xVals.size()+"");
         axisLeftBar.setXOffset(offset);
     }
 
+    /*设置量表对齐*/
     private void setOffset() {
-
-        float offsetLeft = 0;
-        float offsetRight = 0;
-        float offset = Utils.convertDpToPixel(10);
-
-        float lMax1 = offset;
-        if (axisLeftLine.needsOffset()) {
-            lMax1 = axisLeftLine.getRequiredWidthSpace(lineChart.getRendererLeftYAxis().getPaintAxisLabels());   Log.e("!!!","1"+lMax1);
+        float lineLeft = lineChart.getViewPortHandler().offsetLeft();
+        float barLeft = barChart.getViewPortHandler().offsetLeft();
+        float lineRight = lineChart.getViewPortHandler().offsetRight();
+        float barRight = barChart.getViewPortHandler().offsetRight();
+        float offsetLeft, offsetRight;
+        if (barLeft < lineLeft) {
+            offsetLeft = lineLeft - barLeft;
+            barChart.setExtraLeftOffset(offsetLeft);
+        } else {
+            offsetLeft = barLeft - lineLeft;
+            lineChart.setExtraLeftOffset(offsetLeft);
         }
 
-        float lMax2 = 0;
-        if (axisLeftBar.needsOffset()) {
-            lMax2 = axisLeftBar.getRequiredWidthSpace(barChart.getRendererLeftYAxis().getPaintAxisLabels());   Log.e("!!!","2"+lMax2);
+        if (barRight < lineRight) {
+            offsetRight = lineRight - barRight;
+            barChart.setExtraRightOffset(offsetRight);
+        } else {
+            offsetRight = barRight - lineRight;
+            lineChart.setExtraRightOffset(offsetRight);
         }
-
-        float rMax = offset;
-        if (axisRightLine.needsOffset()) {
-            rMax = axisRightLine.getRequiredWidthSpace(lineChart.getRendererRightYAxis().getPaintAxisLabels());  Log.e("!!!","3"+rMax);
-        }
-
-        if (lMax1 < lMax2) {
-            lMax1 = lMax2;   Log.e("!!!","4");
-        }
-
-
-        offsetLeft = Utils.convertPixelsToDp(lMax1);
-        offsetRight = Utils.convertPixelsToDp(rMax);
-
-
-        barChart.setExtraLeftOffset(offsetLeft);
-        barChart.setExtraRightOffset(offsetRight);
-        lineChart.setExtraLeftOffset(offsetLeft);
-        lineChart.setExtraRightOffset(offsetRight);
-
 
     }
 
     public void setShowLabels(SparseArray<String> labels) {
-        xAxisLine.setShowLabels(labels);
-        xAxisBar.setShowLabels(labels);
+        xAxisLine.setXLabels(labels);
+        xAxisBar.setXLabels(labels);
     }
+
     public String[] getMinutesCount() {
         return new String[243];
     }
