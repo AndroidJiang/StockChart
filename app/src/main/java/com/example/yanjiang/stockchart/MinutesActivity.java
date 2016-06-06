@@ -7,9 +7,8 @@ import android.util.Log;
 import android.util.SparseArray;
 
 import com.example.yanjiang.stockchart.api.ConstantTest;
-import com.example.yanjiang.stockchart.bean.MData;
-import com.example.yanjiang.stockchart.bean.MinutesData;
-import com.example.yanjiang.stockchart.bean.MinutesSH;
+import com.example.yanjiang.stockchart.bean.MinuteHelper;
+import com.example.yanjiang.stockchart.bean.MinutesBean;
 import com.example.yanjiang.stockchart.mychart.MyBarChart;
 import com.example.yanjiang.stockchart.mychart.MyLineChart;
 import com.example.yanjiang.stockchart.mychart.MyXAxis;
@@ -70,7 +69,7 @@ public class MinutesActivity extends BaseActivity {
         ButterKnife.bind(this);
         initChart();
 
-        stringSparseArray = setTimeLabels();
+        stringSparseArray = setXLabels();
 
         /*网络数据*/
         //getMinutesData();
@@ -115,6 +114,7 @@ public class MinutesActivity extends BaseActivity {
         barChart.setBorderWidth(1);
         barChart.setBorderColor(getResources().getColor(R.color.grayLine));
         barChart.setDescription("");
+
 
         Legend barChartLegend = barChart.getLegend();
         barChartLegend.setEnabled(false);
@@ -183,13 +183,11 @@ public class MinutesActivity extends BaseActivity {
                 return mFormat.format(value);
             }
         });
-        MinutesSH minutesSH = new MinutesSH();
-        Log.e("***", minutesSH.getShowTimeLabels() + "");
 
     }
 
 
-    private void setData(MData mData) {
+    private void setData(MinuteHelper mData) {
         setShowLabels(stringSparseArray);
         Log.e("###", mData.getDatas().size() + "ee");
         if (mData.getDatas().size() == 0) {
@@ -242,7 +240,7 @@ public class MinutesActivity extends BaseActivity {
             if (mData.getDatas().get(i).time.equals("13:30")) {
                 continue;
             }*/
-            MinutesData t = mData.getDatas().get(j);
+            MinutesBean t = mData.getDatas().get(j);
 
             if (t == null) {
                 lineCJEntries.add(new Entry(Float.NaN, i, t));
@@ -277,6 +275,7 @@ public class MinutesActivity extends BaseActivity {
         barDataSet.setHighLightAlpha(255);
         barDataSet.setDrawValues(false);
         barDataSet.setHighlightEnabled(true);
+        barDataSet.setColor(Color.RED);
         //谁为基准
         d1.setAxisDependency(YAxis.AxisDependency.LEFT);
         // d2.setAxisDependency(YAxis.AxisDependency.RIGHT);
@@ -314,7 +313,7 @@ public class MinutesActivity extends BaseActivity {
 
                     @Override
                     public void onNext(ResponseBody minutes) {
-                        MData mData = new MData();
+                        MinuteHelper mData = new MinuteHelper();
                         JSONObject object = null;
                         try {
                             object = new JSONObject(minutes.string());
@@ -334,7 +333,7 @@ public class MinutesActivity extends BaseActivity {
 
     private void getOffLineData() {
            /*方便测试，加入假数据*/
-        MData mData = new MData();
+        MinuteHelper mData = new MinuteHelper();
         JSONObject object = null;
         try {
             object = new JSONObject(ConstantTest.JSON_TEST);
@@ -345,14 +344,14 @@ public class MinutesActivity extends BaseActivity {
         setData(mData);
     }
 
-    private SparseArray<String> setTimeLabels() {
-        SparseArray<String> times = new SparseArray<>();
-        times.put(0, "09:30");
-        times.put(60, "10:30");
-        times.put(121, "11:30/13:00");
-        times.put(182, "14:00");
-        times.put(242, "15:00");
-        return times;
+    private SparseArray<String> setXLabels() {
+        SparseArray<String> xLabels = new SparseArray<>();
+        xLabels.put(0, "09:30");
+        xLabels.put(60, "10:30");
+        xLabels.put(121, "11:30/13:00");
+        xLabels.put(182, "14:00");
+        xLabels.put(242, "15:00");
+        return xLabels;
     }
 
 
@@ -372,7 +371,7 @@ public class MinutesActivity extends BaseActivity {
             offsetLeft = Utils.convertPixelsToDp(barLeft-lineLeft);
             lineChart.setExtraLeftOffset(offsetLeft);
         }
-  /*注：setExtra...函数是针对图表绝对位置计算，比如A表offRightA=20dp,B表offRightB=30dp,则A.setExtraLeftOffset(30),并不是10，还有注意单位转换*/
+  /*注：setExtraRight...函数是针对图表绝对位置计算，比如A表offRightA=20dp,B表offRightB=30dp,则A.setExtraLeftOffset(30),并不是10，还有注意单位转换*/
         if (barRight < lineRight) {
             offsetRight = Utils.convertPixelsToDp(lineRight);
             barChart.setExtraRightOffset(offsetRight);

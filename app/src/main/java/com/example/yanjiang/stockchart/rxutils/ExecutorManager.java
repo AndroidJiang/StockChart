@@ -14,9 +14,6 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- * Created by Joker on 2015/8/24.
- */
 public class ExecutorManager {
 
     public static final int DEVICE_INFO_UNKNOWN = 0;
