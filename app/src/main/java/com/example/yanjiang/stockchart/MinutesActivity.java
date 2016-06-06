@@ -115,6 +115,7 @@ public class MinutesActivity extends BaseActivity {
         barChart.setBorderWidth(1);
         barChart.setBorderColor(getResources().getColor(R.color.grayLine));
         barChart.setDescription("");
+
         Legend barChartLegend = barChart.getLegend();
         barChartLegend.setEnabled(false);
         //x轴
@@ -129,6 +130,9 @@ public class MinutesActivity extends BaseActivity {
         /*折线图y轴左没有basevalue，调用系统的*/
         axisLeftLine.setLabelCount(5, true);
         axisLeftLine.setDrawLabels(true);
+        axisLeftLine.setDrawGridLines(false);
+        /*轴不显示 避免和border冲突*/
+        axisLeftLine.setDrawAxisLine(false);
 
 
         //右边y
@@ -157,16 +161,19 @@ public class MinutesActivity extends BaseActivity {
         xAxisBar = barChart.getXAxis();
         xAxisBar.setDrawLabels(false);
         xAxisBar.setDrawGridLines(false);
+        xAxisBar.setDrawAxisLine(false);
         // xAxisBar.setPosition(XAxis.XAxisPosition.BOTTOM);
 
         axisLeftBar = barChart.getAxisLeft();
         axisLeftBar.setAxisMinValue(0);
         axisLeftBar.setDrawGridLines(false);
+        axisLeftBar.setDrawAxisLine(false);
 
 
         axisRightBar = barChart.getAxisRight();
         axisRightBar.setDrawLabels(false);
         axisRightBar.setDrawGridLines(false);
+        axisRightBar.setDrawAxisLine(false);
 
         //y轴样式
         this.axisLeftLine.setValueFormatter(new YAxisValueFormatter() {
@@ -208,8 +215,9 @@ public class MinutesActivity extends BaseActivity {
         /*次方*/
         axisLeftBar.setValueFormatter(new ChengJiaoLiangFormatter((int) Math.pow(10, u)));
         axisLeftBar.setShowMaxAndUnit(unit);
+        axisLeftBar.setDrawLabels(true);
         //axisLeftBar.setAxisMinValue(0);//即使最小是不是0，也无碍
-        //axisLeftBar.setShowOnlyMinMax(true);
+        axisLeftBar.setShowOnlyMinMax(true);
         axisRightBar.setAxisMaxValue(mData.getVolmax());
         //   axisRightBar.setAxisMinValue(mData.getVolmin);//即使最小是不是0，也无碍
         //axisRightBar.setShowOnlyMinMax(true);
@@ -284,8 +292,6 @@ public class MinutesActivity extends BaseActivity {
 
 
         setOffset();
-        //setOff();
-        // setYAxisOffset(2);
         lineChart.invalidate();//刷新图
         barChart.invalidate();
 
@@ -349,18 +355,7 @@ public class MinutesActivity extends BaseActivity {
         return times;
     }
 
-    public void setOff() {
-        float offset = Utils.convertDpToPixel(5);
 
-        lineChart.setExtraOffsets(0, 0, 0, 0);
-       // barChart.setExtraOffsets(offset, 0, offset, offset);
-    }
-
-    public void setYAxisOffset(float offset) {
-        axisLeftLine.setXOffset(offset);
-        axisRightLine.setXOffset(offset);
-        axisLeftBar.setXOffset(offset);
-    }
 
     /*设置量表对齐*/
     private void setOffset() {
@@ -369,19 +364,20 @@ public class MinutesActivity extends BaseActivity {
         float lineRight = lineChart.getViewPortHandler().offsetRight();
         float barRight = barChart.getViewPortHandler().offsetRight();
         float offsetLeft, offsetRight;
+ /*注：setExtraLeft...函数是针对图表相对位置计算，比如A表offLeftA=20dp,B表offLeftB=30dp,则A.setExtraLeftOffset(10),并不是30，还有注意单位转换*/
         if (barLeft < lineLeft) {
-            offsetLeft = lineLeft - barLeft;
+            offsetLeft = Utils.convertPixelsToDp(lineLeft-barLeft);
             barChart.setExtraLeftOffset(offsetLeft);
         } else {
-            offsetLeft = barLeft - lineLeft;
+            offsetLeft = Utils.convertPixelsToDp(barLeft-lineLeft);
             lineChart.setExtraLeftOffset(offsetLeft);
         }
-
+  /*注：setExtra...函数是针对图表绝对位置计算，比如A表offRightA=20dp,B表offRightB=30dp,则A.setExtraLeftOffset(30),并不是10，还有注意单位转换*/
         if (barRight < lineRight) {
-            offsetRight = lineRight - barRight;
+            offsetRight = Utils.convertPixelsToDp(lineRight);
             barChart.setExtraRightOffset(offsetRight);
         } else {
-            offsetRight = barRight - lineRight;
+            offsetRight = Utils.convertPixelsToDp(barRight);
             lineChart.setExtraRightOffset(offsetRight);
         }
 

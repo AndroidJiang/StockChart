@@ -1,7 +1,6 @@
 package com.example.yanjiang.stockchart.mychart;
 
 import android.graphics.Canvas;
-import android.graphics.Path;
 import android.graphics.PointF;
 
 import com.github.mikephil.charting.charts.BarLineChartBase;
@@ -71,13 +70,13 @@ public class MyXAxisRenderer extends XAxisRenderer {
         if (!mChart.isScaleXEnabled()) {
             count -= 1;
         }
-        for (int i = 0; i < count; i ++) {
+      /*  for (int i = 0; i < count; i ++) {
             int ix = mXAxis.getXLabels().keyAt(i);
             position[0] = ix;
             mTrans.pointValuesToPixel(position);
             c.drawLine(position[0], mViewPortHandler.offsetTop(), position[0],
                     mViewPortHandler.contentBottom(), mGridPaint);
-        }
+        }*/
 
     }
 
