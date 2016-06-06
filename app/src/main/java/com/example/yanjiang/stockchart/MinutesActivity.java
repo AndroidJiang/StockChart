@@ -111,7 +111,6 @@ public class MinutesActivity extends BaseActivity {
         lineChartLegend.setEnabled(false);
 
         barChart.setScaleEnabled(false);
-        barChart.setDrawBorders(false);
         barChart.setDrawBorders(true);
         barChart.setBorderWidth(1);
         barChart.setBorderColor(getResources().getColor(R.color.grayLine));
@@ -161,6 +160,7 @@ public class MinutesActivity extends BaseActivity {
         // xAxisBar.setPosition(XAxis.XAxisPosition.BOTTOM);
 
         axisLeftBar = barChart.getAxisLeft();
+        axisLeftBar.setAxisMinValue(0);
         axisLeftBar.setDrawGridLines(false);
 
 
