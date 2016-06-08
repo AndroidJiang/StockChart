@@ -159,7 +159,7 @@ public class BarChartRenderer extends DataRenderer {
 /*重写柱状图宽度*/
                 /*c.drawRect(buffer.buffer[j], buffer.buffer[j + 1], buffer.buffer[j + 2],
                         buffer.buffer[j + 3], mRenderPaint);*/
-                c.drawRect(buffer.buffer[j] + (buffer.buffer[j + 2] - buffer.buffer[j]) / 3, buffer.buffer[j + 1], buffer.buffer[j + 2] - (buffer.buffer[j + 2] - buffer.buffer[j]) / 3,
+                c.drawRect(buffer.buffer[j], buffer.buffer[j + 1], buffer.buffer[j + 2] - (buffer.buffer[j + 2] - buffer.buffer[j]) / 3,
                         buffer.buffer[j + 3], mRenderPaint);
                 if (drawBorder) {
                     c.drawRect(buffer.buffer[j], buffer.buffer[j + 1], buffer.buffer[j + 2],

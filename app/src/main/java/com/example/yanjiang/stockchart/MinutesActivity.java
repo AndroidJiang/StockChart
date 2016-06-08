@@ -10,7 +10,9 @@ import com.example.yanjiang.stockchart.api.ConstantTest;
 import com.example.yanjiang.stockchart.bean.MinuteHelper;
 import com.example.yanjiang.stockchart.bean.MinutesBean;
 import com.example.yanjiang.stockchart.mychart.MyBarChart;
+import com.example.yanjiang.stockchart.mychart.MyLeftMarkerView;
 import com.example.yanjiang.stockchart.mychart.MyLineChart;
+import com.example.yanjiang.stockchart.mychart.MyRightMarkerView;
 import com.example.yanjiang.stockchart.mychart.MyXAxis;
 import com.example.yanjiang.stockchart.mychart.MyYAxis;
 import com.example.yanjiang.stockchart.rxutils.ChengJiaoLiangFormatter;
@@ -61,6 +63,7 @@ public class MinutesActivity extends BaseActivity {
     MyYAxis axisLeftBar;
     MyYAxis axisRightBar;
     SparseArray<String> stringSparseArray;
+    private MinuteHelper mData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,8 +82,8 @@ public class MinutesActivity extends BaseActivity {
             @Override
             public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
                 barChart.highlightValues(new Highlight[]{h});
+                lineChart.setHighlightValue(e,h);
             }
-
             @Override
             public void onNothingSelected() {
 
@@ -89,7 +92,9 @@ public class MinutesActivity extends BaseActivity {
         barChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-                lineChart.highlightValues(new Highlight[]{h});
+              //  barChart.highlightValues(new Highlight[]{h});
+                lineChart.setHighlightValue(e, new Highlight(h.getXIndex(),0));//此函数已经返回highlightBValues的变量，并且刷新，故上面方法可以注释
+               // barChart.setHighlightValue(h);
             }
 
             @Override
@@ -160,10 +165,10 @@ public class MinutesActivity extends BaseActivity {
         //bar x y轴
         xAxisBar = barChart.getXAxis();
         xAxisBar.setDrawLabels(false);
-        xAxisBar.setDrawGridLines(false);
+        xAxisBar.setDrawGridLines(true);
         xAxisBar.setDrawAxisLine(false);
         // xAxisBar.setPosition(XAxis.XAxisPosition.BOTTOM);
-
+        xAxisBar.setGridColor(getResources().getColor(R.color.grayLine));
         axisLeftBar = barChart.getAxisLeft();
         axisLeftBar.setAxisMinValue(0);
         axisLeftBar.setDrawGridLines(false);
@@ -188,6 +193,7 @@ public class MinutesActivity extends BaseActivity {
 
 
     private void setData(MinuteHelper mData) {
+        setMarkerView(mData);
         setShowLabels(stringSparseArray);
         Log.e("###", mData.getDatas().size() + "ee");
         if (mData.getDatas().size() == 0) {
@@ -255,7 +261,7 @@ public class MinutesActivity extends BaseActivity {
             lineCJEntries.add(new Entry(mData.getDatas().get(i).chengjiaojia, i));
             lineJJEntries.add(new Entry(mData.getDatas().get(i).junjia, i));
             barEntries.add(new BarEntry(mData.getDatas().get(i).chengjiaoliang, i));
-            dateList.add(mData.getDatas().get(i).time);
+           // dateList.add(mData.getDatas().get(i).time);
         }
         d1 = new LineDataSet(lineCJEntries, "成交价");
         d2 = new LineDataSet(lineJJEntries, "均价");
@@ -313,7 +319,8 @@ public class MinutesActivity extends BaseActivity {
 
                     @Override
                     public void onNext(ResponseBody minutes) {
-                        MinuteHelper mData = new MinuteHelper();
+
+                        mData = new MinuteHelper();
                         JSONObject object = null;
                         try {
                             object = new JSONObject(minutes.string());
@@ -333,7 +340,7 @@ public class MinutesActivity extends BaseActivity {
 
     private void getOffLineData() {
            /*方便测试，加入假数据*/
-        MinuteHelper mData = new MinuteHelper();
+         mData = new MinuteHelper();
         JSONObject object = null;
         try {
             object = new JSONObject(ConstantTest.JSON_TEST);
@@ -389,5 +396,10 @@ public class MinutesActivity extends BaseActivity {
 
     public String[] getMinutesCount() {
         return new String[243];
+    }
+    private void setMarkerView(MinuteHelper mData){
+        MyLeftMarkerView leftMarkerView = new MyLeftMarkerView(MinutesActivity.this, R.layout.mymarkerview);
+        MyRightMarkerView rightMarkerView = new MyRightMarkerView(MinutesActivity.this, R.layout.mymarkerview);
+        lineChart.setMarker(leftMarkerView, rightMarkerView, mData);
     }
 }
