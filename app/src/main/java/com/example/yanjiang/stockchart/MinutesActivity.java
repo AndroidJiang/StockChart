@@ -359,7 +359,7 @@ public class MinutesActivity extends BaseActivity {
         xLabels.put(60, "10:30");
         xLabels.put(121, "11:30/13:00");
         xLabels.put(182, "14:00");
-        xLabels.put(242, "15:00");
+        xLabels.put(241, "15:00");
         return xLabels;
     }
 
