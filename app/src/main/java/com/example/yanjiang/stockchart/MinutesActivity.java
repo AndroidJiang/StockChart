@@ -109,7 +109,7 @@ public class MinutesActivity extends BaseActivity {
         lineChart.setScaleEnabled(false);
         lineChart.setDrawBorders(true);
         lineChart.setBorderWidth(1);
-        lineChart.setBorderColor(getResources().getColor(R.color.grayLine));
+        lineChart.setBorderColor(getResources().getColor(R.color.minute_grayLine));
         lineChart.setDescription("");
         Legend lineChartLegend = lineChart.getLegend();
         lineChartLegend.setEnabled(false);
@@ -117,7 +117,7 @@ public class MinutesActivity extends BaseActivity {
         barChart.setScaleEnabled(false);
         barChart.setDrawBorders(true);
         barChart.setBorderWidth(1);
-        barChart.setBorderColor(getResources().getColor(R.color.grayLine));
+        barChart.setBorderColor(getResources().getColor(R.color.minute_grayLine));
         barChart.setDescription("");
 
 
@@ -138,6 +138,7 @@ public class MinutesActivity extends BaseActivity {
         axisLeftLine.setDrawGridLines(false);
         /*轴不显示 避免和border冲突*/
         axisLeftLine.setDrawAxisLine(false);
+        axisLeftLine.setTextColor(getResources().getColor(R.color.minute_zhoutv));
 
 
         //右边y
@@ -156,11 +157,12 @@ public class MinutesActivity extends BaseActivity {
         axisRightLine.setDrawGridLines(false);
         axisRightLine.setDrawAxisLine(false);
         //背景线
-        xAxisLine.setGridColor(getResources().getColor(R.color.grayLine));
-        xAxisLine.setAxisLineColor(getResources().getColor(R.color.grayLine));
-        axisLeftLine.setGridColor(getResources().getColor(R.color.grayLine));
-        axisRightLine.setAxisLineColor(getResources().getColor(R.color.grayLine));
-
+        xAxisLine.setGridColor(getResources().getColor(R.color.minute_grayLine));
+        xAxisLine.setAxisLineColor(getResources().getColor(R.color.minute_grayLine));
+        xAxisLine.setTextColor(getResources().getColor(R.color.minute_zhoutv));
+        axisLeftLine.setGridColor(getResources().getColor(R.color.minute_grayLine));
+        axisRightLine.setAxisLineColor(getResources().getColor(R.color.minute_grayLine));
+        axisRightLine.setTextColor(getResources().getColor(R.color.minute_zhoutv));
 
         //bar x y轴
         xAxisBar = barChart.getXAxis();
@@ -168,11 +170,12 @@ public class MinutesActivity extends BaseActivity {
         xAxisBar.setDrawGridLines(true);
         xAxisBar.setDrawAxisLine(false);
         // xAxisBar.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxisBar.setGridColor(getResources().getColor(R.color.grayLine));
+        xAxisBar.setGridColor(getResources().getColor(R.color.minute_grayLine));
         axisLeftBar = barChart.getAxisLeft();
         axisLeftBar.setAxisMinValue(0);
         axisLeftBar.setDrawGridLines(false);
         axisLeftBar.setDrawAxisLine(false);
+        axisLeftBar.setTextColor(getResources().getColor(R.color.minute_zhoutv));
 
 
         axisRightBar = barChart.getAxisRight();
@@ -229,7 +232,7 @@ public class MinutesActivity extends BaseActivity {
         //基准线
         LimitLine ll = new LimitLine(0);
         ll.setLineWidth(1f);
-        ll.setLineColor(Color.RED);
+        ll.setLineColor(getResources().getColor(R.color.minute_jizhun));
         ll.enableDashedLine(10f, 10f, 0f);
         ll.setLineWidth(1);
         axisRightLine.addLimitLine(ll);
@@ -269,15 +272,15 @@ public class MinutesActivity extends BaseActivity {
 
         d1.setCircleRadius(0);
         d2.setCircleRadius(0);
-        d1.setColor(Color.BLUE);
-        d2.setColor(Color.RED);
-        d1.setHighLightColor(Color.BLACK);
+        d1.setColor(getResources().getColor(R.color.minute_blue));
+        d2.setColor(getResources().getColor(R.color.minute_yellow));
+        d1.setHighLightColor(Color.WHITE);
         d2.setHighlightEnabled(false);
         d1.setDrawFilled(true);
 
 
         barDataSet.setBarSpacePercent(0); //bar空隙
-        barDataSet.setHighLightColor(Color.BLACK);
+        barDataSet.setHighLightColor(Color.WHITE);
         barDataSet.setHighLightAlpha(255);
         barDataSet.setDrawValues(false);
         barDataSet.setHighlightEnabled(true);

@@ -8,6 +8,7 @@
     android:layout_height="wrap_content"
     android:textColor="@android:color/white"
     android:text=""
-    android:background="@android:color/black"/>
+    android:padding="3dp"
+    android:background="@color/marker_bg"/>
 
 </LinearLayout>
