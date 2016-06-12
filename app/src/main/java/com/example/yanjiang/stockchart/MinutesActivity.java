@@ -138,7 +138,6 @@ public class MinutesActivity extends BaseActivity {
         axisLeftLine.setDrawGridLines(false);
         /*轴不显示 避免和border冲突*/
         axisLeftLine.setDrawAxisLine(false);
-        axisLeftLine.setTextColor(getResources().getColor(R.color.minute_zhoutv));
 
 
         //右边y
@@ -161,6 +160,7 @@ public class MinutesActivity extends BaseActivity {
         xAxisLine.setAxisLineColor(getResources().getColor(R.color.minute_grayLine));
         xAxisLine.setTextColor(getResources().getColor(R.color.minute_zhoutv));
         axisLeftLine.setGridColor(getResources().getColor(R.color.minute_grayLine));
+        axisLeftLine.setTextColor(getResources().getColor(R.color.minute_zhoutv));
         axisRightLine.setAxisLineColor(getResources().getColor(R.color.minute_grayLine));
         axisRightLine.setTextColor(getResources().getColor(R.color.minute_zhoutv));
 
@@ -182,7 +182,6 @@ public class MinutesActivity extends BaseActivity {
         axisRightBar.setDrawLabels(false);
         axisRightBar.setDrawGridLines(false);
         axisRightBar.setDrawAxisLine(false);
-
         //y轴样式
         this.axisLeftLine.setValueFormatter(new YAxisValueFormatter() {
             @Override
@@ -279,7 +278,7 @@ public class MinutesActivity extends BaseActivity {
         d1.setDrawFilled(true);
 
 
-        barDataSet.setBarSpacePercent(0); //bar空隙
+        barDataSet.setBarSpacePercent(50); //bar空隙
         barDataSet.setHighLightColor(Color.WHITE);
         barDataSet.setHighLightAlpha(255);
         barDataSet.setDrawValues(false);
@@ -346,7 +345,7 @@ public class MinutesActivity extends BaseActivity {
          mData = new MinuteHelper();
         JSONObject object = null;
         try {
-            object = new JSONObject(ConstantTest.JSON_TEST);
+            object = new JSONObject(ConstantTest.JSON_TEST2);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -398,7 +397,7 @@ public class MinutesActivity extends BaseActivity {
     }
 
     public String[] getMinutesCount() {
-        return new String[243];
+        return new String[242];
     }
     private void setMarkerView(MinuteHelper mData){
         MyLeftMarkerView leftMarkerView = new MyLeftMarkerView(MinutesActivity.this, R.layout.mymarkerview);
