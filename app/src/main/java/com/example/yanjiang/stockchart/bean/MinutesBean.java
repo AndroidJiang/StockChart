@@ -1,12 +1,13 @@
 package com.example.yanjiang.stockchart.bean;
 
-/**
- * Created by Administrator on 2016/6/6.
- */
-public class MinutesBean {
-    public Float chengjiaojia,junjia,total,change,percentage;
-    public int chengjiaoliang;
-    public String time;
-    public int color;
 
+public class MinutesBean {
+    public String time;
+    public float cjprice;
+    public float cjnum;
+    public float avprice = Float.NaN;
+    public float per;
+    public float exchange;
+    public float total;
+    public int color = 0xff000000;
 }

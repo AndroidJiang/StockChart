@@ -6,24 +6,24 @@ import com.github.mikephil.charting.formatter.YAxisValueFormatter;
 
 import java.text.DecimalFormat;
 
-public class ChengJiaoLiangFormatter implements YAxisValueFormatter {
+public class VolFormatter implements YAxisValueFormatter {
 
-    private final int mJishu;
+    private final int unit;
     private DecimalFormat mFormat;
 
-    public ChengJiaoLiangFormatter(int jishu) {
-        if (jishu == 1) {
+    public VolFormatter(int unit) {
+        if (unit == 1) {
             mFormat = new DecimalFormat("#0");
         } else {
             mFormat = new DecimalFormat("#0.00");
         }
-        mJishu = jishu;
+        this.unit = unit;
     }
 
 
     @Override
     public String getFormattedValue(float value, YAxis yAxis) {
-        value = value / mJishu;
+        value = value / unit;
         return mFormat.format(value);
     }
 }

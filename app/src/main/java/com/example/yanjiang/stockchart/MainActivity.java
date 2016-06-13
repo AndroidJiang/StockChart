@@ -21,8 +21,8 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        Intent intent = new Intent(MainActivity.this, MinutesActivity.class);
-        startActivity(intent);
+      /*  Intent intent = new Intent(MainActivity.this, MinutesActivity.class);
+        startActivity(intent);*/
     }
 
 
@@ -34,6 +34,8 @@ public class MainActivity extends BaseActivity {
                 startActivity(intent);
                 break;
             case R.id.btn_k:
+                Intent intentK = new Intent(MainActivity.this, KLineActivity.class);
+                startActivity(intentK);
                 break;
         }
     }

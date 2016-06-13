@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.highlight.Highlight;
 
 /**
  * 作者：ajiang
@@ -57,5 +58,10 @@ public class MyBarChart extends BarChart {
     @Override
     public MyYAxis getAxisRight() {
         return (MyYAxis) super.getAxisRight();
+    }
+
+    public void setHighlightValue(Highlight h){
+        mIndicesToHighlight = new Highlight[]{
+                h};
     }
 }
