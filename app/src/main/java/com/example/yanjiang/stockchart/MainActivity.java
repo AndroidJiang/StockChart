@@ -34,6 +34,8 @@ public class MainActivity extends BaseActivity {
                 startActivity(intent);
                 break;
             case R.id.btn_k:
+                Intent intentK = new Intent(MainActivity.this, KLineActivity.class);
+                startActivity(intentK);
                 break;
         }
     }

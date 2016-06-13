@@ -260,13 +260,15 @@ public class MinutesActivity extends BaseActivity {
                     stringSparseArray.get(i).contains("/")) {
                 i++;
             }
-            lineCJEntries.add(new Entry(mData.getDatas().get(i).chengjiaojia, i));
-            lineJJEntries.add(new Entry(mData.getDatas().get(i).junjia, i));
-            barEntries.add(new BarEntry(mData.getDatas().get(i).chengjiaoliang, i));
+            lineCJEntries.add(new Entry(mData.getDatas().get(i).cjprice, i));
+            lineJJEntries.add(new Entry(mData.getDatas().get(i).avprice, i));
+            barEntries.add(new BarEntry(mData.getDatas().get(i).cjnum, i));
            // dateList.add(mData.getDatas().get(i).time);
         }
         d1 = new LineDataSet(lineCJEntries, "成交价");
         d2 = new LineDataSet(lineJJEntries, "均价");
+        d1.setDrawValues(false);
+        d2.setDrawValues(false);
         barDataSet = new BarDataSet(barEntries, "成交量");
 
         d1.setCircleRadius(0);

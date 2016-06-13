@@ -1,6 +1,5 @@
 package com.example.yanjiang.stockchart.bean;
 
-import android.text.TextUtils;
 import android.util.SparseArray;
 
 import org.json.JSONArray;
@@ -21,37 +20,38 @@ public class MinuteHelper {
 
     public void parseData(JSONObject object) {
         datas = new ArrayList<>();
-        JSONArray temp = object.optJSONObject("data").optJSONObject(code).optJSONObject("data").optJSONArray("data");
+        JSONArray jsonArray = object.optJSONObject("data").optJSONObject(code).optJSONObject("data").optJSONArray("data");
         String date = object.optJSONObject("data").optJSONObject(code).optJSONObject("data").optString("date");
         if (date.length() == 0) {
             return;
         }
+/*数据解析依照自己需求来定，如果服务器直接返回百分比数据，则不需要客户端进行计算*/
         baseValue = (float) object.optJSONObject("data").optJSONObject(code).optJSONObject("qt").optJSONArray(code).optDouble(4);
-        int count = temp.length();
+        int count = jsonArray.length();
         for (int i = 0; i < count; i++) {
-            String[] t = temp.optString(i).split(" ");
+            String[] t = jsonArray.optString(i).split(" ");
             MinutesBean minutesData = new MinutesBean();
             minutesData.time = t[0].substring(0, 2) + ":" + t[0].substring(2);
-            minutesData.chengjiaojia = Float.parseFloat(t[1]);
+            minutesData.cjprice = Float.parseFloat(t[1]);
             if (i != 0) {
-                String[] pre_t = temp.optString(i - 1).split(" ");
-                minutesData.chengjiaoliang = Integer.parseInt(t[2]) - Integer.parseInt(pre_t[2]);
-                minutesData.color = minutesData.chengjiaojia - datas.get(i - 1).chengjiaojia >= 0 ? this.increasingColor : decreasingColor;
-                minutesData.total = minutesData.chengjiaoliang * minutesData.chengjiaojia + datas.get(i - 1).total;
-                minutesData.junjia = (minutesData.total) / Integer.parseInt(t[2]);
+                String[] pre_t = jsonArray.optString(i - 1).split(" ");
+                minutesData.cjnum = Integer.parseInt(t[2]) - Integer.parseInt(pre_t[2]);
+                minutesData.color = minutesData.cjprice - datas.get(i - 1).cjprice >= 0 ? this.increasingColor : decreasingColor;
+                minutesData.total = minutesData.cjnum * minutesData.cjprice + datas.get(i - 1).total;
+                minutesData.avprice = (minutesData.total) / Integer.parseInt(t[2]);
             } else {
-                minutesData.chengjiaoliang = Integer.parseInt(t[2]);
-                minutesData.junjia = minutesData.chengjiaojia;
+                minutesData.cjnum = Integer.parseInt(t[2]);
+                minutesData.avprice = minutesData.cjprice;
                 minutesData.color = this.increasingColor;
-                minutesData.total = minutesData.chengjiaoliang * minutesData.chengjiaojia;
+                minutesData.total = minutesData.cjnum * minutesData.cjprice;
             }
-            minutesData.change = minutesData.chengjiaojia - baseValue;
-            minutesData.percentage = (minutesData.change / baseValue);
-            double cha = minutesData.chengjiaojia - baseValue;
+            minutesData.exchange = minutesData.cjprice - baseValue;
+            minutesData.per = (minutesData.exchange / baseValue);
+            double cha = minutesData.cjprice - baseValue;
             if (Math.abs(cha) > maxmin) {
                 maxmin = (float) Math.abs(cha);
             }
-            volmax = Math.max(minutesData.chengjiaoliang, volmax);
+            volmax = Math.max(minutesData.cjnum, volmax);
             datas.add(minutesData);
         }
 
@@ -87,11 +87,4 @@ public class MinuteHelper {
     }
 
 
-    private String doDate(String date) {
-        if (TextUtils.isEmpty(date) || date.length() < 8) {
-            return "";
-        }
-
-        return date.substring(4, 6) + "-" + date.substring(6);
-    }
 }
