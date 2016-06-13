@@ -15,7 +15,7 @@ import com.example.yanjiang.stockchart.mychart.MyLineChart;
 import com.example.yanjiang.stockchart.mychart.MyRightMarkerView;
 import com.example.yanjiang.stockchart.mychart.MyXAxis;
 import com.example.yanjiang.stockchart.mychart.MyYAxis;
-import com.example.yanjiang.stockchart.rxutils.ChengJiaoLiangFormatter;
+import com.example.yanjiang.stockchart.rxutils.VolFormatter;
 import com.example.yanjiang.stockchart.rxutils.MyUtils;
 import com.example.yanjiang.stockchart.rxutils.SchedulersCompat;
 import com.github.mikephil.charting.components.Legend;
@@ -219,7 +219,7 @@ public class MinutesActivity extends BaseActivity {
             u = 8;
         }
         /*次方*/
-        axisLeftBar.setValueFormatter(new ChengJiaoLiangFormatter((int) Math.pow(10, u)));
+        axisLeftBar.setValueFormatter(new VolFormatter((int) Math.pow(10, u)));
         axisLeftBar.setShowMaxAndUnit(unit);
         axisLeftBar.setDrawLabels(true);
         //axisLeftBar.setAxisMinValue(0);//即使最小是不是0，也无碍
@@ -333,7 +333,7 @@ public class MinutesActivity extends BaseActivity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        mData.parseData(object);
+                        mData.parseMinutes(object);
                         setData(mData);
 
                     }
@@ -347,11 +347,11 @@ public class MinutesActivity extends BaseActivity {
          mData = new MinuteHelper();
         JSONObject object = null;
         try {
-            object = new JSONObject(ConstantTest.JSON_TEST2);
+            object = new JSONObject(ConstantTest.MINUTESURL);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        mData.parseData(object);
+        mData.parseMinutes(object);
         setData(mData);
     }
 

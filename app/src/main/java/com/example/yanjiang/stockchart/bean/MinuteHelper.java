@@ -8,18 +8,18 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class MinuteHelper {
-    private ArrayList<MinutesBean> datas;
+    private ArrayList<MinutesBean> datas=new ArrayList<>();
+    private ArrayList<KLineBean> kDatas=new ArrayList<>();
     private float baseValue;
     private float maxmin;
     private float volmax;
     private SparseArray<String> dayLabels;
-    private String code="sz002081";
+    private String code = "sz002081";
     private int decreasingColor;
     private int increasingColor;
     private String stockExchange;
 
-    public void parseData(JSONObject object) {
-        datas = new ArrayList<>();
+    public void parseMinutes(JSONObject object) {
         JSONArray jsonArray = object.optJSONObject("data").optJSONObject(code).optJSONObject("data").optJSONArray("data");
         String date = object.optJSONObject("data").optJSONObject(code).optJSONObject("data").optString("date");
         if (date.length() == 0) {
@@ -60,10 +60,33 @@ public class MinuteHelper {
         }
     }
 
+    public void parseKLine(JSONObject obj) {
+        ArrayList<KLineBean> kLineBeans = new ArrayList<>();
+        JSONObject data = obj.optJSONObject("data").optJSONObject(code);
+        JSONArray list = data.optJSONArray("day");
+        if (list != null) {
+            int count = list.length();
+            for (int i = 0; i < count; i++) {
+                JSONArray dayData = list.optJSONArray(i);
+                KLineBean kLineData = new KLineBean();
+                kLineBeans.add(kLineData);
+                kLineData.date = dayData.optString(0);
+                kLineData.open = (float) dayData.optDouble(1);
+                kLineData.close = (float) dayData.optDouble(2);
+                kLineData.high = (float) dayData.optDouble(3);
+                kLineData.low = (float) dayData.optDouble(4);
+                kLineData.vol = (float) dayData.optDouble(5);
+            }
+        }
+        kDatas.addAll(kLineBeans);
+
+
+    }
 
     public float getMin() {
         return baseValue - maxmin;
     }
+
     public float getMax() {
         return baseValue + maxmin;
     }
@@ -85,6 +108,8 @@ public class MinuteHelper {
     public ArrayList<MinutesBean> getDatas() {
         return datas;
     }
-
+    public ArrayList<KLineBean> getKLineDatas() {
+        return kDatas;
+    }
 
 }
