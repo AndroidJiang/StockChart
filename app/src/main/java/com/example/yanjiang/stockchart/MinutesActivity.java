@@ -82,7 +82,7 @@ public class MinutesActivity extends BaseActivity {
             @Override
             public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
                 barChart.highlightValues(new Highlight[]{h});
-                lineChart.setHighlightValue(e,h);
+                lineChart.setHighlightValue(h);
             }
             @Override
             public void onNothingSelected() {
@@ -93,7 +93,7 @@ public class MinutesActivity extends BaseActivity {
             @Override
             public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
               //  barChart.highlightValues(new Highlight[]{h});
-                lineChart.setHighlightValue(e, new Highlight(h.getXIndex(),0));//此函数已经返回highlightBValues的变量，并且刷新，故上面方法可以注释
+                lineChart.setHighlightValue(new Highlight(h.getXIndex(),0));//此函数已经返回highlightBValues的变量，并且刷新，故上面方法可以注释
                // barChart.setHighlightValue(h);
             }
 

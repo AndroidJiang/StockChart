@@ -71,8 +71,7 @@ public class MyLineChart extends LineChart {
         this.minuteHelper=minuteHelper;
     }
 
-    public void setHighlightValue(Entry e, Highlight h) {
-        this.e = e;
+    public void setHighlightValue( Highlight h) {
         if (mData == null)
             mIndicesToHighlight = null;
         else {
@@ -82,17 +81,13 @@ public class MyLineChart extends LineChart {
         invalidate();
     }
 
-    /*此处处理不好，希望大神给出建议*/
+    /*感谢LoveSmileZh提醒，此处没问题，已优化*/
     @Override
     protected void drawMarkers(Canvas canvas) {
         if (mIndicesToHighlight != null && myMarkerViewLeft != null && myMarkerViewRight != null) {
             for (int i = 0; i < mIndicesToHighlight.length; i++) {
-                Entry e = this.e;
-                if (e == null || e.getXIndex() != mIndicesToHighlight[i].getXIndex())
-                    continue;
                 e=mData.getEntryForHighlight(mIndicesToHighlight[i]);
                 float[] pos = getMarkerPosition(e, mIndicesToHighlight[i]);
-                Log.e("!!!!",pos[0]+","+pos[1]);
                 myMarkerViewLeft.draw(canvas, mViewPortHandler.contentLeft() - myMarkerViewLeft.getWidth(), pos[1] - myMarkerViewLeft.getHeight() / 2);
                 myMarkerViewRight.draw(canvas, mViewPortHandler.contentRight(), pos[1] - myMarkerViewRight.getHeight() / 2);
                 float yValForXIndex1 = minuteHelper.getDatas().get(mIndicesToHighlight[i].getXIndex()).cjprice;
@@ -100,9 +95,11 @@ public class MyLineChart extends LineChart {
 
                 myMarkerViewLeft.setData(yValForXIndex1);
                 myMarkerViewRight.setData(yValForXIndex2);
-                /**/
                 myMarkerViewLeft.refreshContent(e, mIndicesToHighlight[i]);
                 myMarkerViewRight.refreshContent(e, mIndicesToHighlight[i]);
+
+                /*修复bug*/
+                invalidate();
                 /*重新计算大小*/
                 myMarkerViewLeft.measure(MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
                         MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
