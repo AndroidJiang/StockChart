@@ -31,7 +31,6 @@ public class KLineActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kline);
         ButterKnife.bind(this);
-
         getOffLineData();
     }
 
