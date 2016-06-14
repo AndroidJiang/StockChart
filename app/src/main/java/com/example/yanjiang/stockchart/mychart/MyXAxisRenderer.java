@@ -63,6 +63,7 @@ public class MyXAxisRenderer extends XAxisRenderer {
         float[] position = new float[]{
                 0f, 0f
         };
+
         mGridPaint.setColor(mXAxis.getGridColor());
         mGridPaint.setStrokeWidth(mXAxis.getGridLineWidth());
         mGridPaint.setPathEffect(mXAxis.getGridDashPathEffect());

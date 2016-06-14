@@ -1,13 +1,25 @@
 package com.example.yanjiang.stockchart;
 
+import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.example.yanjiang.stockchart.api.ConstantTest;
 import com.example.yanjiang.stockchart.bean.KLineBean;
 import com.example.yanjiang.stockchart.bean.MinuteHelper;
-import com.example.yanjiang.stockchart.mychart.MyBarChart;
+import com.example.yanjiang.stockchart.rxutils.MyUtils;
+import com.example.yanjiang.stockchart.rxutils.VolFormatter;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.CombinedChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.CandleData;
+import com.github.mikephil.charting.data.CandleDataSet;
+import com.github.mikephil.charting.data.CandleEntry;
+import com.github.mikephil.charting.data.CombinedData;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,16 +34,20 @@ public class KLineActivity extends BaseActivity {
     @Bind(R.id.combinedchart)
     CombinedChart combinedchart;
     @Bind(R.id.barchart)
-    MyBarChart barchart;
+    BarChart barChart;
     private MinuteHelper mData;
     private ArrayList<KLineBean> kLineDatas;
+    XAxis xAxisBar, xAxisK;
+    YAxis axisLeftBar, axisLeftK;
+    YAxis axisRightBar, axisRightK;
+    BarDataSet barDataSet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kline);
         ButterKnife.bind(this);
-
+        initChart();
         getOffLineData();
     }
 
@@ -50,12 +66,122 @@ public class KLineActivity extends BaseActivity {
         mData.getKLineDatas();
 
 
-       setData(mData);
+        setData(mData);
+    }
+
+    private void initChart() {
+        barChart.setDrawBorders(true);
+        barChart.setBorderWidth(1);
+        barChart.setBorderColor(getResources().getColor(R.color.minute_grayLine));
+        barChart.setDescription("");
+        barChart.setDragEnabled(true);
+        barChart.setScaleYEnabled(false);
+        barChart.setAutoScaleMinMaxEnabled(true);
+        Legend barChartLegend = barChart.getLegend();
+        barChartLegend.setEnabled(false);
+        //bar x y轴
+        xAxisBar = barChart.getXAxis();
+        xAxisBar.setDrawLabels(true);
+        xAxisBar.setDrawGridLines(false);
+        xAxisBar.setDrawAxisLine(false);
+        xAxisBar.setTextColor(getResources().getColor(R.color.minute_zhoutv));
+        xAxisBar.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxisBar.setGridColor(getResources().getColor(R.color.minute_grayLine));
+
+        axisLeftBar = barChart.getAxisLeft();
+        axisLeftBar.setAxisMinValue(0);
+        axisLeftBar.setDrawGridLines(false);
+        axisLeftBar.setDrawAxisLine(false);
+        axisLeftBar.setTextColor(getResources().getColor(R.color.minute_zhoutv));
+        axisLeftBar.setDrawLabels(true);
+        axisLeftBar.setShowOnlyMinMax(true);
+        axisRightBar = barChart.getAxisRight();
+        axisRightBar.setDrawLabels(false);
+        axisRightBar.setDrawGridLines(false);
+        axisRightBar.setDrawAxisLine(false);
+
+        /****************************************************************/
+        combinedchart.setDrawBorders(true);
+        combinedchart.setBorderWidth(1);
+        combinedchart.setBorderColor(getResources().getColor(R.color.minute_grayLine));
+        combinedchart.setDescription("");
+        combinedchart.setDragEnabled(true);
+        combinedchart.setScaleYEnabled(false);
+        combinedchart.setAutoScaleMinMaxEnabled(true);
+        Legend combinedchartLegend = combinedchart.getLegend();
+        combinedchartLegend.setEnabled(false);
+        //bar x y轴
+        xAxisK = combinedchart.getXAxis();
+        xAxisK.setDrawLabels(true);
+        xAxisK.setDrawGridLines(false);
+        xAxisK.setDrawAxisLine(false);
+        xAxisK.setTextColor(getResources().getColor(R.color.minute_zhoutv));
+        xAxisK.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxisK.setGridColor(getResources().getColor(R.color.minute_grayLine));
+
+        axisLeftK = combinedchart.getAxisLeft();
+        axisLeftK.setDrawGridLines(true);
+        axisLeftK.setDrawAxisLine(false);
+        axisLeftK.setDrawLabels(true);
+        axisLeftK.setTextColor(getResources().getColor(R.color.minute_zhoutv));
+        axisLeftK.setGridColor(getResources().getColor(R.color.minute_grayLine));
+        axisLeftK.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+        axisRightK = combinedchart.getAxisRight();
+        axisRightK.setDrawLabels(false);
+        axisRightK.setDrawGridLines(true);
+        axisRightK.setDrawAxisLine(false);
+        axisRightK.setGridColor(getResources().getColor(R.color.minute_grayLine));
     }
 
     private void setData(MinuteHelper mData) {
         kLineDatas = mData.getKLineDatas();
-        Log.e("~~~","count"+kLineDatas.size());
+        axisLeftBar.setAxisMaxValue(mData.getVolmax());
+        String unit = MyUtils.getVolUnit(mData.getVolmax());
+        int u = 1;
+        if (unit.equals("万手")) {
+            u = 4;
+        } else if (unit.equals("亿手")) {
+            u = 8;
+        }
+        axisLeftBar.setValueFormatter(new VolFormatter((int) Math.pow(10, u)));
+        axisRightBar.setAxisMaxValue(mData.getVolmax());
+
+
+        ArrayList<String> xVals = new ArrayList<String>();
+        ArrayList<BarEntry> barEntries = new ArrayList<BarEntry>();
+        ArrayList<CandleEntry> candleEntries = new ArrayList<CandleEntry>();
+        for (int i = 0, j = 0; i < mData.getKLineDatas().size(); i++, j++) {
+            xVals.add(mData.getKLineDatas().get(i).date + "");
+            barEntries.add(new BarEntry(mData.getKLineDatas().get(i).vol, i));
+            candleEntries.add(new CandleEntry(i, mData.getKLineDatas().get(i).high, mData.getKLineDatas().get(i).low, mData.getKLineDatas().get(i).open, mData.getKLineDatas().get(i).close));
+        }
+        barDataSet = new BarDataSet(barEntries, "成交量");
+        barDataSet.setBarSpacePercent(50); //bar空隙
+        barDataSet.setHighLightColor(Color.WHITE);
+        barDataSet.setHighLightAlpha(255);
+        barDataSet.setDrawValues(false);
+        barDataSet.setHighlightEnabled(true);
+        barDataSet.setColor(Color.RED);
+        BarData barData = new BarData(xVals, barDataSet);
+        barChart.setData(barData);
+        barChart.setVisibleXRange(30, 60);
+
+
+        CandleDataSet candleDataSet = new CandleDataSet(candleEntries, "KLine");
+        candleDataSet.setDrawHorizontalHighlightIndicator(false);
+        candleDataSet.setValueTextSize(10f);
+        candleDataSet.setDrawValues(false);
+        candleDataSet.setColor(Color.RED);
+        candleDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+        CandleData candleData = new CandleData(xVals, candleDataSet);
+
+
+        CombinedData combinedData=new CombinedData(xVals);
+        combinedData.setData(candleData);
+        combinedchart.setData(combinedData);
+        combinedchart.setVisibleXRange(30, 60);
+        barChart.invalidate();
+        combinedchart.invalidate();
     }
 
 }
