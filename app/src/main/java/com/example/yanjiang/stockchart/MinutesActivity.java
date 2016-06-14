@@ -301,6 +301,7 @@ public class MinutesActivity extends BaseActivity {
 
 
         setOffset();
+
         lineChart.invalidate();//刷新图
         barChart.invalidate();
 
