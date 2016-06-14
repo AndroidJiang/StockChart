@@ -65,13 +65,13 @@ public class MyLineChart extends LineChart {
         return (MyYAxis) super.getAxisRight();
     }
 
-    public void setMarker(MyLeftMarkerView markerLeft, MyRightMarkerView markerRight,MinuteHelper minuteHelper) {
+    public void setMarker(MyLeftMarkerView markerLeft, MyRightMarkerView markerRight, MinuteHelper minuteHelper) {
         this.myMarkerViewLeft = markerLeft;
         this.myMarkerViewRight = markerRight;
-        this.minuteHelper=minuteHelper;
+        this.minuteHelper = minuteHelper;
     }
 
-    public void setHighlightValue( Highlight h) {
+    public void setHighlightValue(Highlight h) {
         if (mData == null)
             mIndicesToHighlight = null;
         else {
@@ -86,7 +86,7 @@ public class MyLineChart extends LineChart {
     protected void drawMarkers(Canvas canvas) {
         if (mIndicesToHighlight != null && myMarkerViewLeft != null && myMarkerViewRight != null) {
             for (int i = 0; i < mIndicesToHighlight.length; i++) {
-                e=mData.getEntryForHighlight(mIndicesToHighlight[i]);
+                e = mData.getEntryForHighlight(mIndicesToHighlight[i]);
                 float[] pos = getMarkerPosition(e, mIndicesToHighlight[i]);
                 myMarkerViewLeft.draw(canvas, mViewPortHandler.contentLeft() - myMarkerViewLeft.getWidth(), pos[1] - myMarkerViewLeft.getHeight() / 2);
                 myMarkerViewRight.draw(canvas, mViewPortHandler.contentRight(), pos[1] - myMarkerViewRight.getHeight() / 2);
