@@ -51,12 +51,12 @@ public class MyYAxisRenderer extends YAxisRenderer {
         }
     }
 
-  /*  @Override
+    @Override
     protected void drawYLabels(Canvas c, float fixedPosition, float[] positions, float offset) {
-        *//*当有最小text的时候*//*
+       /*当有最小text的时候*/
         if (!TextUtils.isEmpty(mYAxis.getMinValue()) && mYAxis.isShowOnlyMinMaxEnabled()) {
             for (int i = 0; i < mYAxis.mEntryCount; i++) {
-                *//*获取对应位置的值*//*
+                /*获取对应位置的值*/
                 String text = mYAxis.getFormattedLabel(i);
                 if (i == 0) {
                     text = mYAxis.getMinValue();
@@ -89,6 +89,6 @@ public class MyYAxisRenderer extends YAxisRenderer {
 
 
         }
-    }*/
+    }
 
 }
