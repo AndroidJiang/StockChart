@@ -8,8 +8,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class MinuteHelper {
-    private ArrayList<MinutesBean> datas=new ArrayList<>();
-    private ArrayList<KLineBean> kDatas=new ArrayList<>();
+    private ArrayList<MinutesBean> datas = new ArrayList<>();
+    private ArrayList<KLineBean> kDatas = new ArrayList<>();
     private float baseValue;
     private float maxmin;
     private float volmax;
@@ -18,6 +18,8 @@ public class MinuteHelper {
     private int decreasingColor;
     private int increasingColor;
     private String stockExchange;
+    private SparseArray<String> xValuesLabel=new SparseArray<>();
+    private int firstDay = 10;
 
     public void parseMinutes(JSONObject object) {
         JSONArray jsonArray = object.optJSONObject("data").optJSONObject(code).optJSONObject("data").optJSONArray("data");
@@ -76,11 +78,11 @@ public class MinuteHelper {
                 kLineData.high = (float) dayData.optDouble(3);
                 kLineData.low = (float) dayData.optDouble(4);
                 kLineData.vol = (float) dayData.optDouble(5);
+                volmax = Math.max(kLineData.vol, volmax);
+                xValuesLabel.put(i, kLineData.date);
             }
         }
         kDatas.addAll(kLineBeans);
-
-
     }
 
     public float getMin() {
@@ -108,8 +110,11 @@ public class MinuteHelper {
     public ArrayList<MinutesBean> getDatas() {
         return datas;
     }
+
     public ArrayList<KLineBean> getKLineDatas() {
         return kDatas;
     }
-
+    public SparseArray<String> getXValuesLabel() {
+        return xValuesLabel;
+    }
 }
