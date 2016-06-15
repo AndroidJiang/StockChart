@@ -20,6 +20,7 @@ import com.github.mikephil.charting.data.CandleData;
 import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CandleEntry;
 import com.github.mikephil.charting.data.CombinedData;
+import com.github.mikephil.charting.utils.Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -77,6 +78,7 @@ public class KLineActivity extends BaseActivity {
         barChart.setDragEnabled(true);
         barChart.setScaleYEnabled(false);
         barChart.setAutoScaleMinMaxEnabled(true);
+        barChart.setHighlightPerDragEnabled(true);
         Legend barChartLegend = barChart.getLegend();
         barChartLegend.setEnabled(false);
         //bar x y轴
@@ -131,6 +133,9 @@ public class KLineActivity extends BaseActivity {
         axisRightK.setDrawGridLines(true);
         axisRightK.setDrawAxisLine(false);
         axisRightK.setGridColor(getResources().getColor(R.color.minute_grayLine));
+
+
+
     }
 
     private void setData(MinuteHelper mData) {
@@ -164,7 +169,7 @@ public class KLineActivity extends BaseActivity {
         barDataSet.setColor(Color.RED);
         BarData barData = new BarData(xVals, barDataSet);
         barChart.setData(barData);
-        barChart.setVisibleXRange(30, 60);
+        barChart.setVisibleXRange(30, 100);
 
 
         CandleDataSet candleDataSet = new CandleDataSet(candleEntries, "KLine");
@@ -179,9 +184,36 @@ public class KLineActivity extends BaseActivity {
         CombinedData combinedData=new CombinedData(xVals);
         combinedData.setData(candleData);
         combinedchart.setData(combinedData);
-        combinedchart.setVisibleXRange(30, 60);
+        combinedchart.setVisibleXRange(30, 100);
+
+        setOffset();
         barChart.invalidate();
         combinedchart.invalidate();
+    }
+    /*设置量表对齐*/
+    private void setOffset() {
+        float lineLeft = combinedchart.getViewPortHandler().offsetLeft();
+        float barLeft = barChart.getViewPortHandler().offsetLeft();
+        float lineRight = combinedchart.getViewPortHandler().offsetRight();
+        float barRight = barChart.getViewPortHandler().offsetRight();
+        float offsetLeft, offsetRight;
+ /*注：setExtraLeft...函数是针对图表相对位置计算，比如A表offLeftA=20dp,B表offLeftB=30dp,则A.setExtraLeftOffset(10),并不是30，还有注意单位转换*/
+        if (barLeft < lineLeft) {
+            offsetLeft = Utils.convertPixelsToDp(lineLeft - barLeft);
+            barChart.setExtraLeftOffset(offsetLeft);
+        } else {
+            offsetLeft = Utils.convertPixelsToDp(barLeft-lineLeft);
+            combinedchart.setExtraLeftOffset(offsetLeft);
+        }
+  /*注：setExtraRight...函数是针对图表绝对位置计算，比如A表offRightA=20dp,B表offRightB=30dp,则A.setExtraLeftOffset(30),并不是10，还有注意单位转换*/
+        if (barRight < lineRight) {
+            offsetRight = Utils.convertPixelsToDp(lineRight);
+            barChart.setExtraRightOffset(offsetRight);
+        } else {
+            offsetRight = Utils.convertPixelsToDp(barRight);
+            combinedchart.setExtraRightOffset(offsetRight);
+        }
+
     }
 
 }
