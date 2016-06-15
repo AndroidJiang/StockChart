@@ -6,9 +6,11 @@ import android.os.Bundle;
 import com.example.yanjiang.stockchart.api.ConstantTest;
 import com.example.yanjiang.stockchart.bean.KLineBean;
 import com.example.yanjiang.stockchart.bean.MinuteHelper;
+import com.example.yanjiang.stockchart.mychart.CoupleChartGestureListener;
 import com.example.yanjiang.stockchart.rxutils.MyUtils;
 import com.example.yanjiang.stockchart.rxutils.VolFormatter;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -20,6 +22,10 @@ import com.github.mikephil.charting.data.CandleData;
 import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CandleEntry;
 import com.github.mikephil.charting.data.CombinedData;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.BarLineChartTouchListener;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.Utils;
 
 import org.json.JSONException;
@@ -42,7 +48,8 @@ public class KLineActivity extends BaseActivity {
     YAxis axisLeftBar, axisLeftK;
     YAxis axisRightBar, axisRightK;
     BarDataSet barDataSet;
-
+    private BarLineChartTouchListener mChartTouchListener;
+    private CoupleChartGestureListener coupleChartGestureListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,10 +140,42 @@ public class KLineActivity extends BaseActivity {
         axisRightK.setDrawGridLines(true);
         axisRightK.setDrawAxisLine(false);
         axisRightK.setGridColor(getResources().getColor(R.color.minute_grayLine));
+        combinedchart.setDragDecelerationEnabled(false);
+        barChart.setDragDecelerationEnabled(false);
+        // 将K线控的滑动事件传递给交易量控件
+        combinedchart.setOnChartGestureListener(new CoupleChartGestureListener(combinedchart, new Chart[]{barChart}));
+        // 将交易量控件的滑动事件传递给K线控件
+        barChart.setOnChartGestureListener(new CoupleChartGestureListener(barChart, new Chart[]{combinedchart}));
 
+        combinedchart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
+                barChart.highlightValues(new Highlight[]{h});
+               // combinedchart.setHighlightValue(h);
+            }
 
+            @Override
+            public void onNothingSelected() {
+
+            }
+        });
+        barChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
+                combinedchart.highlightValues(new Highlight[]{h});
+               // barChart.setHighlightValue(new Highlight(h.getXIndex(), 0));//此函数已经返回highlightBValues的变量，并且刷新，故上面方法可以注释
+                // barChart.setHighlightValue(h);
+            }
+
+            @Override
+            public void onNothingSelected() {
+
+            }
+        });
 
     }
+
+
 
     private void setData(MinuteHelper mData) {
         kLineDatas = mData.getKLineDatas();

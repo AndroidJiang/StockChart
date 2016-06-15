@@ -7,7 +7,7 @@ public class MinutesBean {
     public float cjnum;
     public float avprice = Float.NaN;
     public float per;
-    public float exchange;
+    public float cha;
     public float total;
     public int color = 0xff000000;
 }

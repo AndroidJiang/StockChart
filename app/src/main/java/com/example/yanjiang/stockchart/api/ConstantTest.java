@@ -2,7 +2,7 @@ package com.example.yanjiang.stockchart.api;
 
 /**
  * 作者：ajiang
- * 邮箱：1025065158
+ * 邮箱：1025065158@qq.com
  * 博客：http://blog.csdn.net/qqyanjiang
  */
 public class ConstantTest {

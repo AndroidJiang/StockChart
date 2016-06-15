@@ -11,7 +11,7 @@ public class MinuteHelper {
     private ArrayList<MinutesBean> datas = new ArrayList<>();
     private ArrayList<KLineBean> kDatas = new ArrayList<>();
     private float baseValue;
-    private float maxmin;
+    private float permaxmin;
     private float volmax;
     private SparseArray<String> dayLabels;
     private String code = "sz002081";
@@ -31,34 +31,32 @@ public class MinuteHelper {
         baseValue = (float) object.optJSONObject("data").optJSONObject(code).optJSONObject("qt").optJSONArray(code).optDouble(4);
         int count = jsonArray.length();
         for (int i = 0; i < count; i++) {
-            String[] t = jsonArray.optString(i).split(" ");
+            String[] t = jsonArray.optString(i).split(" ");/*  "0930 9.50 4707",*/
             MinutesBean minutesData = new MinutesBean();
             minutesData.time = t[0].substring(0, 2) + ":" + t[0].substring(2);
             minutesData.cjprice = Float.parseFloat(t[1]);
             if (i != 0) {
                 String[] pre_t = jsonArray.optString(i - 1).split(" ");
                 minutesData.cjnum = Integer.parseInt(t[2]) - Integer.parseInt(pre_t[2]);
-                minutesData.color = minutesData.cjprice - datas.get(i - 1).cjprice >= 0 ? this.increasingColor : decreasingColor;
                 minutesData.total = minutesData.cjnum * minutesData.cjprice + datas.get(i - 1).total;
                 minutesData.avprice = (minutesData.total) / Integer.parseInt(t[2]);
             } else {
                 minutesData.cjnum = Integer.parseInt(t[2]);
                 minutesData.avprice = minutesData.cjprice;
-                minutesData.color = this.increasingColor;
                 minutesData.total = minutesData.cjnum * minutesData.cjprice;
             }
-            minutesData.exchange = minutesData.cjprice - baseValue;
-            minutesData.per = (minutesData.exchange / baseValue);
+            minutesData.cha = minutesData.cjprice - baseValue;
+            minutesData.per = (minutesData.cha / baseValue);
             double cha = minutesData.cjprice - baseValue;
-            if (Math.abs(cha) > maxmin) {
-                maxmin = (float) Math.abs(cha);
+            if (Math.abs(cha) > permaxmin) {
+                permaxmin = (float) Math.abs(cha);
             }
             volmax = Math.max(minutesData.cjnum, volmax);
             datas.add(minutesData);
         }
 
-        if (maxmin == 0) {
-            maxmin = baseValue * 0.02f;
+        if (permaxmin == 0) {
+            permaxmin = baseValue * 0.02f;
         }
     }
 
@@ -86,15 +84,15 @@ public class MinuteHelper {
     }
 
     public float getMin() {
-        return baseValue - maxmin;
+        return baseValue - permaxmin;
     }
 
     public float getMax() {
-        return baseValue + maxmin;
+        return baseValue + permaxmin;
     }
 
     public float getPercentMax() {
-        return maxmin / baseValue;
+        return permaxmin / baseValue;
     }
 
     public float getPercentMin() {
