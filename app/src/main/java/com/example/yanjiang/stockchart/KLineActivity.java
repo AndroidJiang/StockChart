@@ -90,7 +90,7 @@ public class KLineActivity extends BaseActivity {
         barChart.setDragEnabled(true);
         barChart.setScaleYEnabled(false);
         barChart.setAutoScaleMinMaxEnabled(true);
-        barChart.setHighlightPerDragEnabled(true);
+        barChart.setHighlightPerDragEnabled(false);
         Legend barChartLegend = barChart.getLegend();
         barChartLegend.setEnabled(false);
         //bar x y轴
@@ -229,10 +229,10 @@ public class KLineActivity extends BaseActivity {
         }
         barDataSet = new BarDataSet(barEntries, "成交量");
         barDataSet.setBarSpacePercent(50); //bar空隙
-        barDataSet.setHighLightColor(Color.WHITE);
-        barDataSet.setHighLightAlpha(255);
+     /*   barDataSet.setHighLightColor(Color.WHITE);
+        barDataSet.setHighLightAlpha(255);*/
         barDataSet.setDrawValues(false);
-        barDataSet.setHighlightEnabled(true);
+        barDataSet.setHighlightEnabled(false);
         barDataSet.setColor(Color.RED);
         BarData barData = new BarData(xVals, barDataSet);
         barChart.setData(barData);
@@ -240,7 +240,8 @@ public class KLineActivity extends BaseActivity {
 
 
         CandleDataSet candleDataSet = new CandleDataSet(candleEntries, "KLine");
-        candleDataSet.setDrawHorizontalHighlightIndicator(false);
+        //candleDataSet.setDrawHorizontalHighlightIndicator(false);
+        candleDataSet.setHighlightEnabled(false);
         candleDataSet.setValueTextSize(10f);
         candleDataSet.setDrawValues(false);
         candleDataSet.setColor(Color.RED);
@@ -271,7 +272,6 @@ public class KLineActivity extends BaseActivity {
     @NonNull
     private LineDataSet setMaLine(int ma,ArrayList<String> xVals, ArrayList<Entry> lineEntries) {
         LineDataSet lineDataSetMa = new LineDataSet(lineEntries, "ma"+ma);
-        lineDataSetMa.setDrawHorizontalHighlightIndicator(false);
         lineDataSetMa.setDrawValues(false);
         if(ma==5) {
             lineDataSetMa.setColor(Color.GREEN);
@@ -283,6 +283,7 @@ public class KLineActivity extends BaseActivity {
         lineDataSetMa.setLineWidth(1f);
         lineDataSetMa.setDrawCircles(false);
         lineDataSetMa.setAxisDependency(YAxis.AxisDependency.LEFT);
+        lineDataSetMa.setHighlightEnabled(false);
         return lineDataSetMa;
     }
 
