@@ -40,6 +40,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -64,6 +65,8 @@ public class MinutesActivity extends BaseActivity {
     MyYAxis axisRightBar;
     SparseArray<String> stringSparseArray;
     private MinuteHelper mData;
+    Integer sum = 0;
+    List<Integer> listA, listB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,25 +87,53 @@ public class MinutesActivity extends BaseActivity {
                 barChart.highlightValues(new Highlight[]{h});
                 lineChart.setHighlightValue(h);
             }
+
             @Override
             public void onNothingSelected() {
-
             }
         });
         barChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-              //  barChart.highlightValues(new Highlight[]{h});
-                lineChart.setHighlightValue(new Highlight(h.getXIndex(),0));//此函数已经返回highlightBValues的变量，并且刷新，故上面方法可以注释
-               // barChart.setHighlightValue(h);
+                //  barChart.highlightValues(new Highlight[]{h});
+                lineChart.setHighlightValue(new Highlight(h.getXIndex(), 0));//此函数已经返回highlightBValues的变量，并且刷新，故上面方法可以注释
+                // barChart.setHighlightValue(h);
             }
 
             @Override
             public void onNothingSelected() {
-
             }
         });
 
+        /*测试均线算法*/
+        /*listA = new ArrayList<>();
+        listB = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            listA.add(i, i);
+        }
+
+        for (int i = 0; i < 100; i++) {
+
+            if (i >= 4) {
+                sum = 0;
+                listB.add(i, fund(i - 4, i));
+            } else {
+                listB.add(i, 0);
+            }
+        }
+
+        for (int i = 0; i < 100; i++) {
+            Log.e("OUT", listB.get(i) + "");
+        }*/
+
+    }
+
+    private Integer fund(Integer a, Integer b) {
+
+        for (int i = a; i <= b; i++) {
+            sum += listA.get(i);
+        }
+        return sum;
     }
 
     private void initChart() {
@@ -263,7 +294,7 @@ public class MinutesActivity extends BaseActivity {
             lineCJEntries.add(new Entry(mData.getDatas().get(i).cjprice, i));
             lineJJEntries.add(new Entry(mData.getDatas().get(i).avprice, i));
             barEntries.add(new BarEntry(mData.getDatas().get(i).cjnum, i));
-           // dateList.add(mData.getDatas().get(i).time);
+            // dateList.add(mData.getDatas().get(i).time);
         }
         d1 = new LineDataSet(lineCJEntries, "成交价");
         d2 = new LineDataSet(lineJJEntries, "均价");
@@ -345,7 +376,7 @@ public class MinutesActivity extends BaseActivity {
 
     private void getOffLineData() {
            /*方便测试，加入假数据*/
-         mData = new MinuteHelper();
+        mData = new MinuteHelper();
         JSONObject object = null;
         try {
             object = new JSONObject(ConstantTest.MINUTESURL);
@@ -367,7 +398,6 @@ public class MinutesActivity extends BaseActivity {
     }
 
 
-
     /*设置量表对齐*/
     private void setOffset() {
         float lineLeft = lineChart.getViewPortHandler().offsetLeft();
@@ -377,10 +407,10 @@ public class MinutesActivity extends BaseActivity {
         float offsetLeft, offsetRight;
  /*注：setExtraLeft...函数是针对图表相对位置计算，比如A表offLeftA=20dp,B表offLeftB=30dp,则A.setExtraLeftOffset(10),并不是30，还有注意单位转换*/
         if (barLeft < lineLeft) {
-            offsetLeft = Utils.convertPixelsToDp(lineLeft-barLeft);
+            offsetLeft = Utils.convertPixelsToDp(lineLeft - barLeft);
             barChart.setExtraLeftOffset(offsetLeft);
         } else {
-            offsetLeft = Utils.convertPixelsToDp(barLeft-lineLeft);
+            offsetLeft = Utils.convertPixelsToDp(barLeft - lineLeft);
             lineChart.setExtraLeftOffset(offsetLeft);
         }
   /*注：setExtraRight...函数是针对图表绝对位置计算，比如A表offRightA=20dp,B表offRightB=30dp,则A.setExtraLeftOffset(30),并不是10，还有注意单位转换*/
@@ -402,7 +432,8 @@ public class MinutesActivity extends BaseActivity {
     public String[] getMinutesCount() {
         return new String[242];
     }
-    private void setMarkerView(MinuteHelper mData){
+
+    private void setMarkerView(MinuteHelper mData) {
         MyLeftMarkerView leftMarkerView = new MyLeftMarkerView(MinutesActivity.this, R.layout.mymarkerview);
         MyRightMarkerView rightMarkerView = new MyRightMarkerView(MinutesActivity.this, R.layout.mymarkerview);
         lineChart.setMarker(leftMarkerView, rightMarkerView, mData);

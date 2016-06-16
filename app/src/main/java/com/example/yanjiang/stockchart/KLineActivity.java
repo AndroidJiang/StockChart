@@ -2,6 +2,7 @@ package com.example.yanjiang.stockchart;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 
 import com.example.yanjiang.stockchart.api.ConstantTest;
 import com.example.yanjiang.stockchart.bean.KLineBean;
@@ -23,7 +24,10 @@ import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CandleEntry;
 import com.github.mikephil.charting.data.CombinedData;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.BarLineChartTouchListener;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.Utils;
@@ -50,6 +54,7 @@ public class KLineActivity extends BaseActivity {
     BarDataSet barDataSet;
     private BarLineChartTouchListener mChartTouchListener;
     private CoupleChartGestureListener coupleChartGestureListener;
+    float sum=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -150,7 +155,7 @@ public class KLineActivity extends BaseActivity {
         combinedchart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-                barChart.highlightValues(new Highlight[]{h});
+                //barChart.highlightValues(new Highlight[]{h});
                // combinedchart.setHighlightValue(h);
             }
 
@@ -162,7 +167,7 @@ public class KLineActivity extends BaseActivity {
         barChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-                combinedchart.highlightValues(new Highlight[]{h});
+                //combinedchart.highlightValues(new Highlight[]{h});
                // barChart.setHighlightValue(new Highlight(h.getXIndex(), 0));//此函数已经返回highlightBValues的变量，并且刷新，故上面方法可以注释
                 // barChart.setHighlightValue(h);
             }
@@ -174,10 +179,17 @@ public class KLineActivity extends BaseActivity {
         });
 
     }
+    private float getSum(Integer a, Integer b) {
 
+        for (int i = a; i <= b; i++) {
+            sum += mData.getKLineDatas().get(i).close;
+        }
+        return sum;
+    }
 
 
     private void setData(MinuteHelper mData) {
+
         kLineDatas = mData.getKLineDatas();
         axisLeftBar.setAxisMaxValue(mData.getVolmax());
         String unit = MyUtils.getVolUnit(mData.getVolmax());
@@ -194,10 +206,26 @@ public class KLineActivity extends BaseActivity {
         ArrayList<String> xVals = new ArrayList<String>();
         ArrayList<BarEntry> barEntries = new ArrayList<BarEntry>();
         ArrayList<CandleEntry> candleEntries = new ArrayList<CandleEntry>();
+        ArrayList<Entry> line5Entries=new ArrayList<>();
+        ArrayList<Entry> line10Entries=new ArrayList<>();
+        ArrayList<Entry> line30Entries=new ArrayList<>();
         for (int i = 0, j = 0; i < mData.getKLineDatas().size(); i++, j++) {
             xVals.add(mData.getKLineDatas().get(i).date + "");
             barEntries.add(new BarEntry(mData.getKLineDatas().get(i).vol, i));
             candleEntries.add(new CandleEntry(i, mData.getKLineDatas().get(i).high, mData.getKLineDatas().get(i).low, mData.getKLineDatas().get(i).open, mData.getKLineDatas().get(i).close));
+            if(i>=4){
+                sum=0;
+                line5Entries.add(new Entry(getSum(i - 4, i)/5,i));
+            }
+            if(i>=9){
+                sum=0;
+                line10Entries.add(new Entry(getSum(i - 9, i)/10,i));
+            }
+            if(i>=29){
+                sum=0;
+                line30Entries.add(new Entry(getSum(i - 29, i)/30,i));
+            }
+
         }
         barDataSet = new BarDataSet(barEntries, "成交量");
         barDataSet.setBarSpacePercent(50); //bar空隙
@@ -216,19 +244,48 @@ public class KLineActivity extends BaseActivity {
         candleDataSet.setValueTextSize(10f);
         candleDataSet.setDrawValues(false);
         candleDataSet.setColor(Color.RED);
+        candleDataSet.setShadowWidth(1f);
         candleDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         CandleData candleData = new CandleData(xVals, candleDataSet);
 
 
+        ArrayList<ILineDataSet> sets = new ArrayList<ILineDataSet>();
+        sets.add(setMaLine(5,xVals, line5Entries));
+        sets.add(setMaLine(10,xVals, line10Entries));
+        sets.add(setMaLine(30, xVals, line30Entries));
+
+
         CombinedData combinedData=new CombinedData(xVals);
+        LineData lineData=new LineData(xVals,sets);
         combinedData.setData(candleData);
+        combinedData.setData(lineData);
         combinedchart.setData(combinedData);
         combinedchart.setVisibleXRange(30, 100);
+
 
         setOffset();
         barChart.invalidate();
         combinedchart.invalidate();
     }
+
+    @NonNull
+    private LineDataSet setMaLine(int ma,ArrayList<String> xVals, ArrayList<Entry> lineEntries) {
+        LineDataSet lineDataSetMa = new LineDataSet(lineEntries, "ma"+ma);
+        lineDataSetMa.setDrawHorizontalHighlightIndicator(false);
+        lineDataSetMa.setDrawValues(false);
+        if(ma==5) {
+            lineDataSetMa.setColor(Color.GREEN);
+        }else if(ma==10){
+            lineDataSetMa.setColor(Color.GRAY);
+        }else{
+            lineDataSetMa.setColor(Color.YELLOW);
+        }
+        lineDataSetMa.setLineWidth(1f);
+        lineDataSetMa.setDrawCircles(false);
+        lineDataSetMa.setAxisDependency(YAxis.AxisDependency.LEFT);
+        return lineDataSetMa;
+    }
+
     /*设置量表对齐*/
     private void setOffset() {
         float lineLeft = combinedchart.getViewPortHandler().offsetLeft();

@@ -2,6 +2,7 @@ package com.example.yanjiang.stockchart.mychart;
 
 import android.graphics.Canvas;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.github.mikephil.charting.renderer.YAxisRenderer;
 import com.github.mikephil.charting.utils.Transformer;
@@ -53,6 +54,7 @@ public class MyYAxisRenderer extends YAxisRenderer {
 
     @Override
     protected void drawYLabels(Canvas c, float fixedPosition, float[] positions, float offset) {
+        Log.e("@@@",fixedPosition+",");
        /*当有最小text的时候*/
         if (!TextUtils.isEmpty(mYAxis.getMinValue()) && mYAxis.isShowOnlyMinMaxEnabled()) {
             for (int i = 0; i < mYAxis.mEntryCount; i++) {

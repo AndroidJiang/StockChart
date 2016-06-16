@@ -3,7 +3,6 @@ package com.example.yanjiang.stockchart.mychart;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
-import android.util.Log;
 
 import com.example.yanjiang.stockchart.bean.MinuteHelper;
 import com.github.mikephil.charting.charts.LineChart;
@@ -99,7 +98,7 @@ public class MyLineChart extends LineChart {
                 myMarkerViewRight.refreshContent(e, mIndicesToHighlight[i]);
 
                 /*修复bug*/
-                invalidate();
+               invalidate();
                 /*重新计算大小*/
                 myMarkerViewLeft.measure(MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
                         MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
