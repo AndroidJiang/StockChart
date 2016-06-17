@@ -263,6 +263,8 @@ public class KLineActivity extends BaseActivity {
         combinedchart.setData(combinedData);
         combinedchart.setVisibleXRange(30, 100);
 
+        combinedchart.moveViewToX(mData.getKLineDatas().size()-1);
+        barChart.moveViewToX(mData.getDatas().size()-1);
 
         setOffset();
         barChart.invalidate();
