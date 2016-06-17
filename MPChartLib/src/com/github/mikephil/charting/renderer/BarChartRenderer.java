@@ -105,6 +105,8 @@ public class BarChartRenderer extends DataRenderer {
 
         trans.pointValuesToPixel(buffer.buffer);
 
+
+
         // draw the bar shadow before the values
         if (mChart.isDrawBarShadowEnabled()) {
 
@@ -154,7 +156,6 @@ public class BarChartRenderer extends DataRenderer {
 
                 if (!mViewPortHandler.isInBoundsRight(buffer.buffer[j]))
                     break;
-
 
                 /*应网友要求，柱状图加颜色，博主不知道颜色规则，但是代码逻辑上是如此，这里给出的规则是假如成交量上涨，则为红，下跌则为绿*/
                 int i = j / 4;
