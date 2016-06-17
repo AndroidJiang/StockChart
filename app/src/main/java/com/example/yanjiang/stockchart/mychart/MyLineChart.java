@@ -18,7 +18,6 @@ import com.github.mikephil.charting.highlight.Highlight;
 public class MyLineChart extends LineChart {
     private MyLeftMarkerView myMarkerViewLeft;
     private MyRightMarkerView myMarkerViewRight;
-    private Entry e;
     private MinuteHelper minuteHelper;
 
     public MyLineChart(Context context) {
@@ -80,15 +79,27 @@ public class MyLineChart extends LineChart {
         invalidate();
     }
 
-    /*感谢LoveSmileZh提醒，此处没问题，已优化*/
     @Override
     protected void drawMarkers(Canvas canvas) {
-        if (mIndicesToHighlight != null && myMarkerViewLeft != null && myMarkerViewRight != null) {
-            for (int i = 0; i < mIndicesToHighlight.length; i++) {
-                e = mData.getEntryForHighlight(mIndicesToHighlight[i]);
-                float[] pos = getMarkerPosition(e, mIndicesToHighlight[i]);
-                myMarkerViewLeft.draw(canvas, mViewPortHandler.contentLeft() - myMarkerViewLeft.getWidth(), pos[1] - myMarkerViewLeft.getHeight() / 2);
-                myMarkerViewRight.draw(canvas, mViewPortHandler.contentRight(), pos[1] - myMarkerViewRight.getHeight() / 2);
+        if (!mDrawMarkerViews || !valuesToHighlight())
+            return;
+        for (int i = 0; i < mIndicesToHighlight.length; i++) {
+            Highlight highlight = mIndicesToHighlight[i];
+            int xIndex = mIndicesToHighlight[i].getXIndex();
+            int dataSetIndex = mIndicesToHighlight[i].getDataSetIndex();
+            float deltaX = mXAxis != null
+                    ? mXAxis.mAxisRange
+                    : ((mData == null ? 0.f : mData.getXValCount()) - 1.f);
+            if (xIndex <= deltaX && xIndex <= deltaX * mAnimator.getPhaseX()) {
+                Entry e = mData.getEntryForHighlight(mIndicesToHighlight[i]);
+                // make sure entry not null
+                if (e == null || e.getXIndex() != mIndicesToHighlight[i].getXIndex())
+                    continue;
+                float[] pos = getMarkerPosition(e, highlight);
+                // check bounds
+                if (!mViewPortHandler.isInBounds(pos[0], pos[1]))
+                    continue;
+
                 float yValForXIndex1 = minuteHelper.getDatas().get(mIndicesToHighlight[i].getXIndex()).cjprice;
                 float yValForXIndex2 = minuteHelper.getDatas().get(mIndicesToHighlight[i].getXIndex()).per;
 
@@ -96,9 +107,8 @@ public class MyLineChart extends LineChart {
                 myMarkerViewRight.setData(yValForXIndex2);
                 myMarkerViewLeft.refreshContent(e, mIndicesToHighlight[i]);
                 myMarkerViewRight.refreshContent(e, mIndicesToHighlight[i]);
-
                 /*修复bug*/
-               invalidate();
+                // invalidate();
                 /*重新计算大小*/
                 myMarkerViewLeft.measure(MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
                         MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
@@ -108,8 +118,10 @@ public class MyLineChart extends LineChart {
                         MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
                 myMarkerViewRight.layout(0, 0, myMarkerViewRight.getMeasuredWidth(),
                         myMarkerViewRight.getMeasuredHeight());
+
+                myMarkerViewLeft.draw(canvas, mViewPortHandler.contentLeft() - myMarkerViewLeft.getWidth(), pos[1] - myMarkerViewLeft.getHeight() / 2);
+                myMarkerViewRight.draw(canvas, mViewPortHandler.contentRight(), pos[1] - myMarkerViewRight.getHeight() / 2);
             }
         }
-
     }
 }
