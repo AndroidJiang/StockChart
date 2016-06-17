@@ -3,7 +3,6 @@
 /local.properties
 /.idea/workspace.xml
 /.idea/libraries
-/app/src/main/java/com/example/yanjiang/stockchart/api/Constant.java
 .DS_Store
 /build
 /captures
