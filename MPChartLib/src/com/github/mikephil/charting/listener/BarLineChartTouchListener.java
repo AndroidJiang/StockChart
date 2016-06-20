@@ -72,7 +72,7 @@ public class BarLineChartTouchListener extends ChartTouchListener<BarLineChartBa
      * the minimum distance between the pointers that will trigger a zoom gesture
      */
     private float mMinScalePointerDistance;
-
+    private boolean Highlight;
     public BarLineChartTouchListener(BarLineChartBase<? extends BarLineScatterCandleBubbleData<? extends IBarLineScatterCandleBubbleDataSet<? extends Entry>>> chart, Matrix touchMatrix) {
         super(chart);
         this.mMatrix = touchMatrix;
@@ -114,7 +114,7 @@ public class BarLineChartTouchListener extends ChartTouchListener<BarLineChartBa
                 startAction(event);
 
                 stopDeceleration();
-
+                Highlight=true;
                 saveTouchStart(event);
 
                 break;
@@ -157,6 +157,7 @@ public class BarLineChartTouchListener extends ChartTouchListener<BarLineChartBa
 
                     mChart.disableScroll();
                     performDrag(event);
+                    Highlight=false;
 
                 } else if (mTouchMode == X_ZOOM || mTouchMode == Y_ZOOM || mTouchMode == PINCH_ZOOM) {
 
@@ -165,6 +166,12 @@ public class BarLineChartTouchListener extends ChartTouchListener<BarLineChartBa
                     if (mChart.isScaleXEnabled() || mChart.isScaleYEnabled())
                         performZoom(event);
 
+                }  else if (mTouchMode == HIGH_TLIGHT) {
+                    Log.e("@@@@@","high!!!");
+                    //if (mChart.isHighlightEnabled()) {
+                            Log.e("@@@@@","high");
+                        performHighlightDrag(event);
+                    //}
                 } else if (mTouchMode == NONE
                         && Math.abs(distance(event.getX(), mTouchStartPoint.x, event.getY(),
                         mTouchStartPoint.y)) > mDragTriggerDist) {
@@ -225,7 +232,7 @@ public class BarLineChartTouchListener extends ChartTouchListener<BarLineChartBa
 
                 mTouchMode = NONE;
                 mChart.enableScroll();
-
+                Highlight=true;
                 if (mVelocityTracker != null) {
                     mVelocityTracker.recycle();
                     mVelocityTracker = null;
@@ -541,20 +548,23 @@ public class BarLineChartTouchListener extends ChartTouchListener<BarLineChartBa
 
     @Override
     public void onLongPress(MotionEvent e) {
+        if(mDecelerationVelocity!=null&&mDecelerationVelocity.x==0&&Highlight) {
+            Log.e("***","!!!!");
+            mTouchMode = HIGH_TLIGHT;
+            mLastGesture = ChartGesture.LONG_PRESS;
+            performHighlightDrag(e);
+            OnChartGestureListener l = mChart.getOnChartGestureListener();
 
-        mLastGesture = ChartGesture.LONG_PRESS;
+            if (l != null) {
 
-        OnChartGestureListener l = mChart.getOnChartGestureListener();
-
-        if (l != null) {
-
-            l.onChartLongPressed(e);
+                l.onChartLongPressed(e);
+            }
         }
     }
-
+/*取消单机高亮，改为长按*/
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
-
+        //mChart.highlightTouch(null);
         mLastGesture = ChartGesture.SINGLE_TAP;
 
         OnChartGestureListener l = mChart.getOnChartGestureListener();

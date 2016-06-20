@@ -994,6 +994,11 @@ public abstract class Chart<T extends ChartData<? extends IDataSet<? extends Ent
      *
      * @return
      */
+
+    public boolean isHighlightEnabled() {
+        return mData == null ? true : mData.isHighlightEnabled();
+    }
+
     public float getYMax() {
         return mData.getYMax();
     }

@@ -90,7 +90,6 @@ public class KLineActivity extends BaseActivity {
         barChart.setDragEnabled(true);
         barChart.setScaleYEnabled(false);
         barChart.setAutoScaleMinMaxEnabled(true);
-        barChart.setHighlightPerDragEnabled(false);
         Legend barChartLegend = barChart.getLegend();
         barChartLegend.setEnabled(false);
         //bar x y轴
@@ -147,37 +146,34 @@ public class KLineActivity extends BaseActivity {
         axisRightK.setGridColor(getResources().getColor(R.color.minute_grayLine));
         combinedchart.setDragDecelerationEnabled(false);
         barChart.setDragDecelerationEnabled(false);
+
+        barChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
+                combinedchart.highlightValues(new Highlight[]{h});
+            }
+
+            @Override
+            public void onNothingSelected() {
+
+            }
+        });
+        combinedchart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
+                barChart.highlightValues(new Highlight[]{h});
+            }
+
+            @Override
+            public void onNothingSelected() {
+
+            }
+        });
+
         // 将K线控的滑动事件传递给交易量控件
         combinedchart.setOnChartGestureListener(new CoupleChartGestureListener(combinedchart, new Chart[]{barChart}));
         // 将交易量控件的滑动事件传递给K线控件
         barChart.setOnChartGestureListener(new CoupleChartGestureListener(barChart, new Chart[]{combinedchart}));
-
-        combinedchart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
-            @Override
-            public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-                //barChart.highlightValues(new Highlight[]{h});
-               // combinedchart.setHighlightValue(h);
-            }
-
-            @Override
-            public void onNothingSelected() {
-
-            }
-        });
-        barChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
-            @Override
-            public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-                //combinedchart.highlightValues(new Highlight[]{h});
-               // barChart.setHighlightValue(new Highlight(h.getXIndex(), 0));//此函数已经返回highlightBValues的变量，并且刷新，故上面方法可以注释
-                // barChart.setHighlightValue(h);
-            }
-
-            @Override
-            public void onNothingSelected() {
-
-            }
-        });
-
     }
     private float getSum(Integer a, Integer b) {
 
@@ -229,10 +225,10 @@ public class KLineActivity extends BaseActivity {
         }
         barDataSet = new BarDataSet(barEntries, "成交量");
         barDataSet.setBarSpacePercent(50); //bar空隙
-     /*   barDataSet.setHighLightColor(Color.WHITE);
-        barDataSet.setHighLightAlpha(255);*/
+        barDataSet.setHighlightEnabled(true);
+        barDataSet.setHighLightAlpha(255);
+        barDataSet.setHighLightColor(Color.WHITE);
         barDataSet.setDrawValues(false);
-        barDataSet.setHighlightEnabled(false);
         barDataSet.setColor(Color.RED);
         BarData barData = new BarData(xVals, barDataSet);
         barChart.setData(barData);
@@ -240,8 +236,9 @@ public class KLineActivity extends BaseActivity {
 
 
         CandleDataSet candleDataSet = new CandleDataSet(candleEntries, "KLine");
-        //candleDataSet.setDrawHorizontalHighlightIndicator(false);
-        candleDataSet.setHighlightEnabled(false);
+        candleDataSet.setDrawHorizontalHighlightIndicator(false);
+        candleDataSet.setHighlightEnabled(true);
+        candleDataSet.setHighLightColor(Color.WHITE);
         candleDataSet.setValueTextSize(10f);
         candleDataSet.setDrawValues(false);
         candleDataSet.setColor(Color.RED);
@@ -251,8 +248,8 @@ public class KLineActivity extends BaseActivity {
 
 
         ArrayList<ILineDataSet> sets = new ArrayList<ILineDataSet>();
-        sets.add(setMaLine(5,xVals, line5Entries));
-        sets.add(setMaLine(10,xVals, line10Entries));
+        sets.add(setMaLine(5, xVals, line5Entries));
+        sets.add(setMaLine(10, xVals, line10Entries));
         sets.add(setMaLine(30, xVals, line30Entries));
 
 
@@ -263,8 +260,8 @@ public class KLineActivity extends BaseActivity {
         combinedchart.setData(combinedData);
         combinedchart.setVisibleXRange(30, 100);
 
-        combinedchart.moveViewToX(mData.getKLineDatas().size()-1);
-        barChart.moveViewToX(mData.getDatas().size()-1);
+      /*  combinedchart.moveViewToX(mData.getKLineDatas().size()-1);
+        barChart.moveViewToX(mData.getDatas().size()-1);*/
 
         setOffset();
         barChart.invalidate();
