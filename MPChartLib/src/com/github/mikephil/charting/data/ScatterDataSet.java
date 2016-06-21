@@ -46,7 +46,7 @@ public class ScatterDataSet extends LineScatterCandleRadarDataSet<Entry> impleme
     @Override
     public DataSet<Entry> copy() {
 
-        List<Entry> yVals = new ArrayList<Entry>();
+        List<Entry> yVals = new ArrayList<>();
 
         for (int i = 0; i < mYVals.size(); i++) {
             yVals.add(mYVals.get(i).copy());

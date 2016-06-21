@@ -74,7 +74,7 @@ public class RealmLineDataSet<T extends RealmObject> extends RealmLineRadarDataS
      */
     public RealmLineDataSet(RealmResults<T> result, String yValuesField) {
         super(result, yValuesField);
-        mCircleColors = new ArrayList<Integer>();
+        mCircleColors = new ArrayList<>();
 
         // default color
         mCircleColors.add(Color.rgb(140, 234, 255));
@@ -92,7 +92,7 @@ public class RealmLineDataSet<T extends RealmObject> extends RealmLineRadarDataS
      */
     public RealmLineDataSet(RealmResults<T> result, String yValuesField, String xIndexField) {
         super(result, yValuesField, xIndexField);
-        mCircleColors = new ArrayList<Integer>();
+        mCircleColors = new ArrayList<>();
 
         // default color
         mCircleColors.add(Color.rgb(140, 234, 255));
@@ -310,7 +310,7 @@ public class RealmLineDataSet<T extends RealmObject> extends RealmLineRadarDataS
      */
     public void setCircleColors(int[] colors, Context c) {
 
-        List<Integer> clrs = new ArrayList<Integer>();
+        List<Integer> clrs = new ArrayList<>();
 
         for (int color : colors) {
             clrs.add(c.getResources().getColor(color));
@@ -334,7 +334,7 @@ public class RealmLineDataSet<T extends RealmObject> extends RealmLineRadarDataS
      * resets the circle-colors array and creates a new one
      */
     public void resetCircleColors() {
-        mCircleColors = new ArrayList<Integer>();
+        mCircleColors = new ArrayList<>();
     }
 
     /**

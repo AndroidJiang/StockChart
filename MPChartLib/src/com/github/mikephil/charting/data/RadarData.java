@@ -42,7 +42,7 @@ public class RadarData extends ChartData<IRadarDataSet> {
     }
 
     private static List<IRadarDataSet> toList(IRadarDataSet dataSet) {
-        List<IRadarDataSet> sets = new ArrayList<IRadarDataSet>();
+        List<IRadarDataSet> sets = new ArrayList<>();
         sets.add(dataSet);
         return sets;
     }

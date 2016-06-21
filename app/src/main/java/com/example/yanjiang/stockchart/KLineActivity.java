@@ -199,9 +199,9 @@ public class KLineActivity extends BaseActivity {
         axisRightBar.setAxisMaxValue(mData.getVolmax());
 
 
-        ArrayList<String> xVals = new ArrayList<String>();
-        ArrayList<BarEntry> barEntries = new ArrayList<BarEntry>();
-        ArrayList<CandleEntry> candleEntries = new ArrayList<CandleEntry>();
+        ArrayList<String> xVals = new ArrayList<>();
+        ArrayList<BarEntry> barEntries = new ArrayList<>();
+        ArrayList<CandleEntry> candleEntries = new ArrayList<>();
         ArrayList<Entry> line5Entries=new ArrayList<>();
         ArrayList<Entry> line10Entries=new ArrayList<>();
         ArrayList<Entry> line30Entries=new ArrayList<>();
@@ -247,7 +247,7 @@ public class KLineActivity extends BaseActivity {
         CandleData candleData = new CandleData(xVals, candleDataSet);
 
 
-        ArrayList<ILineDataSet> sets = new ArrayList<ILineDataSet>();
+        ArrayList<ILineDataSet> sets = new ArrayList<>();
         sets.add(setMaLine(5, xVals, line5Entries));
         sets.add(setMaLine(10, xVals, line10Entries));
         sets.add(setMaLine(30, xVals, line30Entries));

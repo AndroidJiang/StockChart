@@ -43,7 +43,7 @@ public abstract class DataSet<T extends Entry> extends BaseDataSet<T> {
         this.mYVals = yVals;
 
         if (mYVals == null)
-            mYVals = new ArrayList<T>();
+            mYVals = new ArrayList<>();
 
         calcMinMax(0, mYVals.size());
     }
@@ -161,7 +161,7 @@ public abstract class DataSet<T extends Entry> extends BaseDataSet<T> {
         float val = e.getVal();
 
         if (mYVals == null) {
-            mYVals = new ArrayList<T>();
+            mYVals = new ArrayList<>();
         }
 
         if (mYVals.isEmpty()) {
@@ -199,7 +199,7 @@ public abstract class DataSet<T extends Entry> extends BaseDataSet<T> {
 
         List<T> yVals = getYVals();
         if (yVals == null) {
-            yVals = new ArrayList<T>();
+            yVals = new ArrayList<>();
         }
 
         if (yVals.isEmpty()) {
@@ -337,7 +337,7 @@ public abstract class DataSet<T extends Entry> extends BaseDataSet<T> {
     @Override
     public List<T> getEntriesForXIndex(int xIndex) {
 
-        List<T> entries = new ArrayList<T>();
+        List<T> entries = new ArrayList<>();
 
         int low = 0;
         int high = mYVals.size() - 1;

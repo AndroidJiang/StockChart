@@ -1410,7 +1410,7 @@ public abstract class Chart<T extends ChartData<? extends IDataSet<? extends Ent
      */
     public List<Entry> getEntriesAtIndex(int xIndex) {
 
-        List<Entry> vals = new ArrayList<Entry>();
+        List<Entry> vals = new ArrayList<>();
 
         for (int i = 0; i < mData.getDataSetCount(); i++) {
 
@@ -1642,7 +1642,7 @@ public abstract class Chart<T extends ChartData<? extends IDataSet<? extends Ent
     /**
      * tasks to be done after the view is setup
      */
-    protected ArrayList<Runnable> mJobs = new ArrayList<Runnable>();
+    protected ArrayList<Runnable> mJobs = new ArrayList<>();
 
     public void removeViewportJob(Runnable job) {
         mJobs.remove(job);

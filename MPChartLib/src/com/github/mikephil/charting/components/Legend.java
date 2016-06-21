@@ -882,9 +882,9 @@ public class Legend extends ComponentBase {
                 float contentWidth = viewPortHandler.contentWidth() * mMaxSizePercent;
 
                 // Prepare arrays for calculated layout
-                ArrayList<FSize> calculatedLabelSizes = new ArrayList<FSize>(labelCount);
-                ArrayList<Boolean> calculatedLabelBreakPoints = new ArrayList<Boolean>(labelCount);
-                ArrayList<FSize> calculatedLineSizes = new ArrayList<FSize>();
+                ArrayList<FSize> calculatedLabelSizes = new ArrayList<>(labelCount);
+                ArrayList<Boolean> calculatedLabelBreakPoints = new ArrayList<>(labelCount);
+                ArrayList<FSize> calculatedLineSizes = new ArrayList<>();
 
                 // Start calculating layout
                 float maxLineWidth = 0.f;

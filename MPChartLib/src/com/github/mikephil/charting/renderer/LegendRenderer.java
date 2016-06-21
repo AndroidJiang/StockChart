@@ -79,8 +79,8 @@ public class LegendRenderer extends Renderer {
 
         if (!mLegend.isLegendCustom()) {
 
-            List<String> labels = new ArrayList<String>();
-            List<Integer> colors = new ArrayList<Integer>();
+            List<String> labels = new ArrayList<>();
+            List<Integer> colors = new ArrayList<>();
 
             // loop for building up the colors and labels used in the legend
             for (int i = 0; i < data.getDataSetCount(); i++) {

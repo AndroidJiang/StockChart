@@ -44,7 +44,7 @@ public class CombinedChartRenderer extends DataRenderer {
      */
     protected void createRenderers(CombinedChart chart, ChartAnimator animator, ViewPortHandler viewPortHandler) {
 
-        mRenderers = new ArrayList<DataRenderer>();
+        mRenderers = new ArrayList<>();
 
         DrawOrder[] orders = chart.getDrawOrder();
 

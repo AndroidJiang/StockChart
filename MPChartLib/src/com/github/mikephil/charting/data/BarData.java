@@ -50,7 +50,7 @@ public class BarData extends BarLineScatterCandleBubbleData<IBarDataSet> {
     }
 
     private static List<IBarDataSet> toList(IBarDataSet dataSet) {
-        List<IBarDataSet> sets = new ArrayList<IBarDataSet>();
+        List<IBarDataSet> sets = new ArrayList<>();
         sets.add(dataSet);
         return sets;
     }

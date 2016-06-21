@@ -268,11 +268,11 @@ public class MinutesActivity extends BaseActivity {
         axisRightLine.addLimitLine(ll);
         axisRightLine.setBaseValue(0);
 
-        ArrayList<Entry> lineCJEntries = new ArrayList<Entry>();
-        ArrayList<Entry> lineJJEntries = new ArrayList<Entry>();
-        ArrayList<String> dateList = new ArrayList<String>();
-        ArrayList<BarEntry> barEntries = new ArrayList<BarEntry>();
-        ArrayList<String> xVals = new ArrayList<String>();
+        ArrayList<Entry> lineCJEntries = new ArrayList<>();
+        ArrayList<Entry> lineJJEntries = new ArrayList<>();
+        ArrayList<String> dateList = new ArrayList<>();
+        ArrayList<BarEntry> barEntries = new ArrayList<>();
+        ArrayList<String> xVals = new ArrayList<>();
         Log.e("##", Integer.toString(xVals.size()));
         for (int i = 0, j = 0; i < mData.getDatas().size(); i++, j++) {
            /* //避免数据重复，skip也能正常显示
@@ -320,7 +320,7 @@ public class MinutesActivity extends BaseActivity {
         //谁为基准
         d1.setAxisDependency(YAxis.AxisDependency.LEFT);
         // d2.setAxisDependency(YAxis.AxisDependency.RIGHT);
-        ArrayList<ILineDataSet> sets = new ArrayList<ILineDataSet>();
+        ArrayList<ILineDataSet> sets = new ArrayList<>();
         sets.add(d1);
         sets.add(d2);
         /*注老版本LineData参数可以为空，最新版本会报错，修改进入ChartData加入if判断*/
