@@ -845,7 +845,7 @@ public abstract class ChartData<T extends IDataSet<? extends Entry>> {
         List<String> xvals = new ArrayList<String>();
 
         for (int i = from; i < to; i++) {
-            xvals.add("" + i);
+            xvals.add(Integer.toString(i));
         }
 
         return xvals;
