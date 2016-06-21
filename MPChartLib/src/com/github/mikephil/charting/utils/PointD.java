@@ -19,6 +19,7 @@ public class PointD {
     /**
      * returns a string representation of the object
      */
+    @Override
     public String toString() {
         return "PointD, x: " + x + ", y: " + y;
     }
