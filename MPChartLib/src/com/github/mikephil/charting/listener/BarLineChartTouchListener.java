@@ -493,7 +493,7 @@ public class BarLineChartTouchListener extends ChartTouchListener<BarLineChartBa
         ViewPortHandler vph = mChart.getViewPortHandler();
 
         float xTrans = x - vph.offsetLeft();
-        float yTrans = 0f;
+        float yTrans;
 
         // check if axis is inverted
         if (mChart.isAnyAxisInverted() && mClosestDataSetToTouch != null
