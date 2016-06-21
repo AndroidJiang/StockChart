@@ -771,7 +771,7 @@ public abstract class ChartData<T extends IDataSet<? extends Entry>> {
     public int[] getColors() {
 
         if (mDataSets == null)
-            return null;
+            return new int[0];
 
         int clrcnt = 0;
 
