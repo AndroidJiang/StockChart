@@ -18,9 +18,9 @@ import okhttp3.ResponseBody;
  */
 public class HttpInterceptor implements Interceptor {
     private static String mBoundry;
-    private final static int boundaryLength = 32;
+    private static final int boundaryLength = 32;
     private Context context;
-    private final static String boundaryAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_";
+    private static final String boundaryAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_";
 
     public HttpInterceptor(Context context) {
         this.context = context;
