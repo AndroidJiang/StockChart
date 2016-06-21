@@ -46,7 +46,7 @@ public class CombinedHighlighter extends ChartHighlighter<BarLineScatterCandleBu
                     continue;
 
                 // extract all y-values from all DataSets at the given x-index
-                final float yVals[] = dataSet.getYValsForXIndex(xIndex);
+                final float[] yVals = dataSet.getYValsForXIndex(xIndex);
                 for (float yVal : yVals) {
                     pts[1] = yVal;
 
