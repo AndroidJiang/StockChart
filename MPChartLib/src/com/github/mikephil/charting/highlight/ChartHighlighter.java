@@ -77,9 +77,7 @@ public class ChartHighlighter<T extends BarLineScatterCandleBubbleDataProvider> 
 
 		YAxis.AxisDependency axis = leftdist < rightdist ? YAxis.AxisDependency.LEFT : YAxis.AxisDependency.RIGHT;
 
-		SelectionDetail detail = Utils.getClosestSelectionDetailByPixelY(valsAtIndex, y, axis);
-
-		return detail;
+		return Utils.getClosestSelectionDetailByPixelY(valsAtIndex, y, axis);
 	}
 
 	/**

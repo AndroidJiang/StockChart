@@ -116,8 +116,7 @@ public abstract class Utils {
         }
 
         DisplayMetrics metrics = mMetrics;
-        float px = dp * (metrics.densityDpi / 160f);
-        return px;
+        return dp * (metrics.densityDpi / 160f);
     }
 
     /**
@@ -142,8 +141,7 @@ public abstract class Utils {
         }
 
         DisplayMetrics metrics = mMetrics;
-        float dp = px / (metrics.densityDpi / 160f);
-        return dp;
+        return px / (metrics.densityDpi / 160f);
     }
 
     /**
@@ -545,9 +543,8 @@ public abstract class Utils {
      */
     public static PointF getPosition(PointF center, float dist, float angle) {
 
-        PointF p = new PointF((float) (center.x + dist * Math.cos(Math.toRadians(angle))),
+        return new PointF((float) (center.x + dist * Math.cos(Math.toRadians(angle))),
                 (float) (center.y + dist * Math.sin(Math.toRadians(angle))));
-        return p;
     }
 
     public static void velocityTrackerPointerUpCleanUpIfNecessary(MotionEvent ev,

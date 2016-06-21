@@ -282,9 +282,8 @@ public abstract class PieRadarChartBase<T extends ChartData<? extends IDataSet<?
      */
     protected PointF getPosition(PointF center, float dist, float angle) {
 
-        PointF p = new PointF((float) (center.x + dist * Math.cos(Math.toRadians(angle))),
+        return new PointF((float) (center.x + dist * Math.cos(Math.toRadians(angle))),
                 (float) (center.y + dist * Math.sin(Math.toRadians(angle))));
-        return p;
     }
 
     /**

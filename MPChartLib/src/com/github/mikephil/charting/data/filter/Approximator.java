@@ -259,9 +259,7 @@ public class Approximator {
 
         float dx = p2.getXIndex() * mDeltaRatio - p1.getXIndex() * mDeltaRatio;
         float dy = p2.getVal() * mScaleRatio - p1.getVal() * mScaleRatio;
-        double angle = Math.atan2(dy, dx) * 180.0 / Math.PI;
-
-        return angle;
+        return Math.atan2(dy, dx) * 180.0 / Math.PI;
     }
 
     /**
@@ -275,8 +273,6 @@ public class Approximator {
 
         float dx = p2.getXIndex() - p1.getXIndex();
         float dy = p2.getVal() - p1.getVal();
-        double angle = Math.atan2(dy, dx) * 180.0 / Math.PI;
-
-        return angle;
+        return Math.atan2(dy, dx) * 180.0 / Math.PI;
     }
 }

@@ -64,8 +64,7 @@ public class BubbleChartRenderer extends DataRenderer {
         final float factor = normalizeSize
                 ? ((maxSize == 0f) ? 1f : (float) Math.sqrt(entrySize / maxSize))
                 : entrySize;
-        final float shapeSize = reference * factor;
-        return shapeSize;
+        return reference * factor;
     }
 
     protected void drawDataSet(Canvas c, IBubbleDataSet dataSet) {

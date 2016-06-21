@@ -42,9 +42,7 @@ public class BubbleEntry extends Entry {
 
     public BubbleEntry copy() {
 
-        BubbleEntry c = new BubbleEntry(getXIndex(), getVal(), mSize, getData());
-
-        return c;
+        return new BubbleEntry(getXIndex(), getVal(), mSize, getData());
     }
 
     /**

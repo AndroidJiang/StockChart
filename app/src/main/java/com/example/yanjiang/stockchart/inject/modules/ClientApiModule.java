@@ -51,14 +51,12 @@ public class ClientApiModule {
     @Provides
     @Singleton
     public OkHttpClient provideOkHttpClient(Context context, HttpLoggingInterceptor httpLoggingInterceptor) {
-        OkHttpClient client = new OkHttpClient.Builder()
+        return new OkHttpClient.Builder()
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .writeTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)
                 .addInterceptor(httpLoggingInterceptor)
                 .build();
-
-        return client;
     }
 
     @Provides
