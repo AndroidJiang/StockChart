@@ -386,7 +386,7 @@ public abstract class Chart<T extends ChartData<? extends IDataSet<? extends Ent
      */
     protected void calculateFormatter(float min, float max) {
 
-        float reference = 0f;
+        float reference;
 
         if (mData == null || mData.getXValCount() < 2) {
 
@@ -1527,7 +1527,7 @@ public abstract class Chart<T extends ChartData<? extends IDataSet<? extends Ent
 
         Bitmap b = getChartBitmap();
 
-        OutputStream stream = null;
+        OutputStream stream;
         try {
             stream = new FileOutputStream(Environment.getExternalStorageDirectory().getPath()
                     + pathOnSD + "/" + title
@@ -1575,7 +1575,7 @@ public abstract class Chart<T extends ChartData<? extends IDataSet<? extends Ent
             }
         }
 
-        String mimeType = "";
+        String mimeType;
         switch (format) {
             case PNG:
                 mimeType = "image/png";
@@ -1596,7 +1596,7 @@ public abstract class Chart<T extends ChartData<? extends IDataSet<? extends Ent
         }
 
         String filePath = file.getAbsolutePath() + "/" + fileName;
-        FileOutputStream out = null;
+        FileOutputStream out;
         try {
             out = new FileOutputStream(filePath);
 

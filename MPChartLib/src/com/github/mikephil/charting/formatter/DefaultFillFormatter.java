@@ -15,7 +15,7 @@ public class DefaultFillFormatter implements FillFormatter {
     @Override
     public float getFillLinePosition(ILineDataSet dataSet, LineDataProvider dataProvider) {
 
-        float fillMin = 0f;
+        float fillMin;
         float chartMaxY = dataProvider.getYChartMax();
         float chartMinY = dataProvider.getYChartMin();
 

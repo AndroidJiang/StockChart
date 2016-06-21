@@ -181,7 +181,7 @@ public abstract class PieRadarChartBase<T extends ChartData<? extends IDataSet<?
                     break;
 
                 case HORIZONTAL:
-                    float yLegendOffset = 0.f;
+                    float yLegendOffset;
 
                     if (mLegend.getVerticalAlignment() == Legend.LegendVerticalAlignment.TOP ||
                             mLegend.getVerticalAlignment() == Legend.LegendVerticalAlignment.BOTTOM) {
@@ -299,10 +299,10 @@ public abstract class PieRadarChartBase<T extends ChartData<? extends IDataSet<?
 
         PointF c = getCenterOffsets();
 
-        float dist = 0f;
+        float dist;
 
-        float xDist = 0f;
-        float yDist = 0f;
+        float xDist;
+        float yDist;
 
         if (x > c.x) {
             xDist = x - c.x;

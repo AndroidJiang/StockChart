@@ -220,10 +220,10 @@ public class LineChartRenderer extends LineRadarRenderer {
 
         if (size - minx >= 2) {
 
-            float prevDx = 0f;
-            float prevDy = 0f;
-            float curDx = 0f;
-            float curDy = 0f;
+            float prevDx;
+            float prevDy;
+            float curDx;
+            float curDy;
 
             Entry prevPrev = dataSet.getEntryForIndex(minx);
             Entry prev = prevPrev;
@@ -328,7 +328,7 @@ public class LineChartRenderer extends LineRadarRenderer {
 
         mRenderPaint.setStyle(Paint.Style.STROKE);
 
-        Canvas canvas = null;
+        Canvas canvas;
 
         // if the data-set is dashed, draw on bitmap-canvas
         if (dataSet.isDashedLineEnabled()) {

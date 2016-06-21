@@ -87,7 +87,7 @@ public class YAxisRendererHorizontalBarChart extends YAxisRenderer {
         AxisDependency dependency = mYAxis.getAxisDependency();
         YAxisLabelPosition labelPosition = mYAxis.getLabelPosition();
 
-        float yPos = 0f;
+        float yPos;
 
         if (dependency == AxisDependency.LEFT) {
 

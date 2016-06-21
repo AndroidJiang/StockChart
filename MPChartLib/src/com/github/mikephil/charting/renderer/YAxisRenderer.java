@@ -201,7 +201,7 @@ public class YAxisRenderer extends AxisRenderer {
         AxisDependency dependency = mYAxis.getAxisDependency();
         YAxisLabelPosition labelPosition = mYAxis.getLabelPosition();
 
-        float xPos = 0f;
+        float xPos;
 
         if (dependency == AxisDependency.LEFT) {
 
