@@ -199,7 +199,7 @@ public class PieChartRenderer extends DataRenderer {
         int visibleAngleCount = 0;
         for (int j = 0; j < entryCount; j++) {
             // draw only if the value is greater than zero
-            if ((Math.abs(dataSet.getEntryForIndex(j).getVal()) > 0.000001)) {
+            if (Math.abs(dataSet.getEntryForIndex(j).getVal()) > 0.000001) {
                 visibleAngleCount++;
             }
         }
@@ -214,7 +214,7 @@ public class PieChartRenderer extends DataRenderer {
             Entry e = dataSet.getEntryForIndex(j);
 
             // draw only if the value is greater than zero
-            if ((Math.abs(e.getVal()) > 0.000001)) {
+            if (Math.abs(e.getVal()) > 0.000001) {
 
                 if (!mChart.needsHighlight(e.getXIndex(),
                         mChart.getData().getIndexOfDataSet(dataSet))) {
@@ -709,7 +709,7 @@ public class PieChartRenderer extends DataRenderer {
             int visibleAngleCount = 0;
             for (int j = 0; j < entryCount; j++) {
                 // draw only if the value is greater than zero
-                if ((Math.abs(set.getEntryForIndex(j).getVal()) > 0.000001)) {
+                if (Math.abs(set.getEntryForIndex(j).getVal()) > 0.000001) {
                     visibleAngleCount++;
                 }
             }
@@ -898,7 +898,7 @@ public class PieChartRenderer extends DataRenderer {
             Entry e = dataSet.getEntryForIndex(j);
 
             // draw only if the value is greater than zero
-            if ((Math.abs(e.getVal()) > 0.000001)) {
+            if (Math.abs(e.getVal()) > 0.000001) {
 
                 float x = (float) ((r - circleRadius)
                         * Math.cos(Math.toRadians((angle + sliceAngle)

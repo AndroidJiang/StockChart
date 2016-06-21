@@ -103,7 +103,7 @@ public class BarLineChartTouchListener extends ChartTouchListener<BarLineChartBa
             mGestureDetector.onTouchEvent(event);
         }
 
-        if (!mChart.isDragEnabled() && (!mChart.isScaleXEnabled() && !mChart.isScaleYEnabled()))
+        if (!mChart.isDragEnabled() && !mChart.isScaleXEnabled() && !mChart.isScaleYEnabled())
             return true;
 
         // Handle touch events here...
@@ -353,8 +353,8 @@ public class BarLineChartTouchListener extends ChartTouchListener<BarLineChartBa
                             h.canZoomOutMoreY() :
                             h.canZoomInMoreY();
 
-                    float scaleX = (mChart.isScaleXEnabled()) ? scale : 1f;
-                    float scaleY = (mChart.isScaleYEnabled()) ? scale : 1f;
+                    float scaleX = mChart.isScaleXEnabled() ? scale : 1f;
+                    float scaleY = mChart.isScaleYEnabled() ? scale : 1f;
 
                     if (canZoomMoreY || canZoomMoreX) {
 
