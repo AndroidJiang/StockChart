@@ -38,8 +38,8 @@ public abstract class Utils {
     private static DisplayMetrics mMetrics;
     private static int mMinimumFlingVelocity = 50;
     private static int mMaximumFlingVelocity = 8000;
-    public final static double DEG2RAD = (Math.PI / 180.0);
-    public final static float FDEG2RAD = ((float) Math.PI / 180.f);
+    public static final double DEG2RAD = (Math.PI / 180.0);
+    public static final float FDEG2RAD = ((float) Math.PI / 180.f);
     
     /**
      * Prevent class instantiation.
