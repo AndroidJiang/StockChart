@@ -38,7 +38,7 @@ public class HttpInterceptor implements Interceptor {
         String cookie = sharedPreferences.getString("cookie", "");
         Request request = chain.request();
         Response response;
-        if (!cookie.equals("")) {
+        if (!"".equals(cookie)) {
             Request compressedRequest = request.newBuilder()
                     .header("Content-type","application/x-www-form-urlencoded; charset=UTF-8")
                     .header("cookie", cookie.substring(0,cookie.length()-1))

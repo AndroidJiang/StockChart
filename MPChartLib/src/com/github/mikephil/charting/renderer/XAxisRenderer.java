@@ -286,7 +286,7 @@ public class XAxisRenderer extends AxisRenderer {
         String label = limitLine.getLabel();
 
         // if drawing the limit-value label is enabled
-        if (label != null && !label.equals("")) {
+        if (label != null && !"".equals(label)) {
 
             mLimitLinePaint.setStyle(limitLine.getTextStyle());
             mLimitLinePaint.setPathEffect(null);
