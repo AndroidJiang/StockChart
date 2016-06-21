@@ -273,7 +273,7 @@ public class MinutesActivity extends BaseActivity {
         ArrayList<String> dateList = new ArrayList<String>();
         ArrayList<BarEntry> barEntries = new ArrayList<BarEntry>();
         ArrayList<String> xVals = new ArrayList<String>();
-        Log.e("##", xVals.size() + "");
+        Log.e("##", Integer.toString(xVals.size()));
         for (int i = 0, j = 0; i < mData.getDatas().size(); i++, j++) {
            /* //避免数据重复，skip也能正常显示
             if (mData.getDatas().get(i).time.equals("13:30")) {
