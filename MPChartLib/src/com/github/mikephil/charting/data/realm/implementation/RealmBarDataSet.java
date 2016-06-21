@@ -3,7 +3,6 @@ package com.github.mikephil.charting.data.realm.implementation;
 import android.graphics.Color;
 
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.realm.base.RealmBarLineScatterCandleBubbleDataSet;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 

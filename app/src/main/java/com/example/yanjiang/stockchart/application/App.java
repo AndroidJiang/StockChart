@@ -1,7 +1,6 @@
 package com.example.yanjiang.stockchart.application;
 
 import android.app.Application;
-import android.os.Handler;
 
 import com.example.yanjiang.stockchart.BuildConfig;
 import com.example.yanjiang.stockchart.inject.component.AppComponent;

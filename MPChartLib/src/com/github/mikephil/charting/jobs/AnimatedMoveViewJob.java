@@ -1,8 +1,6 @@
 package com.github.mikephil.charting.jobs;
 
-import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
-import android.annotation.SuppressLint;
 import android.view.View;
 
 import com.github.mikephil.charting.utils.Transformer;
