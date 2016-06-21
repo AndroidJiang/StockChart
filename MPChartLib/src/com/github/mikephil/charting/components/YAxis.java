@@ -560,11 +560,8 @@ public class YAxis extends AxisBase {
      * @return
      */
     public boolean needsOffset() {
-        if (isEnabled() && isDrawLabelsEnabled() && getLabelPosition() == YAxisLabelPosition
-                .OUTSIDE_CHART)
-            return true;
-        else
-            return false;
+        return (isEnabled() && isDrawLabelsEnabled() && getLabelPosition() == YAxisLabelPosition
+                .OUTSIDE_CHART);
     }
 
     /**

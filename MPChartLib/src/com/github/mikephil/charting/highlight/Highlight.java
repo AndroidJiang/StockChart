@@ -147,11 +147,8 @@ public class Highlight {
         if (h == null)
             return false;
         else {
-            if (this.mDataSetIndex == h.mDataSetIndex && this.mXIndex == h.mXIndex
-                    && this.mStackIndex == h.mStackIndex)
-                return true;
-            else
-                return false;
+            return (this.mDataSetIndex == h.mDataSetIndex && this.mXIndex == h.mXIndex
+                    && this.mStackIndex == h.mStackIndex);
         }
     }
 
