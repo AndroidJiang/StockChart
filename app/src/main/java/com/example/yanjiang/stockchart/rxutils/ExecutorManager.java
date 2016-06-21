@@ -27,6 +27,7 @@ public class ExecutorManager {
     private static final ThreadFactory eventThreadFactory = new ThreadFactory() {
         private final AtomicInteger mCount = new AtomicInteger(1);
 
+        @Override
         public Thread newThread(@NonNull Runnable r) {
             return new Thread(r, "eventAsyncAndBackground #" + mCount.getAndIncrement());
         }
