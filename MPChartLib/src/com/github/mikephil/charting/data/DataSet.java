@@ -164,7 +164,7 @@ public abstract class DataSet<T extends Entry> extends BaseDataSet<T> {
             mYVals = new ArrayList<T>();
         }
 
-        if (mYVals.size() == 0) {
+        if (mYVals.isEmpty()) {
             mYMax = val;
             mYMin = val;
         } else {
@@ -174,7 +174,7 @@ public abstract class DataSet<T extends Entry> extends BaseDataSet<T> {
                 mYMin = val;
         }
 
-        if (mYVals.size() > 0 && mYVals.get(mYVals.size() - 1).getXIndex() > e.getXIndex()) {
+        if (!mYVals.isEmpty() && mYVals.get(mYVals.size() - 1).getXIndex() > e.getXIndex()) {
             int closestIndex = getEntryIndex(e.getXIndex(), Rounding.UP);
             mYVals.add(closestIndex, e);
             return;
@@ -202,7 +202,7 @@ public abstract class DataSet<T extends Entry> extends BaseDataSet<T> {
             yVals = new ArrayList<T>();
         }
 
-        if (yVals.size() == 0) {
+        if (yVals.isEmpty()) {
             mYMax = val;
             mYMin = val;
         } else {

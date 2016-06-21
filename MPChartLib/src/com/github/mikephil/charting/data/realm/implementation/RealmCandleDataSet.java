@@ -137,7 +137,7 @@ public class RealmCandleDataSet<T extends RealmObject> extends RealmLineScatterC
         if (mValues == null)
             return;
 
-        if (mValues.size() == 0)
+        if (mValues.isEmpty())
             return;
 
         int endValue;

@@ -106,7 +106,7 @@ public class CandleDataSet extends LineScatterCandleRadarDataSet<CandleEntry> im
         if (mYVals == null)
             return;
 
-        if (mYVals.size() == 0)
+        if (mYVals.isEmpty())
             return;
 
         int endValue;

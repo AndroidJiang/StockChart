@@ -71,7 +71,7 @@ public class RealmBubbleDataSet<T extends RealmObject> extends RealmBarLineScatt
         if (mValues == null)
             return;
 
-        if (mValues.size() == 0)
+        if (mValues.isEmpty())
             return;
 
         int endValue;
