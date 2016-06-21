@@ -172,7 +172,7 @@ public class BubbleChartRenderer extends DataRenderer {
                     if (!mViewPortHandler.isInBoundsRight(x))
                         break;
 
-                    if ((!mViewPortHandler.isInBoundsLeft(x) || !mViewPortHandler.isInBoundsY(y)))
+                    if (!mViewPortHandler.isInBoundsLeft(x) || !mViewPortHandler.isInBoundsY(y))
                         continue;
 
                     BubbleEntry entry = dataSet.getEntryForIndex(j / 2 + minx);

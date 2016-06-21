@@ -51,8 +51,8 @@ public class Transformer {
      */
     public void prepareMatrixValuePx(float xChartMin, float deltaX, float deltaY, float yChartMin) {
 
-        float scaleX = (float) ((mViewPortHandler.contentWidth()) / deltaX);
-        float scaleY = (float) ((mViewPortHandler.contentHeight()) / deltaY);
+        float scaleX = (float) (mViewPortHandler.contentWidth() / deltaX);
+        float scaleY = (float) (mViewPortHandler.contentHeight() / deltaY);
 
         if (Float.isInfinite(scaleX))
         {

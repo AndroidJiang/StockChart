@@ -812,7 +812,7 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
      * @param minXRange The minimum visible range of x-values.
      */
     public void setVisibleXRangeMinimum(float minXRange) {
-        float xScale = mXAxis.mAxisRange / (minXRange);
+        float xScale = mXAxis.mAxisRange / minXRange;
         mViewPortHandler.setMaximumScaleX(xScale);
     }
 
