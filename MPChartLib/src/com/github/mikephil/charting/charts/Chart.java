@@ -353,10 +353,7 @@ public abstract class Chart<T extends ChartData<? extends IDataSet<? extends Ent
             return true;
         else {
 
-            if (mData.getYValCount() <= 0)
-                return true;
-            else
-                return false;
+            return mData.getYValCount() <= 0;
         }
     }
 

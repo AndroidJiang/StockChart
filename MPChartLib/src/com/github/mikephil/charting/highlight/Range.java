@@ -22,10 +22,7 @@ public final class Range {
 	 */
 	public boolean contains(float value) {
 
-		if (value > from && value <= to)
-			return true;
-		else
-			return false;
+		return (value > from && value <= to);
 	}
 
 	public boolean isLarger(float value) {

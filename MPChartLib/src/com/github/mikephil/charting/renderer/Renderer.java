@@ -37,10 +37,7 @@ public abstract class Renderer {
      */
     protected boolean fitsBounds(float val, float min, float max) {
 
-        if (val < min || val > max)
-            return false;
-        else
-            return true;
+        return !(val < min || val > max);
     }
 
     /**
