@@ -37,7 +37,7 @@ public class StackedValueFormatter implements ValueFormatter {
         this.mDrawWholeStack = drawWholeStack;
         this.mAppendix = appendix;
 
-        StringBuffer b = new StringBuffer();
+        StringBuilder b = new StringBuilder();
         for (int i = 0; i < decimals; i++) {
             if (i == 0)
                 b.append(".");
