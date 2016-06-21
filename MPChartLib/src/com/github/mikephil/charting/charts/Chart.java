@@ -636,6 +636,7 @@ public abstract class Chart<T extends ChartData<? extends IDataSet<? extends Ent
     }
 
     /**
+     * @deprecated Kept for backward compatibility.
      * Deprecated. Calls highlightValue(high, true)
      */
     @Deprecated

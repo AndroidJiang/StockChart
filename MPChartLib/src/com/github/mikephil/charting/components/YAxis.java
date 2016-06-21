@@ -347,6 +347,7 @@ public class YAxis extends AxisBase {
     }
 
     /**
+     * @deprecated Kept for backward compatibility.
      * This method is deprecated.
      * Use setAxisMinValue(...) / setAxisMaxValue(...) instead.
      *

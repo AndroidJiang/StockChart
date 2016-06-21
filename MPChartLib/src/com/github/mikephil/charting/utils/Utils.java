@@ -69,6 +69,7 @@ public abstract class Utils {
     }
 
     /**
+     * @deprecated Kept for backward compatibility.
      * initialize method, called inside the Chart.init() method. backwards
      * compatibility - to not break existing code
      *

@@ -277,6 +277,7 @@ public class PieChart extends PieRadarChartBase<PieData> {
     }
 
     /**
+     * @deprecated Kept for backward compatibility.
      * This will throw an exception, PieChart has no XAxis object.
      *
      * @return

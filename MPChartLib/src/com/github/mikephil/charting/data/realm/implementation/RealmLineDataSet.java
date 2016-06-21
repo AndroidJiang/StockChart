@@ -218,22 +218,38 @@ public class RealmLineDataSet<T extends RealmObject> extends RealmLineRadarDataS
         return mDrawCircles;
     }
 
+    /**
+     * @deprecated Kept for backward compatibility.
+     * @param enabled
+     */
     @Deprecated
     public void setDrawCubic(boolean enabled) {
         mMode = enabled ? LineDataSet.Mode.CUBIC_BEZIER : LineDataSet.Mode.LINEAR;
     }
 
+    /**
+     * @deprecated Kept for backward compatibility.
+     * @return
+     */
     @Deprecated
     @Override
     public boolean isDrawCubicEnabled() {
         return mMode == LineDataSet.Mode.CUBIC_BEZIER;
     }
 
+    /**
+     * @deprecated Kept for backward compatibility.
+     * @param enabled
+     */
     @Deprecated
     public void setDrawStepped(boolean enabled) {
         mMode = enabled ? LineDataSet.Mode.STEPPED : LineDataSet.Mode.LINEAR;
     }
 
+    /**
+     * @deprecated Kept for backward compatibility.
+     * @return
+     */
     @Deprecated
     @Override
     public boolean isDrawSteppedEnabled() {
