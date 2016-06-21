@@ -42,7 +42,7 @@ public class LineData extends BarLineScatterCandleBubbleData<ILineDataSet> {
     }
 
     private static List<ILineDataSet> toList(ILineDataSet dataSet) {
-        List<ILineDataSet> sets = new ArrayList<ILineDataSet>();
+        List<ILineDataSet> sets = new ArrayList<>();
         sets.add(dataSet);
         return sets;
     }

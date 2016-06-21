@@ -18,7 +18,7 @@ import java.util.List;
 public class XAxis extends AxisBase {
 
     /** the arraylist containing all the x-axis labels */
-    protected List<String> mValues = new ArrayList<String>();
+    protected List<String> mValues = new ArrayList<>();
 
     /**
      * width of the x-axis labels in pixels - this is automatically

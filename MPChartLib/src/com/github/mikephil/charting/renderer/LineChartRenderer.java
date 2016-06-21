@@ -80,7 +80,7 @@ public class LineChartRenderer extends LineRadarRenderer {
 
             if (width > 0 && height > 0) {
 
-                mDrawBitmap = new WeakReference<Bitmap>(Bitmap.createBitmap(width, height, mBitmapConfig));
+                mDrawBitmap = new WeakReference<>(Bitmap.createBitmap(width, height, mBitmapConfig));
                 mBitmapCanvas = new Canvas(mDrawBitmap.get());
             } else
                 return;

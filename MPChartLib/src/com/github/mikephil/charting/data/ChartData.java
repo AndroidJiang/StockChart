@@ -61,8 +61,8 @@ public abstract class ChartData<T extends IDataSet<? extends Entry>> {
     protected List<T> mDataSets;
 
     public ChartData() {
-        mXVals = new ArrayList<String>();
-        mDataSets = new ArrayList<T>();
+        mXVals = new ArrayList<>();
+        mDataSets = new ArrayList<>();
     }
 
     /**
@@ -73,7 +73,7 @@ public abstract class ChartData<T extends IDataSet<? extends Entry>> {
      */
     public ChartData(List<String> xVals) {
         this.mXVals = xVals;
-        this.mDataSets = new ArrayList<T>();
+        this.mDataSets = new ArrayList<>();
         init();
     }
 
@@ -85,7 +85,7 @@ public abstract class ChartData<T extends IDataSet<? extends Entry>> {
      */
     public ChartData(String[] xVals) {
         this.mXVals = arrayToList(xVals);
-        this.mDataSets = new ArrayList<T>();
+        this.mDataSets = new ArrayList<>();
         init();
     }
 
@@ -842,7 +842,7 @@ public abstract class ChartData<T extends IDataSet<? extends Entry>> {
      */
     public static List<String> generateXVals(int from, int to) {
 
-        List<String> xvals = new ArrayList<String>();
+        List<String> xvals = new ArrayList<>();
 
         for (int i = from; i < to; i++) {
             xvals.add(Integer.toString(i));

@@ -148,7 +148,7 @@ public class Approximator {
         algorithmDouglasPeucker(entries, epsilon, 0, entries.size() - 1);
 
         // create a new array with series, only take the kept ones
-        List<Entry> reducedEntries = new ArrayList<Entry>();
+        List<Entry> reducedEntries = new ArrayList<>();
         for (int i = 0; i < entries.size(); i++) {
             if (keep[i]) {
                 Entry curEntry = entries.get(i);
