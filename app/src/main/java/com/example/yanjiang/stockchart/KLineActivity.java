@@ -190,9 +190,9 @@ public class KLineActivity extends BaseActivity {
         axisLeftBar.setAxisMaxValue(mData.getVolmax());
         String unit = MyUtils.getVolUnit(mData.getVolmax());
         int u = 1;
-        if (unit.equals("万手")) {
+        if ("万手".equals(unit)) {
             u = 4;
-        } else if (unit.equals("亿手")) {
+        } else if ("亿手".equals(unit)) {
             u = 8;
         }
         axisLeftBar.setValueFormatter(new VolFormatter((int) Math.pow(10, u)));

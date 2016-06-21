@@ -244,9 +244,9 @@ public class MinutesActivity extends BaseActivity {
         /*单位*/
         String unit = MyUtils.getVolUnit(mData.getVolmax());
         int u = 1;
-        if (unit.equals("万手")) {
+        if ("万手".equals(unit)) {
             u = 4;
-        } else if (unit.equals("亿手")) {
+        } else if ("亿手".equals(unit)) {
             u = 8;
         }
         /*次方*/

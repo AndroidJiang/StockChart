@@ -459,7 +459,7 @@ public abstract class Chart<T extends ChartData<? extends IDataSet<? extends Ent
      */
     protected void drawDescription(Canvas c) {
 
-        if (!mDescription.equals("")) {
+        if (!"".equals(mDescription)) {
 
             if (mDescriptionPosition == null) {
 
