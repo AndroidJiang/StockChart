@@ -1,6 +1,5 @@
 package com.github.mikephil.charting.data.realm.base;
 
-import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.BaseDataSet;
 import com.github.mikephil.charting.data.DataSet;
 import com.github.mikephil.charting.data.Entry;

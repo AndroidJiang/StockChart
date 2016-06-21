@@ -8,7 +8,6 @@ import android.preference.PreferenceManager;
 import com.example.yanjiang.stockchart.BuildConfig;
 import com.example.yanjiang.stockchart.api.ClientApi;
 import com.example.yanjiang.stockchart.api.Constant;
-import com.example.yanjiang.stockchart.interceptor.HttpInterceptor;
 
 import java.util.concurrent.TimeUnit;
 
