@@ -40,6 +40,12 @@ public abstract class Utils {
     private static int mMaximumFlingVelocity = 8000;
     public final static double DEG2RAD = (Math.PI / 180.0);
     public final static float FDEG2RAD = ((float) Math.PI / 180.f);
+    
+    /**
+     * Prevent class instantiation.
+     */
+    private Utils() {
+    }
 
     /**
      * initialize method, called inside the Chart.init() method.

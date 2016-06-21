@@ -6,6 +6,12 @@ package com.example.yanjiang.stockchart.rxutils;
  * blog：http://blog.csdn.net/qqyanjiang
  */
 public class MyUtils {
+    /**
+     * Prevent class instantiation.
+     */
+    private MyUtils() {
+    }
+
     public static String getVolUnit(float num) {
 
         int e = (int) Math.floor(Math.log10(num));
