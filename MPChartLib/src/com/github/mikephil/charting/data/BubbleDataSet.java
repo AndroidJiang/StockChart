@@ -40,7 +40,7 @@ public class BubbleDataSet extends BarLineScatterCandleBubbleDataSet<BubbleEntry
         if (mYVals == null)
             return;
 
-        if (mYVals.size() == 0)
+        if (mYVals.isEmpty())
             return;
 
         int endValue;

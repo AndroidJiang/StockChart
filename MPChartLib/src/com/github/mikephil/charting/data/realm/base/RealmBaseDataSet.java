@@ -276,7 +276,7 @@ public abstract class RealmBaseDataSet<T extends RealmObject, S extends Entry> e
             mValues = new ArrayList<S>();
         }
 
-        if (mValues.size() == 0) {
+        if (mValues.isEmpty()) {
             mYMax = val;
             mYMin = val;
         } else {
@@ -322,7 +322,7 @@ public abstract class RealmBaseDataSet<T extends RealmObject, S extends Entry> e
             mValues = new ArrayList<S>();
         }
 
-        if (mValues.size() == 0) {
+        if (mValues.isEmpty()) {
             mYMax = val;
             mYMin = val;
         } else {
@@ -332,7 +332,7 @@ public abstract class RealmBaseDataSet<T extends RealmObject, S extends Entry> e
                 mYMin = val;
         }
 
-        if (mValues.size() > 0 && mValues.get(mValues.size() - 1).getXIndex() > e.getXIndex()) {
+        if (!mValues.isEmpty() && mValues.get(mValues.size() - 1).getXIndex() > e.getXIndex()) {
             int closestIndex = getEntryIndex(e.getXIndex(), DataSet.Rounding.UP);
             mValues.add(closestIndex, e);
             return;
