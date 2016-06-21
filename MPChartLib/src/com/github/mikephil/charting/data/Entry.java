@@ -107,8 +107,7 @@ public class Entry extends ChartData<DataSet<? extends Entry>> {
      * @return
      */
     public Entry copy() {
-        Entry e = new Entry(mVal, mXIndex, mData);
-        return e;
+        return new Entry(mVal, mXIndex, mData);
     }
 
     /**

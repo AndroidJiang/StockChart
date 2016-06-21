@@ -464,8 +464,7 @@ public class BarLineChartTouchListener extends ChartTouchListener<BarLineChartBa
      * @return
      */
     private static float getXDist(MotionEvent e) {
-        float x = Math.abs(e.getX(0) - e.getX(1));
-        return x;
+        return Math.abs(e.getX(0) - e.getX(1));
     }
 
     /**
@@ -476,8 +475,7 @@ public class BarLineChartTouchListener extends ChartTouchListener<BarLineChartBa
      * @return
      */
     private static float getYDist(MotionEvent e) {
-        float y = Math.abs(e.getY(0) - e.getY(1));
-        return y;
+        return Math.abs(e.getY(0) - e.getY(1));
     }
 
     /**

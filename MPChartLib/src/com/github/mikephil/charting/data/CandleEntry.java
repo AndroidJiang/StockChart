@@ -88,10 +88,8 @@ public class CandleEntry extends Entry {
 
     public CandleEntry copy() {
 
-        CandleEntry c = new CandleEntry(getXIndex(), mShadowHigh, mShadowLow, mOpen,
+        return new CandleEntry(getXIndex(), mShadowHigh, mShadowLow, mOpen,
                 mClose, getData());
-
-        return c;
     }
 
     /**

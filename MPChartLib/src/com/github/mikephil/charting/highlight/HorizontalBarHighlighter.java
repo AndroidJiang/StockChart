@@ -113,7 +113,6 @@ public class HorizontalBarHighlighter extends BarHighlighter {
 
 		float groupSpaceSum = mChart.getBarData().getGroupSpace() * (float) steps;
 
-		float baseNoSpace = (float) yVal - groupSpaceSum;
-		return baseNoSpace;
+		return (float) yVal - groupSpaceSum;
 	}
 }
