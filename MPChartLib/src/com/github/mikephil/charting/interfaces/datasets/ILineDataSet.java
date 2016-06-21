@@ -27,9 +27,17 @@ public interface ILineDataSet extends ILineRadarDataSet<Entry> {
      */
     float getCubicIntensity();
 
+    /**
+     * @deprecated Kept for backward compatibility.
+     * @return
+     */
     @Deprecated
     boolean isDrawCubicEnabled();
 
+    /**
+     * @deprecated Kept for backward compatibility.
+     * @return
+     */
     @Deprecated
     boolean isDrawSteppedEnabled();
 

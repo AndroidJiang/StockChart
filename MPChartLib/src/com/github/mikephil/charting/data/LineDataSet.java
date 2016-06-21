@@ -156,6 +156,7 @@ public class LineDataSet extends LineRadarDataSet<Entry> implements ILineDataSet
     }
 
     /**
+     * @deprecated Kept for backward compatibility.
      * sets the size (radius) of the circle shpaed value indicators,
      * default size = 4f
      *
@@ -169,7 +170,7 @@ public class LineDataSet extends LineRadarDataSet<Entry> implements ILineDataSet
     }
 
     /**
-     *
+     * @deprecated Kept for backward compatibility.
      * This function is deprecated because of unclarity. Use getCircleRadius instead.
      *
      */
@@ -225,22 +226,38 @@ public class LineDataSet extends LineRadarDataSet<Entry> implements ILineDataSet
         return mDrawCircles;
     }
 
+    /**
+     * @deprecated Kept for backward compatibility.
+     * @param enabled
+     */
     @Deprecated
     public void setDrawCubic(boolean enabled) {
         mMode = enabled ? Mode.CUBIC_BEZIER : Mode.LINEAR;
     }
 
+    /**
+     * @deprecated Kept for backward compatibility.
+     * @return
+     */
     @Deprecated
     @Override
     public boolean isDrawCubicEnabled() {
         return mMode == Mode.CUBIC_BEZIER;
     }
 
+    /**
+     * @deprecated Kept for backward compatibility.
+     * @param enabled
+     */
     @Deprecated
     public void setDrawStepped(boolean enabled) {
         mMode = enabled ? Mode.STEPPED : Mode.LINEAR;
     }
 
+    /**
+     * @deprecated Kept for backward compatibility.
+     * @return
+     */
     @Deprecated
     @Override
     public boolean isDrawSteppedEnabled() {
