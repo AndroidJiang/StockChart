@@ -42,10 +42,11 @@ public class FileUtils {
         File file = new File(sdcard, path);
 
         List<Entry> entries = new ArrayList<Entry>();
-
+        @SuppressWarnings("resource")
+        BufferedReader br = null;
+        
         try {
-            @SuppressWarnings("resource")
-            BufferedReader br = new BufferedReader(new FileReader(file));
+            br = new BufferedReader(new FileReader(file));
             String line;
 
             while ((line = br.readLine()) != null) {
@@ -66,6 +67,13 @@ public class FileUtils {
             }
         } catch (IOException e) {
             Log.e(LOG, e.toString());
+        } finally {
+            if (br != null)
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    Log.e(LOG, e.toString());
+                }
         }
 
         return entries;
@@ -209,10 +217,11 @@ public class FileUtils {
                 Log.e(LOG, e.toString());
             }
         }
+        BufferedWriter buf = null;
         try
         {
             // BufferedWriter for performance, true to set append to file flag
-            BufferedWriter buf = new BufferedWriter(new FileWriter(saved, true));
+            buf = new BufferedWriter(new FileWriter(saved, true));
 
             for (Entry e : entries) {
 
@@ -220,10 +229,17 @@ public class FileUtils {
                 buf.newLine();
             }
 
-            buf.close();
         } catch (IOException e)
         {
             Log.e(LOG, e.toString());
+        } finally 
+        {
+            if (buf != null)
+                try {
+                    buf.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
         }
     }
 
