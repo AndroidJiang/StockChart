@@ -206,7 +206,8 @@ public class BubbleChartRenderer extends DataRenderer {
             final int maxDataSetIndex = high.getDataSetIndex() == -1
                     ? bubbleData.getDataSetCount()
                     : (high.getDataSetIndex() + 1);
-            if (maxDataSetIndex - minDataSetIndex < 1) continue;
+            if (maxDataSetIndex - minDataSetIndex < 1) 
+                continue;
 
             for (int dataSetIndex = minDataSetIndex;
                  dataSetIndex < maxDataSetIndex;

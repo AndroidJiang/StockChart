@@ -97,7 +97,8 @@ public class BarHighlighter extends ChartHighlighter<BarDataProvider> {
 
 		final float yValue = dataSet.getYValForXIndex(xIndex);
 
-		if (yValue == Double.NaN) return null;
+		if (yValue == Double.NaN) 
+			return null;
 
 		return new SelectionDetail(
 				yValue,
