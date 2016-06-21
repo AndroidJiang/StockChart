@@ -362,7 +362,8 @@ public class LineChartRenderer extends LineRadarRenderer {
                 }
 
                 Entry e = dataSet.getEntryForIndex(j);
-                if (e == null) continue;
+                if (e == null) 
+                    continue;
 
                 mLineBuffer[0] = e.getXIndex();
                 mLineBuffer[1] = e.getVal() * phaseY;
@@ -371,7 +372,8 @@ public class LineChartRenderer extends LineRadarRenderer {
 
                     e = dataSet.getEntryForIndex(j + 1);
 
-                    if (e == null) break;
+                    if (e == null) 
+                        break;
 
                     if (isDrawSteppedEnabled) {
                         mLineBuffer[2] = e.getXIndex();
@@ -427,7 +429,8 @@ public class LineChartRenderer extends LineRadarRenderer {
                     e1 = dataSet.getEntryForIndex(x == 0 ? 0 : (x - 1));
                     e2 = dataSet.getEntryForIndex(x);
 
-                    if (e1 == null || e2 == null) continue;
+                    if (e1 == null || e2 == null) 
+                        continue;
 
                     mLineBuffer[j++] = e1.getXIndex();
                     mLineBuffer[j++] = e1.getVal() * phaseY;
@@ -511,7 +514,8 @@ public class LineChartRenderer extends LineRadarRenderer {
 
             if (isDrawSteppedEnabled) {
                 final Entry ePrev = dataSet.getEntryForIndex(x - 1);
-                if (ePrev == null) continue;
+                if (ePrev == null) 
+                    continue;
 
                 filled.lineTo(e.getXIndex(), ePrev.getVal() * phaseY);
             }
@@ -651,7 +655,8 @@ public class LineChartRenderer extends LineRadarRenderer {
 
                 Entry e = dataSet.getEntryForIndex(j);
 
-                if (e == null) break;
+                if (e == null) 
+                    break;
 
                 circlesBuffer[0] = e.getXIndex();
                 circlesBuffer[1] = e.getVal() * phaseY;
@@ -715,7 +720,8 @@ public class LineChartRenderer extends LineRadarRenderer {
             final int maxDataSetIndex = high.getDataSetIndex() == -1
                     ? lineData.getDataSetCount()
                     : (high.getDataSetIndex() + 1);
-            if (maxDataSetIndex - minDataSetIndex < 1) continue;
+            if (maxDataSetIndex - minDataSetIndex < 1) 
+                continue;
 
             for (int dataSetIndex = minDataSetIndex;
                  dataSetIndex < maxDataSetIndex;

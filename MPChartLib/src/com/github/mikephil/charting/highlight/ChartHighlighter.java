@@ -91,7 +91,8 @@ public class ChartHighlighter<T extends BarLineScatterCandleBubbleDataProvider> 
 
 		List<SelectionDetail> vals = new ArrayList<SelectionDetail>();
 
-		if (mChart.getData() == null) return vals;
+		if (mChart.getData() == null) 
+			return vals;
 
 		float[] pts = new float[2];
 

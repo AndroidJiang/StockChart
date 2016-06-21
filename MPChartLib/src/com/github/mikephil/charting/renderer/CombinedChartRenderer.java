@@ -107,7 +107,8 @@ public class CombinedChartRenderer extends DataRenderer {
     public void drawHighlighted(Canvas c, Highlight[] indices) {
 
         Chart chart = mChart.get();
-        if (chart == null) return;
+        if (chart == null) 
+            return;
 
         for (DataRenderer renderer : mRenderers) {
             ChartData data = null;
