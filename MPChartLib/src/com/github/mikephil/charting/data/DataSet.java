@@ -122,7 +122,7 @@ public abstract class DataSet<T extends Entry> extends BaseDataSet<T> {
 
     @Override
     public String toString() {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         buffer.append(toSimpleString());
         for (int i = 0; i < mYVals.size(); i++) {
             buffer.append(mYVals.get(i).toString() + " ");
@@ -137,7 +137,7 @@ public abstract class DataSet<T extends Entry> extends BaseDataSet<T> {
      * @return
      */
     public String toSimpleString() {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         buffer.append("DataSet, label: " + (getLabel() == null ? "" : getLabel()) + ", entries: " + mYVals.size() + "\n");
         return buffer.toString();
     }

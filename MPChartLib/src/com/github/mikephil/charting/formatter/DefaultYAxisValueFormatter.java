@@ -22,7 +22,7 @@ public class DefaultYAxisValueFormatter implements YAxisValueFormatter {
      */
     public DefaultYAxisValueFormatter(int digits) {
 
-        StringBuffer b = new StringBuffer();
+        StringBuilder b = new StringBuilder();
         for (int i = 0; i < digits; i++) {
             if (i == 0)
                 b.append(".");
