@@ -18,9 +18,9 @@ import okhttp3.ResponseBody;
  */
 public class HttpInterceptor implements Interceptor {
     private static String mBoundry;
-    private static final int boundaryLength = 32;
+    private static final int BOUNDARY_LENGTH = 32;
     private Context context;
-    private static final String boundaryAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_";
+    private static final String BOUNDARY_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_";
 
     public HttpInterceptor(Context context) {
         this.context = context;
@@ -54,8 +54,8 @@ public class HttpInterceptor implements Interceptor {
     private static String setBoundary() {
         StringBuilder sb = new StringBuilder();
         Random random = new Random();
-        for (int i = 0; i < boundaryLength; ++i)
-            sb.append(boundaryAlphabet.charAt(random.nextInt(boundaryAlphabet.length())));
+        for (int i = 0; i < BOUNDARY_LENGTH; ++i)
+            sb.append(BOUNDARY_ALPHABET.charAt(random.nextInt(BOUNDARY_ALPHABET.length())));
         return sb.toString();
     }
 
