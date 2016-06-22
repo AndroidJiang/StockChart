@@ -57,7 +57,7 @@ public class ChartHighlighter<T extends BarLineScatterCandleBubbleDataProvider> 
 		// take any transformer to determine the x-axis value
 		mChart.getTransformer(YAxis.AxisDependency.LEFT).pixelsToValue(pts);
 
-		return (int) Math.round(pts[0]);
+		return Math.round(pts[0]);
 	}
 
 	/**
