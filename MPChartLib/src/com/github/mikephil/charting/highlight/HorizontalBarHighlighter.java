@@ -70,7 +70,7 @@ public class HorizontalBarHighlighter extends BarHighlighter {
 			// take any transformer to determine the x-axis value
 			mChart.getTransformer(YAxis.AxisDependency.LEFT).pixelsToValue(pts);
 
-			return (int) Math.round(pts[1]);
+			return Math.round(pts[1]);
 		} else {
 
 			float baseNoSpace = getBase(x);
@@ -109,10 +109,10 @@ public class HorizontalBarHighlighter extends BarHighlighter {
 		int setCount = mChart.getBarData().getDataSetCount();
 
 		// calculate how often the group-space appears
-		int steps = (int) ((float) yVal / ((float) setCount + mChart.getBarData().getGroupSpace()));
+		int steps = (int) (yVal / ((float) setCount + mChart.getBarData().getGroupSpace()));
 
 		float groupSpaceSum = mChart.getBarData().getGroupSpace() * (float) steps;
 
-		return (float) yVal - groupSpaceSum;
+		return yVal - groupSpaceSum;
 	}
 }
