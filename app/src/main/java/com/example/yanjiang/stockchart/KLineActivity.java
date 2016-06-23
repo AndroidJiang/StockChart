@@ -2,11 +2,13 @@ package com.example.yanjiang.stockchart;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 
 import com.example.yanjiang.stockchart.api.ConstantTest;
 import com.example.yanjiang.stockchart.bean.KLineBean;
-import com.example.yanjiang.stockchart.bean.MinuteHelper;
+import com.example.yanjiang.stockchart.bean.DataParse;
 import com.example.yanjiang.stockchart.mychart.CoupleChartGestureListener;
 import com.example.yanjiang.stockchart.rxutils.MyUtils;
 import com.example.yanjiang.stockchart.rxutils.VolFormatter;
@@ -46,7 +48,7 @@ public class KLineActivity extends BaseActivity {
     CombinedChart combinedchart;
     @Bind(R.id.barchart)
     BarChart barChart;
-    private MinuteHelper mData;
+    private DataParse mData;
     private ArrayList<KLineBean> kLineDatas;
     XAxis xAxisBar, xAxisK;
     YAxis axisLeftBar, axisLeftK;
@@ -55,6 +57,13 @@ public class KLineActivity extends BaseActivity {
     private BarLineChartTouchListener mChartTouchListener;
     private CoupleChartGestureListener coupleChartGestureListener;
     float sum=0;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            combinedchart.invalidate();
+            barChart.invalidate();
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +76,7 @@ public class KLineActivity extends BaseActivity {
 
     private void getOffLineData() {
            /*方便测试，加入假数据*/
-        mData = new MinuteHelper();
+        mData = new DataParse();
         JSONObject object = null;
         try {
             object = new JSONObject(ConstantTest.KLINEURL);
@@ -80,6 +89,8 @@ public class KLineActivity extends BaseActivity {
 
 
         setData(mData);
+
+
     }
 
     private void initChart() {
@@ -146,7 +157,10 @@ public class KLineActivity extends BaseActivity {
         axisRightK.setGridColor(getResources().getColor(R.color.minute_grayLine));
         combinedchart.setDragDecelerationEnabled(false);
         barChart.setDragDecelerationEnabled(false);
-
+        // 将K线控的滑动事件传递给交易量控件
+        combinedchart.setOnChartGestureListener(new CoupleChartGestureListener(combinedchart, new Chart[]{barChart}));
+        // 将交易量控件的滑动事件传递给K线控件
+        barChart.setOnChartGestureListener(new CoupleChartGestureListener(barChart, new Chart[]{combinedchart}));
         barChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
@@ -168,10 +182,7 @@ public class KLineActivity extends BaseActivity {
             }
         });
 
-        // 将K线控的滑动事件传递给交易量控件
-        combinedchart.setOnChartGestureListener(new CoupleChartGestureListener(combinedchart, new Chart[]{barChart}));
-        // 将交易量控件的滑动事件传递给K线控件
-        barChart.setOnChartGestureListener(new CoupleChartGestureListener(barChart, new Chart[]{combinedchart}));
+
     }
     private float getSum(Integer a, Integer b) {
 
@@ -182,7 +193,7 @@ public class KLineActivity extends BaseActivity {
     }
 
 
-    private void setData(MinuteHelper mData) {
+    private void setData(DataParse mData) {
 
         kLineDatas = mData.getKLineDatas();
         axisLeftBar.setAxisMaxValue(mData.getVolmax());
@@ -258,12 +269,16 @@ public class KLineActivity extends BaseActivity {
         combinedchart.setData(combinedData);
         combinedchart.setVisibleXRange(30, 100);
 
-      /*  combinedchart.moveViewToX(mData.getKLineDatas().size()-1);
+     /*   combinedchart.moveViewToX(mData.getKLineDatas().size()-1);
         barChart.moveViewToX(mData.getDatas().size()-1);*/
 
         setOffset();
-        barChart.invalidate();
-        combinedchart.invalidate();
+
+        /*此处解决方法来源于CombinedChartDemo，k线图y轴显示问题，图表滑动后才能对齐的bug，希望有人给出解决方法*/
+        handler.sendEmptyMessageDelayed(0, 300);
+
+   /*     barChart.invalidate();
+        combinedchart.invalidate();*/
     }
 
     @NonNull
@@ -290,24 +305,30 @@ public class KLineActivity extends BaseActivity {
         float barLeft = barChart.getViewPortHandler().offsetLeft();
         float lineRight = combinedchart.getViewPortHandler().offsetRight();
         float barRight = barChart.getViewPortHandler().offsetRight();
+        float barBottom = barChart.getViewPortHandler().offsetBottom();
         float offsetLeft, offsetRight;
+        float transLeft = 0, transRight = 0;
  /*注：setExtraLeft...函数是针对图表相对位置计算，比如A表offLeftA=20dp,B表offLeftB=30dp,则A.setExtraLeftOffset(10),并不是30，还有注意单位转换*/
         if (barLeft < lineLeft) {
-            offsetLeft = Utils.convertPixelsToDp(lineLeft - barLeft);
-            barChart.setExtraLeftOffset(offsetLeft);
+           /* offsetLeft = Utils.convertPixelsToDp(lineLeft - barLeft);
+            barChart.setExtraLeftOffset(offsetLeft);*/
+            transLeft = lineLeft;
         } else {
             offsetLeft = Utils.convertPixelsToDp(barLeft-lineLeft);
             combinedchart.setExtraLeftOffset(offsetLeft);
+            transLeft = barLeft;
         }
   /*注：setExtraRight...函数是针对图表绝对位置计算，比如A表offRightA=20dp,B表offRightB=30dp,则A.setExtraLeftOffset(30),并不是10，还有注意单位转换*/
         if (barRight < lineRight) {
-            offsetRight = Utils.convertPixelsToDp(lineRight);
-            barChart.setExtraRightOffset(offsetRight);
+          /*  offsetRight = Utils.convertPixelsToDp(lineRight);
+            barChart.setExtraRightOffset(offsetRight);*/
+            transRight = lineRight;
         } else {
             offsetRight = Utils.convertPixelsToDp(barRight);
             combinedchart.setExtraRightOffset(offsetRight);
+            transRight = barRight;
         }
-
+        barChart.setViewPortOffsets(transLeft, 20, transRight, barBottom);
     }
 
 }

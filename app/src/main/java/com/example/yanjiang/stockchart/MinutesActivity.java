@@ -7,7 +7,7 @@ import android.util.Log;
 import android.util.SparseArray;
 
 import com.example.yanjiang.stockchart.api.ConstantTest;
-import com.example.yanjiang.stockchart.bean.MinuteHelper;
+import com.example.yanjiang.stockchart.bean.DataParse;
 import com.example.yanjiang.stockchart.bean.MinutesBean;
 import com.example.yanjiang.stockchart.mychart.MyBarChart;
 import com.example.yanjiang.stockchart.mychart.MyLeftMarkerView;
@@ -64,7 +64,7 @@ public class MinutesActivity extends BaseActivity {
     MyYAxis axisLeftBar;
     MyYAxis axisRightBar;
     SparseArray<String> stringSparseArray;
-    private MinuteHelper mData;
+    private DataParse mData;
     Integer sum = 0;
     List<Integer> listA, listB;
 
@@ -225,7 +225,7 @@ public class MinutesActivity extends BaseActivity {
     }
 
 
-    private void setData(MinuteHelper mData) {
+    private void setData(DataParse mData) {
         setMarkerView(mData);
         setShowLabels(stringSparseArray);
         Log.e("###", mData.getDatas().size() + "ee");
@@ -355,7 +355,7 @@ public class MinutesActivity extends BaseActivity {
                     @Override
                     public void onNext(ResponseBody minutes) {
 
-                        mData = new MinuteHelper();
+                        mData = new DataParse();
                         JSONObject object = null;
                         try {
                             object = new JSONObject(minutes.string());
@@ -375,7 +375,7 @@ public class MinutesActivity extends BaseActivity {
 
     private void getOffLineData() {
            /*方便测试，加入假数据*/
-        mData = new MinuteHelper();
+        mData = new DataParse();
         JSONObject object = null;
         try {
             object = new JSONObject(ConstantTest.MINUTESURL);
@@ -440,7 +440,7 @@ public class MinutesActivity extends BaseActivity {
         return new String[242];
     }
 
-    private void setMarkerView(MinuteHelper mData) {
+    private void setMarkerView(DataParse mData) {
         MyLeftMarkerView leftMarkerView = new MyLeftMarkerView(MinutesActivity.this, R.layout.mymarkerview);
         MyRightMarkerView rightMarkerView = new MyRightMarkerView(MinutesActivity.this, R.layout.mymarkerview);
         lineChart.setMarker(leftMarkerView, rightMarkerView, mData);

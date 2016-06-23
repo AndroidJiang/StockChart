@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MinuteHelper {
+public class DataParse {
     private ArrayList<MinutesBean> datas = new ArrayList<>();
     private ArrayList<KLineBean> kDatas = new ArrayList<>();
     private float baseValue;

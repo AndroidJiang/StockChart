@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 
-import com.example.yanjiang.stockchart.bean.MinuteHelper;
+import com.example.yanjiang.stockchart.bean.DataParse;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -18,7 +18,7 @@ import com.github.mikephil.charting.highlight.Highlight;
 public class MyLineChart extends LineChart {
     private MyLeftMarkerView myMarkerViewLeft;
     private MyRightMarkerView myMarkerViewRight;
-    private MinuteHelper minuteHelper;
+    private DataParse minuteHelper;
 
     public MyLineChart(Context context) {
         super(context);
@@ -63,7 +63,7 @@ public class MyLineChart extends LineChart {
         return (MyYAxis) super.getAxisRight();
     }
 
-    public void setMarker(MyLeftMarkerView markerLeft, MyRightMarkerView markerRight, MinuteHelper minuteHelper) {
+    public void setMarker(MyLeftMarkerView markerLeft, MyRightMarkerView markerRight, DataParse minuteHelper) {
         this.myMarkerViewLeft = markerLeft;
         this.myMarkerViewRight = markerRight;
         this.minuteHelper = minuteHelper;
