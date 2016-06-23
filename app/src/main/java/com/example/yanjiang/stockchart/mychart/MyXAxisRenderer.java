@@ -48,7 +48,7 @@ public class MyXAxisRenderer extends XAxisRenderer {
                     position[0] = mChart.getViewPortHandler().contentLeft() + labelWidth / 2;
                 }
                 c.drawText(label, position[0],
-                        pos+10,
+                        pos+ Utils.convertPixelsToDp(mChart.getViewPortHandler().offsetBottom()),
                         mAxisLabelPaint);
             }
 

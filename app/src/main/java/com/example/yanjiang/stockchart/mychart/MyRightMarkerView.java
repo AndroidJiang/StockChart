@@ -42,11 +42,12 @@ public class MyRightMarkerView extends MarkerView {
 
     @Override
     public int getXOffset(float xpos) {
-        return 0;
+
+        return (int)xpos;
     }
 
     @Override
     public int getYOffset(float ypos) {
-        return 0;
+        return (int)ypos;
     }
 }

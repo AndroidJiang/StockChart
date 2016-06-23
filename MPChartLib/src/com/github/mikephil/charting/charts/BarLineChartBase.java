@@ -1002,7 +1002,20 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
             }
         });
     }
+    public void setViewPortTopOffsets(final float top) {
 
+        mCustomViewPortEnabled = true;
+        post(new Runnable() {
+
+            @Override
+            public void run() {
+
+                mViewPortHandler.restrainViewPort(getExtraLeftOffset(), top, getExtraRightOffset(), getExtraBottomOffset());
+                prepareOffsetMatrix();
+                prepareValuePxMatrix();
+            }
+        });
+    }
     /**
      * Resets all custom offsets set via setViewPortOffsets(...) method. Allows
      * the chart to again calculate all offsets automatically.

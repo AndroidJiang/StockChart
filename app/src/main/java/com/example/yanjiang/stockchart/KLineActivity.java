@@ -155,7 +155,6 @@ public class KLineActivity extends BaseActivity {
 
             @Override
             public void onNothingSelected() {
-
             }
         });
         combinedchart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
@@ -166,7 +165,6 @@ public class KLineActivity extends BaseActivity {
 
             @Override
             public void onNothingSelected() {
-
             }
         });
 

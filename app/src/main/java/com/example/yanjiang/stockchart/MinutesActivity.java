@@ -282,9 +282,9 @@ public class MinutesActivity extends BaseActivity {
             MinutesBean t = mData.getDatas().get(j);
 
             if (t == null) {
-                lineCJEntries.add(new Entry(Float.NaN, i, t));
+                lineCJEntries.add(new Entry(Float.NaN, i));
                 lineJJEntries.add(new Entry(Float.NaN, i));
-                barEntries.add(new BarEntry(Float.NaN, i, t));
+                barEntries.add(new BarEntry(Float.NaN, i));
                 continue;
             }
             if (!TextUtils.isEmpty(stringSparseArray.get(i)) &&
@@ -332,7 +332,6 @@ public class MinutesActivity extends BaseActivity {
 
 
         setOffset();
-
         lineChart.invalidate();//刷新图
         barChart.invalidate();
 
@@ -404,24 +403,32 @@ public class MinutesActivity extends BaseActivity {
         float barLeft = barChart.getViewPortHandler().offsetLeft();
         float lineRight = lineChart.getViewPortHandler().offsetRight();
         float barRight = barChart.getViewPortHandler().offsetRight();
+        float barBottom = barChart.getViewPortHandler().offsetBottom();
         float offsetLeft, offsetRight;
+        float transLeft = 0, transRight = 0;
  /*注：setExtraLeft...函数是针对图表相对位置计算，比如A表offLeftA=20dp,B表offLeftB=30dp,则A.setExtraLeftOffset(10),并不是30，还有注意单位转换*/
         if (barLeft < lineLeft) {
-            offsetLeft = Utils.convertPixelsToDp(lineLeft - barLeft);
-            barChart.setExtraLeftOffset(offsetLeft);
+            //offsetLeft = Utils.convertPixelsToDp(lineLeft - barLeft);
+            // barChart.setExtraLeftOffset(offsetLeft);
+            transLeft = lineLeft;
+
         } else {
             offsetLeft = Utils.convertPixelsToDp(barLeft - lineLeft);
             lineChart.setExtraLeftOffset(offsetLeft);
+            transLeft = barLeft;
         }
+
   /*注：setExtraRight...函数是针对图表绝对位置计算，比如A表offRightA=20dp,B表offRightB=30dp,则A.setExtraLeftOffset(30),并不是10，还有注意单位转换*/
         if (barRight < lineRight) {
-            offsetRight = Utils.convertPixelsToDp(lineRight);
-            barChart.setExtraRightOffset(offsetRight);
+            //offsetRight = Utils.convertPixelsToDp(lineRight);
+            //barChart.setExtraRightOffset(offsetRight);
+            transRight = lineRight;
         } else {
             offsetRight = Utils.convertPixelsToDp(barRight);
             lineChart.setExtraRightOffset(offsetRight);
+            transRight = barRight;
         }
-
+        barChart.setViewPortOffsets(transLeft, 0, transRight, barBottom);
     }
 
     public void setShowLabels(SparseArray<String> labels) {
