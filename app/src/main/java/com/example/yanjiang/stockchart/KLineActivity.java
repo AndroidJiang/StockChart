@@ -167,6 +167,7 @@ public class KLineActivity extends BaseActivity {
         barChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
+                Log.e("%%%%",h.getXIndex()+"");
                 combinedchart.highlightValues(new Highlight[]{h});
             }
 
@@ -177,6 +178,7 @@ public class KLineActivity extends BaseActivity {
         combinedchart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
+
                 barChart.highlightValues(new Highlight[]{h});
             }
 
@@ -287,6 +289,13 @@ public class KLineActivity extends BaseActivity {
     @NonNull
     private LineDataSet setMaLine(int ma,ArrayList<String> xVals, ArrayList<Entry> lineEntries) {
         LineDataSet lineDataSetMa = new LineDataSet(lineEntries, "ma"+ma);
+        if(ma==5) {
+            lineDataSetMa.setHighlightEnabled(true);
+            lineDataSetMa.setDrawHorizontalHighlightIndicator(false);
+            lineDataSetMa.setHighLightColor(Color.WHITE);
+        }else{/*此处必须得写*/
+            lineDataSetMa.setHighlightEnabled(false);
+        }
         lineDataSetMa.setDrawValues(false);
         if(ma==5) {
             lineDataSetMa.setColor(Color.GREEN);
@@ -298,7 +307,6 @@ public class KLineActivity extends BaseActivity {
         lineDataSetMa.setLineWidth(1f);
         lineDataSetMa.setDrawCircles(false);
         lineDataSetMa.setAxisDependency(YAxis.AxisDependency.LEFT);
-        lineDataSetMa.setHighlightEnabled(false);
         return lineDataSetMa;
     }
 

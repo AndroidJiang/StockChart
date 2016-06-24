@@ -428,7 +428,7 @@ public class MinutesActivity extends BaseActivity {
             lineChart.setExtraRightOffset(offsetRight);
             transRight = barRight;
         }
-        barChart.setViewPortOffsets(transLeft, 0, transRight, barBottom);
+        barChart.setViewPortOffsets(transLeft, 5, transRight, barBottom);
     }
 
     public void setShowLabels(SparseArray<String> labels) {

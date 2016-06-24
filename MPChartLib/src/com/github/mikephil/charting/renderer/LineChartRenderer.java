@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import com.github.mikephil.charting.animation.ChartAnimator;
 import com.github.mikephil.charting.charts.LineChart;
@@ -164,8 +165,8 @@ public class LineChartRenderer extends LineRadarRenderer {
                 prev = dataSet.getEntryForIndex(j - 1);
                 cur = dataSet.getEntryForIndex(j);
 
-                final float cpx = (float)(prev.getXIndex())
-                        + (float)(cur.getXIndex() - prev.getXIndex()) / 2.0f;
+                final float cpx = (float) (prev.getXIndex())
+                        + (float) (cur.getXIndex() - prev.getXIndex()) / 2.0f;
 
                 cubicPath.cubicTo(
                         cpx, prev.getVal() * phaseY,
@@ -279,7 +280,7 @@ public class LineChartRenderer extends LineRadarRenderer {
 
         float fillMin = dataSet.getFillFormatter()
                 .getFillLinePosition(dataSet, mChart);
-        
+
         // Take the from/to xIndex from the entries themselves,
         // so missing entries won't screw up the filling.
         // What we need to draw is line from points of the xIndexes - not arbitrary entry indexes!
@@ -343,7 +344,7 @@ public class LineChartRenderer extends LineRadarRenderer {
         int minx = Math.max(dataSet.getEntryIndex(entryFrom) - diff, 0);
         int maxx = Math.min(Math.max(minx + 2, dataSet.getEntryIndex(entryTo) + 1), entryCount);
 
-        final int count = (int)(Math.ceil((float)(maxx - minx) * phaseX + (float)(minx)));
+        final int count = (int) (Math.ceil((float) (maxx - minx) * phaseX + (float) (minx)));
 
         // more than 1 color
         if (dataSet.getColors().size() > 1) {
@@ -361,7 +362,7 @@ public class LineChartRenderer extends LineRadarRenderer {
                 }
 
                 Entry e = dataSet.getEntryForIndex(j);
-                if (e == null) 
+                if (e == null)
                     continue;
 
                 mLineBuffer[0] = e.getXIndex();
@@ -371,7 +372,7 @@ public class LineChartRenderer extends LineRadarRenderer {
 
                     e = dataSet.getEntryForIndex(j + 1);
 
-                    if (e == null) 
+                    if (e == null)
                         break;
 
                     if (isDrawSteppedEnabled) {
@@ -419,7 +420,6 @@ public class LineChartRenderer extends LineRadarRenderer {
             Entry e1, e2;
 
             e1 = dataSet.getEntryForIndex(minx);
-
             if (e1 != null) {
 
                 int j = 0;
@@ -428,7 +428,7 @@ public class LineChartRenderer extends LineRadarRenderer {
                     e1 = dataSet.getEntryForIndex(x == 0 ? 0 : (x - 1));
                     e2 = dataSet.getEntryForIndex(x);
 
-                    if (e1 == null || e2 == null) 
+                    if (e1 == null || e2 == null)
                         continue;
 
                     mLineBuffer[j++] = e1.getXIndex();
@@ -452,8 +452,8 @@ public class LineChartRenderer extends LineRadarRenderer {
                             Math.max((count - minx - 1) * pointsPerEntryPair, pointsPerEntryPair) *
                                     2;
 
-                    mRenderPaint.setColor(dataSet.getColor());
 
+                    mRenderPaint.setColor(dataSet.getColor());
                     canvas.drawLines(mLineBuffer, 0, size,
                             mRenderPaint);
                 }
@@ -513,7 +513,7 @@ public class LineChartRenderer extends LineRadarRenderer {
 
             if (isDrawSteppedEnabled) {
                 final Entry ePrev = dataSet.getEntryForIndex(x - 1);
-                if (ePrev == null) 
+                if (ePrev == null)
                     continue;
 
                 filled.lineTo(e.getXIndex(), ePrev.getVal() * phaseY);
@@ -650,11 +650,11 @@ public class LineChartRenderer extends LineRadarRenderer {
             for (int j = minx,
                  count = (int) Math.ceil((maxx - minx) * phaseX + minx);
                  j < count;
-                 j ++) {
+                 j++) {
 
                 Entry e = dataSet.getEntryForIndex(j);
 
-                if (e == null) 
+                if (e == null)
                     break;
 
                 circlesBuffer[0] = e.getXIndex();
@@ -719,7 +719,7 @@ public class LineChartRenderer extends LineRadarRenderer {
             final int maxDataSetIndex = high.getDataSetIndex() == -1
                     ? lineData.getDataSetCount()
                     : (high.getDataSetIndex() + 1);
-            if (maxDataSetIndex - minDataSetIndex < 1) 
+            if (maxDataSetIndex - minDataSetIndex < 1)
                 continue;
 
             for (int dataSetIndex = minDataSetIndex;
@@ -738,8 +738,9 @@ public class LineChartRenderer extends LineRadarRenderer {
                     continue;
 
                 final float yVal = set.getYValForXIndex(xIndex);
-                if (Float.isNaN(yVal))
-                    continue;
+                /*注释此处，防止数据为空时，无高亮*/
+           /*     if (Float.isNaN(yVal))
+                    continue;*/
 
                 float y = yVal * mAnimator.getPhaseY(); // get
                 // the

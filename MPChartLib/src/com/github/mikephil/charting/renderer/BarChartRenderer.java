@@ -357,8 +357,8 @@ public class BarChartRenderer extends DataRenderer {
 
                 IBarDataSet set = barData.getDataSetByIndex(dataSetIndex);
 
-             /*   if (set == null || !set.isHighlightEnabled())
-                    continue;*/
+                if (set == null || !set.isHighlightEnabled())
+                    continue;
 
                 float barspaceHalf = set.getBarSpace() / 2f;
 

@@ -30,6 +30,7 @@ public class MyRightMarkerView extends MarkerView {
         mFormat = new DecimalFormat("#0.00");
         markerTv = (TextView) findViewById(R.id.marker_tv);
         markerTv.setTextSize(10);
+
     }
 
     public void setData(float num){
@@ -43,11 +44,11 @@ public class MyRightMarkerView extends MarkerView {
     @Override
     public int getXOffset(float xpos) {
 
-        return (int)xpos;
+        return 0;
     }
 
     @Override
     public int getYOffset(float ypos) {
-        return (int)ypos;
+        return 0;
     }
 }
