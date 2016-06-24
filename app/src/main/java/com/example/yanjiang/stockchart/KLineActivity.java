@@ -1,11 +1,13 @@
 package com.example.yanjiang.stockchart;
 
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.ViewTreeObserver;
 
 import com.example.yanjiang.stockchart.api.ConstantTest;
 import com.example.yanjiang.stockchart.bean.DataParse;
@@ -34,6 +36,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.BarLineChartTouchListener;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.Utils;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -173,6 +176,7 @@ public class KLineActivity extends BaseActivity {
 
             @Override
             public void onNothingSelected() {
+                combinedchart.highlightValue(null);
             }
         });
         combinedchart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
@@ -184,6 +188,7 @@ public class KLineActivity extends BaseActivity {
 
             @Override
             public void onNothingSelected() {
+                barChart.highlightValue(null);
             }
         });
 
@@ -197,7 +202,11 @@ public class KLineActivity extends BaseActivity {
         return sum;
     }
 
-
+    private float culcMaxscale(float count) {
+        float max = 1;
+        max = count / 127 * 5;
+        return max;
+    }
     private void setData(DataParse mData) {
 
         kLineDatas = mData.getKLineDatas();
@@ -246,7 +255,11 @@ public class KLineActivity extends BaseActivity {
         barDataSet.setColor(Color.RED);
         BarData barData = new BarData(xVals, barDataSet);
         barChart.setData(barData);
-        barChart.setVisibleXRange(30, 100);
+        final ViewPortHandler viewPortHandlerBar = barChart.getViewPortHandler();
+        viewPortHandlerBar.setMaximumScaleX(culcMaxscale(xVals.size()));
+        Matrix touchmatrix = viewPortHandlerBar.getMatrixTouch();
+        final float xscale = 3;
+        touchmatrix.postScale(xscale, 1f);
 
 
         CandleDataSet candleDataSet = new CandleDataSet(candleEntries, "KLine");
@@ -272,7 +285,11 @@ public class KLineActivity extends BaseActivity {
         combinedData.setData(candleData);
         combinedData.setData(lineData);
         combinedchart.setData(combinedData);
-        combinedchart.setVisibleXRange(30, 100);
+        final ViewPortHandler viewPortHandlerCombin = combinedchart.getViewPortHandler();
+        viewPortHandlerCombin.setMaximumScaleX(culcMaxscale(xVals.size()));
+        Matrix matrixCombin = viewPortHandlerCombin.getMatrixTouch();
+        final float xscaleCombin = 3;
+        matrixCombin.postScale(xscaleCombin, 1f);
 
      /*   combinedchart.moveViewToX(mData.getKLineDatas().size()-1);
         barChart.moveViewToX(mData.getDatas().size()-1);*/
@@ -285,7 +302,6 @@ public class KLineActivity extends BaseActivity {
    /*     barChart.invalidate();
         combinedchart.invalidate();*/
     }
-
     @NonNull
     private LineDataSet setMaLine(int ma,ArrayList<String> xVals, ArrayList<Entry> lineEntries) {
         LineDataSet lineDataSetMa = new LineDataSet(lineEntries, "ma"+ma);

@@ -562,8 +562,8 @@ public class BarLineChartTouchListener extends ChartTouchListener<BarLineChartBa
 /*取消单机高亮，改为长按*/
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
-        //mChart.highlightTouch(null);
-        mLastGesture = ChartGesture.SINGLE_TAP;
+        mChart.highlightTouch(null);
+      /*  mLastGesture = ChartGesture.SINGLE_TAP;
 
         OnChartGestureListener l = mChart.getOnChartGestureListener();
 
@@ -577,7 +577,7 @@ public class BarLineChartTouchListener extends ChartTouchListener<BarLineChartBa
 
 
         Highlight h = mChart.getHighlightByTouchPoint(e.getX(), e.getY());
-        performHighlight(h, e);
+        performHighlight(h, e);*/
 
         return super.onSingleTapUp(e);
     }
