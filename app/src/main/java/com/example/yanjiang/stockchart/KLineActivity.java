@@ -5,10 +5,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.example.yanjiang.stockchart.api.ConstantTest;
-import com.example.yanjiang.stockchart.bean.KLineBean;
 import com.example.yanjiang.stockchart.bean.DataParse;
+import com.example.yanjiang.stockchart.bean.KLineBean;
 import com.example.yanjiang.stockchart.mychart.CoupleChartGestureListener;
 import com.example.yanjiang.stockchart.rxutils.MyUtils;
 import com.example.yanjiang.stockchart.rxutils.VolFormatter;
@@ -103,6 +104,8 @@ public class KLineActivity extends BaseActivity {
         barChart.setAutoScaleMinMaxEnabled(true);
         Legend barChartLegend = barChart.getLegend();
         barChartLegend.setEnabled(false);
+
+        //BarYAxisFormatter  barYAxisFormatter=new BarYAxisFormatter();
         //bar x y轴
         xAxisBar = barChart.getXAxis();
         xAxisBar.setDrawLabels(true);
@@ -118,12 +121,12 @@ public class KLineActivity extends BaseActivity {
         axisLeftBar.setDrawAxisLine(false);
         axisLeftBar.setTextColor(getResources().getColor(R.color.minute_zhoutv));
         axisLeftBar.setDrawLabels(true);
+        axisLeftBar.setSpaceTop(0);
         axisLeftBar.setShowOnlyMinMax(true);
         axisRightBar = barChart.getAxisRight();
         axisRightBar.setDrawLabels(false);
         axisRightBar.setDrawGridLines(false);
         axisRightBar.setDrawAxisLine(false);
-
         /****************************************************************/
         combinedchart.setDrawBorders(true);
         combinedchart.setBorderWidth(1);
@@ -196,7 +199,7 @@ public class KLineActivity extends BaseActivity {
     private void setData(DataParse mData) {
 
         kLineDatas = mData.getKLineDatas();
-        axisLeftBar.setAxisMaxValue(mData.getVolmax());
+       // axisLeftBar.setAxisMaxValue(mData.getVolmax());
         String unit = MyUtils.getVolUnit(mData.getVolmax());
         int u = 1;
         if ("万手".equals(unit)) {
@@ -205,8 +208,8 @@ public class KLineActivity extends BaseActivity {
             u = 8;
         }
         axisLeftBar.setValueFormatter(new VolFormatter((int) Math.pow(10, u)));
-        axisRightBar.setAxisMaxValue(mData.getVolmax());
-
+       // axisRightBar.setAxisMaxValue(mData.getVolmax());
+        Log.e("@@@",mData.getVolmax()+"da");
 
         ArrayList<String> xVals = new ArrayList<>();
         ArrayList<BarEntry> barEntries = new ArrayList<>();
@@ -328,7 +331,7 @@ public class KLineActivity extends BaseActivity {
             combinedchart.setExtraRightOffset(offsetRight);
             transRight = barRight;
         }
-        barChart.setViewPortOffsets(transLeft, 20, transRight, barBottom);
+        barChart.setViewPortOffsets(transLeft, 15, transRight, barBottom);
     }
 
 }

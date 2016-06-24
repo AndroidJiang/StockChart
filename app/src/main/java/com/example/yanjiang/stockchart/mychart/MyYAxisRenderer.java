@@ -64,7 +64,7 @@ public class MyYAxisRenderer extends YAxisRenderer {
                     text = mYAxis.getMinValue();
                 }
                 if (i == 1) {
-                    c.drawText(text, fixedPosition, mViewPortHandler.offsetTop() +10, mAxisLabelPaint);
+                    c.drawText(text, fixedPosition, mViewPortHandler.offsetTop() +35, mAxisLabelPaint);
                 } else if (i == 0) {
                     c.drawText(text, fixedPosition, mViewPortHandler.contentBottom() - 3, mAxisLabelPaint);
                 }
