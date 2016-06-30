@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.view.ViewTreeObserver;
 
 import com.example.yanjiang.stockchart.api.ConstantTest;
 import com.example.yanjiang.stockchart.bean.DataParse;
@@ -60,14 +59,22 @@ public class KLineActivity extends BaseActivity {
     BarDataSet barDataSet;
     private BarLineChartTouchListener mChartTouchListener;
     private CoupleChartGestureListener coupleChartGestureListener;
-    float sum=0;
+    float sum = 0;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
+            barChart.setAutoScaleMinMaxEnabled(true);
+            combinedchart.setAutoScaleMinMaxEnabled(true);
+
+            combinedchart.notifyDataSetChanged();
+            barChart.notifyDataSetChanged();
+
             combinedchart.invalidate();
             barChart.invalidate();
+
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,7 +111,7 @@ public class KLineActivity extends BaseActivity {
         barChart.setDescription("");
         barChart.setDragEnabled(true);
         barChart.setScaleYEnabled(false);
-        barChart.setAutoScaleMinMaxEnabled(true);
+
         Legend barChartLegend = barChart.getLegend();
         barChartLegend.setEnabled(false);
 
@@ -137,7 +144,7 @@ public class KLineActivity extends BaseActivity {
         combinedchart.setDescription("");
         combinedchart.setDragEnabled(true);
         combinedchart.setScaleYEnabled(false);
-        combinedchart.setAutoScaleMinMaxEnabled(true);
+
         Legend combinedchartLegend = combinedchart.getLegend();
         combinedchartLegend.setEnabled(false);
         //bar x y轴
@@ -161,8 +168,12 @@ public class KLineActivity extends BaseActivity {
         axisRightK.setDrawGridLines(true);
         axisRightK.setDrawAxisLine(false);
         axisRightK.setGridColor(getResources().getColor(R.color.minute_grayLine));
-        combinedchart.setDragDecelerationEnabled(false);
-        barChart.setDragDecelerationEnabled(false);
+        combinedchart.setDragDecelerationEnabled(true);
+        barChart.setDragDecelerationEnabled(true);
+        combinedchart.setDragDecelerationFrictionCoef(0.2f);
+        barChart.setDragDecelerationFrictionCoef(0.2f);
+
+
         // 将K线控的滑动事件传递给交易量控件
         combinedchart.setOnChartGestureListener(new CoupleChartGestureListener(combinedchart, new Chart[]{barChart}));
         // 将交易量控件的滑动事件传递给K线控件
@@ -170,7 +181,7 @@ public class KLineActivity extends BaseActivity {
         barChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-                Log.e("%%%%",h.getXIndex()+"");
+                Log.e("%%%%", h.getXIndex() + "");
                 combinedchart.highlightValues(new Highlight[]{h});
             }
 
@@ -194,6 +205,7 @@ public class KLineActivity extends BaseActivity {
 
 
     }
+
     private float getSum(Integer a, Integer b) {
 
         for (int i = a; i <= b; i++) {
@@ -207,10 +219,11 @@ public class KLineActivity extends BaseActivity {
         max = count / 127 * 5;
         return max;
     }
+
     private void setData(DataParse mData) {
 
         kLineDatas = mData.getKLineDatas();
-       // axisLeftBar.setAxisMaxValue(mData.getVolmax());
+        // axisLeftBar.setAxisMaxValue(mData.getVolmax());
         String unit = MyUtils.getVolUnit(mData.getVolmax());
         int u = 1;
         if ("万手".equals(unit)) {
@@ -219,30 +232,30 @@ public class KLineActivity extends BaseActivity {
             u = 8;
         }
         axisLeftBar.setValueFormatter(new VolFormatter((int) Math.pow(10, u)));
-       // axisRightBar.setAxisMaxValue(mData.getVolmax());
-        Log.e("@@@",mData.getVolmax()+"da");
+        // axisRightBar.setAxisMaxValue(mData.getVolmax());
+        Log.e("@@@", mData.getVolmax() + "da");
 
         ArrayList<String> xVals = new ArrayList<>();
         ArrayList<BarEntry> barEntries = new ArrayList<>();
         ArrayList<CandleEntry> candleEntries = new ArrayList<>();
-        ArrayList<Entry> line5Entries=new ArrayList<>();
-        ArrayList<Entry> line10Entries=new ArrayList<>();
-        ArrayList<Entry> line30Entries=new ArrayList<>();
+        ArrayList<Entry> line5Entries = new ArrayList<>();
+        ArrayList<Entry> line10Entries = new ArrayList<>();
+        ArrayList<Entry> line30Entries = new ArrayList<>();
         for (int i = 0, j = 0; i < mData.getKLineDatas().size(); i++, j++) {
             xVals.add(mData.getKLineDatas().get(i).date + "");
             barEntries.add(new BarEntry(mData.getKLineDatas().get(i).vol, i));
             candleEntries.add(new CandleEntry(i, mData.getKLineDatas().get(i).high, mData.getKLineDatas().get(i).low, mData.getKLineDatas().get(i).open, mData.getKLineDatas().get(i).close));
-            if(i>=4){
-                sum=0;
-                line5Entries.add(new Entry(getSum(i - 4, i)/5,i));
+            if (i >= 4) {
+                sum = 0;
+                line5Entries.add(new Entry(getSum(i - 4, i) / 5, i));
             }
-            if(i>=9){
-                sum=0;
-                line10Entries.add(new Entry(getSum(i - 9, i)/10,i));
+            if (i >= 9) {
+                sum = 0;
+                line10Entries.add(new Entry(getSum(i - 9, i) / 10, i));
             }
-            if(i>=29){
-                sum=0;
-                line30Entries.add(new Entry(getSum(i - 29, i)/30,i));
+            if (i >= 29) {
+                sum = 0;
+                line30Entries.add(new Entry(getSum(i - 29, i) / 30, i));
             }
 
         }
@@ -280,44 +293,47 @@ public class KLineActivity extends BaseActivity {
         sets.add(setMaLine(30, xVals, line30Entries));
 
 
-        CombinedData combinedData=new CombinedData(xVals);
-        LineData lineData=new LineData(xVals,sets);
+        CombinedData combinedData = new CombinedData(xVals);
+        LineData lineData = new LineData(xVals, sets);
         combinedData.setData(candleData);
         combinedData.setData(lineData);
         combinedchart.setData(combinedData);
+        combinedchart.moveViewToX(mData.getKLineDatas().size() - 1);
         final ViewPortHandler viewPortHandlerCombin = combinedchart.getViewPortHandler();
         viewPortHandlerCombin.setMaximumScaleX(culcMaxscale(xVals.size()));
         Matrix matrixCombin = viewPortHandlerCombin.getMatrixTouch();
         final float xscaleCombin = 3;
         matrixCombin.postScale(xscaleCombin, 1f);
 
-     /*   combinedchart.moveViewToX(mData.getKLineDatas().size()-1);
-        barChart.moveViewToX(mData.getDatas().size()-1);*/
-
+        combinedchart.moveViewToX(mData.getKLineDatas().size() - 1);
+        barChart.moveViewToX(mData.getKLineDatas().size() - 1);
         setOffset();
 
-        /*此处解决方法来源于CombinedChartDemo，k线图y轴显示问题，图表滑动后才能对齐的bug，希望有人给出解决方法*/
+/****************************************************************************************
+ 此处解决方法来源于CombinedChartDemo，k线图y轴显示问题，图表滑动后才能对齐的bug，希望有人给出解决方法
+ (注：此bug现已修复，感谢和chenguang79一起研究)
+ ****************************************************************************************/
+
         handler.sendEmptyMessageDelayed(0, 300);
 
-   /*     barChart.invalidate();
-        combinedchart.invalidate();*/
     }
+
     @NonNull
-    private LineDataSet setMaLine(int ma,ArrayList<String> xVals, ArrayList<Entry> lineEntries) {
-        LineDataSet lineDataSetMa = new LineDataSet(lineEntries, "ma"+ma);
-        if(ma==5) {
+    private LineDataSet setMaLine(int ma, ArrayList<String> xVals, ArrayList<Entry> lineEntries) {
+        LineDataSet lineDataSetMa = new LineDataSet(lineEntries, "ma" + ma);
+        if (ma == 5) {
             lineDataSetMa.setHighlightEnabled(true);
             lineDataSetMa.setDrawHorizontalHighlightIndicator(false);
             lineDataSetMa.setHighLightColor(Color.WHITE);
-        }else{/*此处必须得写*/
+        } else {/*此处必须得写*/
             lineDataSetMa.setHighlightEnabled(false);
         }
         lineDataSetMa.setDrawValues(false);
-        if(ma==5) {
+        if (ma == 5) {
             lineDataSetMa.setColor(Color.GREEN);
-        }else if(ma==10){
+        } else if (ma == 10) {
             lineDataSetMa.setColor(Color.GRAY);
-        }else{
+        } else {
             lineDataSetMa.setColor(Color.YELLOW);
         }
         lineDataSetMa.setLineWidth(1f);
@@ -341,7 +357,7 @@ public class KLineActivity extends BaseActivity {
             barChart.setExtraLeftOffset(offsetLeft);*/
             transLeft = lineLeft;
         } else {
-            offsetLeft = Utils.convertPixelsToDp(barLeft-lineLeft);
+            offsetLeft = Utils.convertPixelsToDp(barLeft - lineLeft);
             combinedchart.setExtraLeftOffset(offsetLeft);
             transLeft = barLeft;
         }

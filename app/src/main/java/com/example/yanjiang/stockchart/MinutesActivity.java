@@ -171,6 +171,7 @@ public class MinutesActivity extends BaseActivity {
         axisLeftLine.setDrawAxisLine(false);
 
 
+
         //右边y
         axisRightLine = lineChart.getAxisRight();
         axisRightLine.setLabelCount(2, true);
@@ -330,10 +331,8 @@ public class MinutesActivity extends BaseActivity {
         /*注老版本LineData参数可以为空，最新版本会报错，修改进入ChartData加入if判断*/
         LineData cd = new LineData(getMinutesCount(), sets);
         lineChart.setData(cd);
-
         BarData barData = new BarData(getMinutesCount(), barDataSet);
         barChart.setData(barData);
-
 
         setOffset();
         lineChart.invalidate();//刷新图
