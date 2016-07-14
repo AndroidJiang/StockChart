@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.yanjiang.stockchart.api.ClientApi;
+import com.example.yanjiang.stockchart.api.DownLoadApi;
 import com.example.yanjiang.stockchart.application.App;
 import com.example.yanjiang.stockchart.inject.modules.AppModule;
 import com.example.yanjiang.stockchart.inject.modules.ClientApiModule;
@@ -19,7 +20,7 @@ public interface AppComponent {
 
     ClientApi clientApi();
 
-
+    DownLoadApi downLoadApi();
     SharedPreferences sharedPreferences();
 
     void inject(App application);

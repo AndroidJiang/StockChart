@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import com.example.yanjiang.stockchart.BuildConfig;
 import com.example.yanjiang.stockchart.api.ClientApi;
 import com.example.yanjiang.stockchart.api.Constant;
+import com.example.yanjiang.stockchart.api.DownLoadApi;
 
 import java.util.concurrent.TimeUnit;
 
@@ -26,6 +27,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 @Module
 public class ClientApiModule {
+    @Provides
+    @Singleton
+    public DownLoadApi provideDownLoadApi(OkHttpClient client) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constant.HTTP_BASE)
+                .client(client)
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
+
+        return retrofit.create(DownLoadApi.class);
+    }
     @Provides
     @Singleton
     public ClientApi provideClientApi(OkHttpClient client, GsonConverterFactory gsonConverterFactory) {

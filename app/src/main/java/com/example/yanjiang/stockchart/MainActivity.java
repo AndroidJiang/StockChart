@@ -14,6 +14,8 @@ public class MainActivity extends BaseActivity {
     Button btn;
     @Bind(R.id.btn_k)
     Button btnK;
+    @Bind(R.id.btn_fix)
+    Button btnFix;
 
 
     @Override
@@ -26,7 +28,7 @@ public class MainActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.btn, R.id.btn_k})
+    @OnClick({R.id.btn, R.id.btn_k,R.id.btn_fix})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn:
