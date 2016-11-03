@@ -83,10 +83,10 @@ public abstract class DataSet<T extends Entry> extends BaseDataSet<T> {
             }
         }
 
-        if (mYMin == Float.MAX_VALUE) {
+        /*if (mYMin == Float.MAX_VALUE) {
             mYMin = 0.f;
             mYMax = 0.f;
-        }
+        }*/
     }
 
     @Override
