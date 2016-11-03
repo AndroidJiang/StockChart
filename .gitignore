@@ -6,3 +6,12 @@
 .DS_Store
 /build
 /captures
+/.idea/
+/MPChartLib/MPChartLib.iml
+/MPChartLib/proguard-project.txt
+/MPChartLib/pom.xml
+/MPChartLib/project.properties
+/gradle.properties
+/gradlew
+/gradlew.bat
+/StockChart2.iml
