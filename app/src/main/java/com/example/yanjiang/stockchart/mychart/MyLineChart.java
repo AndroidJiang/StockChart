@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.util.AttributeSet;
 
 import com.example.yanjiang.stockchart.bean.DataParse;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -18,6 +19,7 @@ import com.github.mikephil.charting.highlight.Highlight;
 public class MyLineChart extends LineChart {
     private MyLeftMarkerView myMarkerViewLeft;
     private MyRightMarkerView myMarkerViewRight;
+    private MyBottomMarkerView mMyBottomMarkerView;
     private DataParse minuteHelper;
 
     public MyLineChart(Context context) {
@@ -63,9 +65,10 @@ public class MyLineChart extends LineChart {
         return (MyYAxis) super.getAxisRight();
     }
 
-    public void setMarker(MyLeftMarkerView markerLeft, MyRightMarkerView markerRight, DataParse minuteHelper) {
+    public void setMarker(MyLeftMarkerView markerLeft, MyRightMarkerView markerRight,MyBottomMarkerView markerBottom, DataParse minuteHelper) {
         this.myMarkerViewLeft = markerLeft;
         this.myMarkerViewRight = markerRight;
+        this.mMyBottomMarkerView=markerBottom;
         this.minuteHelper = minuteHelper;
     }
 
@@ -102,11 +105,13 @@ public class MyLineChart extends LineChart {
 
                 float yValForXIndex1 = minuteHelper.getDatas().get(mIndicesToHighlight[i].getXIndex()).cjprice;
                 float yValForXIndex2 = minuteHelper.getDatas().get(mIndicesToHighlight[i].getXIndex()).per;
-
+                String time = minuteHelper.getDatas().get(mIndicesToHighlight[i].getXIndex()).time;
                 myMarkerViewLeft.setData(yValForXIndex1);
                 myMarkerViewRight.setData(yValForXIndex2);
+                mMyBottomMarkerView.setData(time);
                 myMarkerViewLeft.refreshContent(e, mIndicesToHighlight[i]);
                 myMarkerViewRight.refreshContent(e, mIndicesToHighlight[i]);
+                mMyBottomMarkerView.refreshContent(e, mIndicesToHighlight[i]);
                 /*修复bug*/
                 // invalidate();
                 /*重新计算大小*/
@@ -118,7 +123,12 @@ public class MyLineChart extends LineChart {
                         MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
                 myMarkerViewRight.layout(0, 0, myMarkerViewRight.getMeasuredWidth(),
                         myMarkerViewRight.getMeasuredHeight());
+                mMyBottomMarkerView.measure(MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
+                        MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+                mMyBottomMarkerView.layout(0, 0, mMyBottomMarkerView.getMeasuredWidth(),
+                        mMyBottomMarkerView.getMeasuredHeight());
 
+                mMyBottomMarkerView.draw(canvas, pos[0]-mMyBottomMarkerView.getWidth()/2, mViewPortHandler.contentBottom());
                 myMarkerViewLeft.draw(canvas, mViewPortHandler.contentLeft() - myMarkerViewLeft.getWidth(), pos[1] - myMarkerViewLeft.getHeight() / 2);
                 myMarkerViewRight.draw(canvas, mViewPortHandler.contentRight(), pos[1] - myMarkerViewRight.getHeight() / 2);
             }

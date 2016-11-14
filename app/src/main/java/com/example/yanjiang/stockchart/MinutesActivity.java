@@ -10,6 +10,7 @@ import com.example.yanjiang.stockchart.api.ConstantTest;
 import com.example.yanjiang.stockchart.bean.DataParse;
 import com.example.yanjiang.stockchart.bean.MinutesBean;
 import com.example.yanjiang.stockchart.mychart.MyBarChart;
+import com.example.yanjiang.stockchart.mychart.MyBottomMarkerView;
 import com.example.yanjiang.stockchart.mychart.MyLeftMarkerView;
 import com.example.yanjiang.stockchart.mychart.MyLineChart;
 import com.example.yanjiang.stockchart.mychart.MyRightMarkerView;
@@ -84,24 +85,29 @@ public class MinutesActivity extends BaseActivity {
         lineChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-                barChart.highlightValues(new Highlight[]{h});
-                lineChart.setHighlightValue(h);
+//                barChart.setHighlightValue(new Highlight(h.getXIndex(), 0));
+
+                barChart.highlightValue(new Highlight(h.getXIndex(), 0));
+
+               // lineChart.setHighlightValue(h);
             }
 
             @Override
             public void onNothingSelected() {
+                barChart.highlightValue(null);
             }
         });
         barChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-                //  barChart.highlightValues(new Highlight[]{h});
-                lineChart.setHighlightValue(new Highlight(h.getXIndex(), 0));//此函数已经返回highlightBValues的变量，并且刷新，故上面方法可以注释
-                // barChart.setHighlightValue(h);
+                lineChart.highlightValue(new Highlight(h.getXIndex(), 0));
+               // lineChart.setHighlightValue(new Highlight(h.getXIndex(), 0));//此函数已经返回highlightBValues的变量，并且刷新，故上面方法可以注释
+                 //barChart.setHighlightValue(h);
             }
 
             @Override
             public void onNothingSelected() {
+                lineChart.highlightValue(null);
             }
         });
 
@@ -446,6 +452,8 @@ public class MinutesActivity extends BaseActivity {
     private void setMarkerView(DataParse mData) {
         MyLeftMarkerView leftMarkerView = new MyLeftMarkerView(MinutesActivity.this, R.layout.mymarkerview);
         MyRightMarkerView rightMarkerView = new MyRightMarkerView(MinutesActivity.this, R.layout.mymarkerview);
-        lineChart.setMarker(leftMarkerView, rightMarkerView, mData);
+        MyBottomMarkerView bottomMarkerView = new MyBottomMarkerView(MinutesActivity.this, R.layout.mymarkerview);
+        lineChart.setMarker(leftMarkerView, rightMarkerView,bottomMarkerView, mData);
+        barChart.setMarker(leftMarkerView, rightMarkerView,bottomMarkerView, mData);
     }
 }

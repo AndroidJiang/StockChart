@@ -71,11 +71,9 @@ public class CoupleChartGestureListener implements OnChartGestureListener {
         float[] srcVals = new float[9];
         Matrix dstMatrix;
         float[] dstVals = new float[9];
-
         // get src chart translation matrix:
         srcMatrix = srcChart.getViewPortHandler().getMatrixTouch();
         srcMatrix.getValues(srcVals);
-
         // apply X axis scaling and position to dst charts:
         for (Chart dstChart : dstCharts) {
             if (dstChart.getVisibility() == View.VISIBLE) {
