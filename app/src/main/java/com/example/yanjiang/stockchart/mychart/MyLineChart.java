@@ -98,6 +98,7 @@ public class MyLineChart extends LineChart {
                 // make sure entry not null
                 if (e == null || e.getXIndex() != mIndicesToHighlight[i].getXIndex())
                     continue;
+
                 float[] pos = getMarkerPosition(e, highlight);
                 // check bounds
                 if (!mViewPortHandler.isInBounds(pos[0], pos[1]))

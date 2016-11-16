@@ -1,5 +1,5 @@
 # 介绍
-# (此demo已经好几个月没更新,接下来会放个大招,敬请期待)
+# (本打算月底前放出更详细的源码,但是毕竟后期的工作是和同事一块完成的,他不同意,只能作罢了,敬请谅解,过几天可能会放个apk给大家体验下)
 采用主流`rxjava`+`retrofit`+`dagger2`框架<br><br>
 StockChart包括分时图，k线图等实现，仍在持续更新中，欢迎star<br><br>
 同时也请关注我的博客更新http://blog.csdn.net/qqyanjiang<br>
