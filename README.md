@@ -1,5 +1,4 @@
-# 介绍
-# (本打算月底前放出更详细的源码,但是毕竟后期的工作是和同事一块完成的,他不同意,只能作罢了,敬请谅解,过几天可能会放个apk给大家体验下)
+# 本demo基本需求能够实现,也不再更新，如果要完美效果，只能自己去拓展开发，不过如果您对股票图表研究不够深入，那么请体验一下供商业版（收费版）http://blog.csdn.net/qqyanjiang/article/details/53771292)
 采用主流`rxjava`+`retrofit`+`dagger2`框架<br><br>
 StockChart包括分时图，k线图等实现，仍在持续更新中，欢迎star<br><br>
 同时也请关注我的博客更新http://blog.csdn.net/qqyanjiang<br>
