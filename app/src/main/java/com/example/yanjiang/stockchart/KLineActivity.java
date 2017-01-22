@@ -223,6 +223,7 @@ public class KLineActivity extends BaseActivity {
     private void setData(DataParse mData) {
 
         kLineDatas = mData.getKLineDatas();
+        int size = kLineDatas.size();   //点的个数
         // axisLeftBar.setAxisMaxValue(mData.getVolmax());
         String unit = MyUtils.getVolUnit(mData.getVolmax());
         int u = 1;
@@ -288,9 +289,20 @@ public class KLineActivity extends BaseActivity {
 
 
         ArrayList<ILineDataSet> sets = new ArrayList<>();
-        sets.add(setMaLine(5, xVals, line5Entries));
-        sets.add(setMaLine(10, xVals, line10Entries));
-        sets.add(setMaLine(30, xVals, line30Entries));
+
+        /******此处修复如果显示的点的个数达不到MA均线的位置所有的点都从0开始计算最小值的问题******************************/
+        if(size>=30){
+            sets.add(setMaLine(5, xVals, line5Entries));
+            sets.add(setMaLine(10, xVals, line10Entries));
+            sets.add(setMaLine(30, xVals, line30Entries));
+        }else if (size>=10&&size<30){
+            sets.add(setMaLine(5, xVals, line5Entries));
+            sets.add(setMaLine(10, xVals, line10Entries));
+        }else if (size>=5&&size<10) {
+            sets.add(setMaLine(5, xVals, line5Entries));
+        }
+
+
 
 
         CombinedData combinedData = new CombinedData(xVals);
