@@ -14,6 +14,5 @@ StockChart包括分时图，k线图等实现，仍在持续更新中，欢迎sta
 #Thanks 
 特别感谢外国友人[AymanDF]
 (https://github.com/AymanDF)对本代码的优化
-
-
-
+同时也很感谢[WinWang] 
+(https://github.com/WinWang)pull的代码
