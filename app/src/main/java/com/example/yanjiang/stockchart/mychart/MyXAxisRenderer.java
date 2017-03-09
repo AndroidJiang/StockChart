@@ -1,6 +1,7 @@
 package com.example.yanjiang.stockchart.mychart;
 
 import android.graphics.Canvas;
+import android.graphics.Path;
 import android.graphics.PointF;
 
 import com.github.mikephil.charting.charts.BarLineChartBase;
@@ -54,7 +55,7 @@ public class MyXAxisRenderer extends XAxisRenderer {
 
         }
     }
-
+    protected Path mRenderGridLinesPath = new Path();
     /*x轴垂直线*/
     @Override
     public void renderGridLines(Canvas c) {
@@ -67,17 +68,41 @@ public class MyXAxisRenderer extends XAxisRenderer {
         mGridPaint.setColor(mXAxis.getGridColor());
         mGridPaint.setStrokeWidth(mXAxis.getGridLineWidth());
         mGridPaint.setPathEffect(mXAxis.getGridDashPathEffect());
+        Path gridLinePath = mRenderGridLinesPath;
+        gridLinePath.reset();
         int count = mXAxis.getXLabels().size();
         if (!mChart.isScaleXEnabled()) {
             count -= 1;
         }
-        for (int i = 0; i < count; i ++) {
+        for (int i = 0; i <= count; i ++) {
+
+
+            int ix = mXAxis.getXLabels().keyAt(i);
+
+            position[0] = ix;
+            mTrans.pointValuesToPixel(position);
+
+
+            if (position[0] >= mViewPortHandler.offsetLeft()
+                    && position[0] <= mViewPortHandler.getChartWidth()) {
+
+                gridLinePath.moveTo(position[0], mViewPortHandler.contentBottom());
+                gridLinePath.lineTo(position[0], mViewPortHandler.contentTop());
+
+                // draw a path because lines don't support dashing on lower android versions
+                c.drawPath(gridLinePath, mGridPaint);
+            }
+
+            gridLinePath.reset();
+
+        }
+        /*for (int i = 0; i < count; i ++) {
             int ix = mXAxis.getXLabels().keyAt(i);
             position[0] = ix;
             mTrans.pointValuesToPixel(position);
             c.drawLine(position[0], mViewPortHandler.offsetTop(), position[0],
                     mViewPortHandler.contentBottom(), mGridPaint);
-        }
+        }*/
 
     }
 

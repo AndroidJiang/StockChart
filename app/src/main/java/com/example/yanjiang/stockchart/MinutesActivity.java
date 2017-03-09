@@ -195,6 +195,7 @@ public class MinutesActivity extends BaseActivity {
         axisRightLine.setDrawAxisLine(false);
         //背景线
         xAxisLine.setGridColor(getResources().getColor(R.color.minute_grayLine));
+        xAxisLine.enableGridDashedLine(10f,5f,0f);
         xAxisLine.setAxisLineColor(getResources().getColor(R.color.minute_grayLine));
         xAxisLine.setTextColor(getResources().getColor(R.color.minute_zhoutv));
         axisLeftLine.setGridColor(getResources().getColor(R.color.minute_grayLine));
