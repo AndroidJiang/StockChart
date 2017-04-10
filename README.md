@@ -1,6 +1,6 @@
 # 号外
 本demo基本需求能够实现,也不再更新，如果要完美效果，只能自己去拓展开发，不过如果您对股票图表研究不够深入，那么请体验一下供商业版（收费版）
-http://blog.csdn.net/qqyanjiang/article/details/54381668)
+http://blog.csdn.net/qqyanjiang/article/details/65631175)
 
 # demo说明
 采用主流`rxjava`+`retrofit`+`dagger2`框架<br><br>
