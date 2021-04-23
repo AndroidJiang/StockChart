@@ -7,6 +7,8 @@ package com.example.yanjiang.stockchart;
  */
 public class Test {
 
+
+
    /* private ArrayList<Integer> listA, listB;
     private  int sum;
 
