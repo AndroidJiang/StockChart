@@ -7,8 +7,8 @@ StockChart包括分时图，k线图等实现，欢迎star<br><br>
 
 
 # Thanks 
-特别感谢外国友人[AymanDF]
-(https://github.com/AymanDF)
+特别感谢外国友人[bryant1410]
+(https://github.com/bryant1410)
 对本代码的优化
 同时也很感谢[WinWang] 
 (https://github.com/WinWang)
