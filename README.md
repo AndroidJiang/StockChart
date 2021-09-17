@@ -6,6 +6,7 @@ StockChart包括分时图，k线图等实现，欢迎star<br><br>
 <br>
 
 
+
 # Thanks 
 特别感谢外国友人[bryant1410]
 (https://github.com/bryant1410)
