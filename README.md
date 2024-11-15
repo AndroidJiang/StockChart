@@ -1,16 +1,8 @@
+若本demo不能满足您的需要
+- **商业版 K 线图源码**：功能更加完善，满足更高需求。
+- **定制开发服务**：如果商业版仍无法满足您的特定需求，我可以提供定制开发服务。
 
-# Demo说明
-采用主流`rxjava`+`retrofit`+`dagger2`框架<br><br>
-StockChart包括分时图，k线图等实现，欢迎star<br><br>
-同时也请关注我的博客http://blog.csdn.net/qqyanjiang<br>
-<br>
+如需咨询或获取更多详情，请添加我的wx联系方式：**1025065158**。
 
-
-
-# Thanks 
-特别感谢外国友人[bryant1410]
-(https://github.com/bryant1410)
-对本代码的优化
-同时也很感谢[WinWang] 
-(https://github.com/WinWang)
-pull的代码
+### 效果展示
+![请添加图片描述](https://i-blog.csdnimg.cn/direct/70d5e6b6b12843a88274a161fa6c5a2b.gif)
